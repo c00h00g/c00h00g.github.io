@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_xp(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$ $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$  $=-\sum_{x,y}p(x">
+<meta name="description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_{x}p(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$        $">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最大熵定义理解">
 <meta property="og:url" content="http://yoursite.com/2018/03/02/max_entropy/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_xp(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$ $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$  $=-\sum_{x,y}p(x">
+<meta property="og:description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_{x}p(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$        $">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T07:28:08.113Z">
+<meta property="og:updated_time" content="2018-12-30T09:26:31.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大熵定义理解">
-<meta name="twitter:description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_xp(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$ $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$  $=-\sum_{x,y}p(x">
+<meta name="twitter:description" content="第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题： 熵：$H(X) = -\sum_{x}p(x)log(p(x))$ 条件熵：$H(Y|X) = H(X, Y) - H(X)$        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$        $">
 
 
 
@@ -345,20 +345,9 @@
 
       
         <p>第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题：</p>
-<p>熵：$H(X) = -\sum_xp(x)log(p(x))$</p>
-<p>条件熵：$H(Y|X) = H(X, Y) - H(X)$</p>
-<pre><code>$= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$
-
-$=-\sum_{x,y}p(x,y)log(p(x,y)) + \sum_x(\sum_yp(x,y))log(p(x))$
-
-$= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_{x,y}p(x,y)log(p(x))$
-
-$= -\sum_{x,y}p(x,y)log\frac{p(x,y)}{p(x)}$
-
-$= - \sum_{x,y}p(x,y)log(p(y|x))$
-
-$=-\sum_{x,y}p(y|x)\overline{p(x)}log(p(y|x)$
-</code></pre><p>其中加横线的p(x)表示根据数据统计出来的经验分布。</p>
+<p>熵：$H(X) = -\sum_{x}p(x)log(p(x))$</p>
+<p>条件熵：$H(Y|X) = H(X, Y) - H(X)$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$<br>        $=-\sum_{x,y}p(x,y)log(p(x,y)) + \sum_x(\sum_yp(x,y))log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_{x,y}p(x,y)log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log\frac{p(x,y)}{p(x)}$<br>        $= - \sum_{x,y}p(x,y)log(p(y|x))$<br>        $=-\sum_{x,y}p(y|x)\overline{p(x)}log(p(y|x)$</p>
+<p>其中加横线的p(x)表示根据数据统计出来的经验分布。</p>
 <p>这里的条件熵就是统计学习方法中讲的最大熵模型，如果书本上能这样写的话，更能方便理解。</p>
 <p>参考资料：</p>
 <p>[1] <a href="https://kexue.fm/archives/3534/" target="_blank" rel="noopener">https://kexue.fm/archives/3534/</a></p>
