@@ -282,6 +282,142 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/15/core调试技巧/" itemprop="url">
+                  core调试技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-15T20:05:50+08:00" content="2017-10-15">
+              2017-10-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/调试/" itemprop="url" rel="index">
+                    <span itemprop="name">调试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="常用gdb命令"><a href="#常用gdb命令" class="headerlink" title="常用gdb命令"></a>常用gdb命令</h4><ol>
+<li>查看堆栈信息<br>bt</li>
+<li>进入到某个堆栈中<br>f n : n是堆栈的id</li>
+<li>gdb打印结构体更漂亮<br>set print pretty</li>
+<li>查看函数参数信息<br>info args</li>
+<li>查看函数局部变量信息<br>info locals</li>
+<li>查看线程信息<br>   info threads<br>   thread n : 进入第n个线程</li>
+</ol>
+<h4 id="Mac上查看core"><a href="#Mac上查看core" class="headerlink" title="Mac上查看core"></a>Mac上查看core</h4><ol>
+<li>出core只有段错误信息，却没有core<br>  需要执行命令：ulimit -c unlimited </li>
+<li>Mac下core是被写入到/cores目录下的，需要在这个目录下查看core</li>
+<li>如何查看core<br>  lldb –core core.xxx</li>
+</ol>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="[ 参考文档 ]"></a>[ <strong>参考文档</strong> ]</h4><ol>
+<li><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html" target="_blank" rel="noopener">http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html</a></li>
+<li><a href="https://wizardforcel.gitbooks.io/100-gdb-tips/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/100-gdb-tips/</a>  100个gdb小技巧</li>
+<li><a href="http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html" target="_blank" rel="noopener">http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/10/some-tricks/" itemprop="url">
                   一些实用技巧
                 </a>
@@ -913,137 +1049,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/09/my-first-blog/" itemprop="url">
-                  开始重新写博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-09T11:16:49+08:00" content="2016-10-09">
-              2016-10-09
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>翻了一下自己之前写过的最后一篇博客，日期是2013年12月13日，距离现在已经有3年了。之前写博客主要是将自己做过的编程题目记录下来，也算坚持了很长时间。这是之前<a href="http://blog.csdn.net/chen895281773/" target="_blank" rel="noopener">博客地址</a>。</p>
-<p>工作之后发现，写一些东西还是很能够加深对问题的理解的，很多你想逃避的知识点，由于必须写下来，也必须弄清楚了。</p>
-<p>之后的博客内容主要关注一下几点：</p>
-<ul>
-<li>机器学习读书、视频笔记</li>
-<li>自己的一些思考</li>
-</ul>
-<p>希望自己可以坚持下来！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1082,7 +1092,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

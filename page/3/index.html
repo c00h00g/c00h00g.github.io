@@ -556,6 +556,131 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/10/some_work_experience/" itemprop="url">
+                  一些工作体会
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-10T23:59:50+08:00" content="2018-02-10">
+              2018-02-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>经常对自己提问。能问出好的问题才能说明对这个问题有自己深入对思考了</li>
+<li>临时方案与理想方案。做事情的时候，不要只想到临时方案临时解决下问题，要想想理想方案是什么，否则，会导致系统越来越难维护</li>
+<li>看到问题的本质。看到问题的时候，要分析下是不是一类问题，而不是单独case by case</li>
+<li>问题分解。学会将问题分解，把复杂问题转化成小问题来做。</li>
+<li>前瞻性。要想到后面要做什么，甚至可以从公司的角度去思考，应该做那些布局，三年后应该做成什么样子，倒逼自己进步。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/05/useful_url/" itemprop="url">
                   经常看的一些链接
                 </a>
@@ -786,160 +911,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/01/Rank_SVM/" itemprop="url">
-                  RANK_SVM算法解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-01T23:59:50+08:00" content="2018-02-01">
-              2018-02-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RANK-SVM-原理"><a href="#RANK-SVM-原理" class="headerlink" title="RANK_SVM 原理"></a>RANK_SVM 原理</h3><p>RankSVM基于SVM算法，将pair-wise的排序问题，转化为分类问题</p>
-<h3 id="SVM算法回顾"><a href="#SVM算法回顾" class="headerlink" title="SVM算法回顾"></a>SVM算法回顾</h3><ol>
-<li><p>SVM的优化目标<br>$min \frac{1}{2}||w^2|| $<br>$s.t. y_i(w^Tx_i+b) &gt;= 1(i = 1, 2, 3 … n)$</p>
-</li>
-<li><p>使用拉格朗日函数 –&gt; 转化为对偶问题来求解</p>
-</li>
-<li>SVM使用的loss func为hinge loss(合页损失函数)<br>$min_{w,b}[1 - y_i(w*x + b)]_+ + \lambda||w||_2^2$</li>
-</ol>
-<h3 id="RANK-SVM介绍"><a href="#RANK-SVM介绍" class="headerlink" title="RANK_SVM介绍"></a>RANK_SVM介绍</h3><ol>
-<li><p>定义1：f是排序函数，$x_i\succ x_j \Longleftrightarrow f(x_i) &gt; f(x_j)$, 表示如果$f(x_i) &gt; f(x_j)$，$x_i$需要排在$x_j$的前面</p>
-</li>
-<li><p>定义2：假设f(x)是一个线性函数，$f(x) = \langle w, x \rangle$ 表示参数向量w和特征向量x的点乘(inner product)</p>
-</li>
-<li><p>定义3，我们可以将排序问题转换为分类问题<br>$f(x_i) &gt; f(x_j) \Longleftrightarrow  \langle w, x_i - x_j \rangle &gt; 0$</p>
-</li>
-<li><p>定义4定义y表示label值, 区值范围+1和-1，</p>
-<ul>
-<li>y = +1, $if \langle w, x_i - x_j \rangle &gt; 0$</li>
-<li>y = -1, $if \langle w, x_i - x_j \rangle &lt; 0$<br>这样，我们就将排序问题转换成了分类问题</li>
-</ul>
-</li>
-</ol>
-<h3 id="如何求解"><a href="#如何求解" class="headerlink" title="如何求解"></a>如何求解</h3><p>这里，传统的SMO优化方法，我们这里不再做具体的介绍，在实做上，我们一般使用的是SGD方法<br>既然我们已经有了loss function，我们当然可以通过sgd的方法来解</p>
-<h4 id="loss-func"><a href="#loss-func" class="headerlink" title="loss func"></a>loss func</h4><ul>
-<li>loss = $min_w  \frac{\lambda}{2}||w||^2 + \sum_{(d_i, d_j)}max(0,  1 - y_{(d_i, d_j)}\langle w, x_{d_i} - x_{d_j} \rangle)$</li>
-<li>grad = $\lambda w - \sum_{i,j}I(y_{i,j} \langle w, x_i - x_j\rangle &lt; 1)y_{i,j}(x_i - x_j)$</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="https://github.com/glycerine/sofia-ml" target="_blank" rel="noopener">https://github.com/glycerine/sofia-ml</a>, google实现的ranksvm</li>
-<li>learning to rank by lihang</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -978,7 +954,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
