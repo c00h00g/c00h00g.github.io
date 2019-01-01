@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Soul of Light">
 <meta property="og:description" content="统计学习方法最后一章讲到了逻辑斯蒂回归的loss func为$log[1 + exp^{-yf(x)}]$一时难以理解，找波叔帮忙看了下，给了这篇 http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf 参考，瞬间理解了。 这里主要将类别的符号变换从之前的0，1转变成了-1和1，那么最大似然估计可以统一写成： $ \prod_{i=1}^n\frac{1}{">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T07:28:08.110Z">
+<meta property="og:updated_time" content="2019-01-01T07:03:31.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑斯蒂回归另一种loss">
 <meta name="twitter:description" content="统计学习方法最后一章讲到了逻辑斯蒂回归的loss func为$log[1 + exp^{-yf(x)}]$一时难以理解，找波叔帮忙看了下，给了这篇 http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf 参考，瞬间理解了。 这里主要将类别的符号变换从之前的0，1转变成了-1和1，那么最大似然估计可以统一写成： $ \prod_{i=1}^n\frac{1}{">
@@ -347,9 +347,8 @@
         <p>统计学习方法最后一章讲到了逻辑斯蒂回归的loss func为$log[1 + exp^{-yf(x)}]$一时难以理解，找波叔帮忙看了下，给了这篇 <a href="http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf" target="_blank" rel="noopener">http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf</a> 参考，瞬间理解了。</p>
 <p>这里主要将类别的符号变换从之前的0，1转变成了-1和1，那么最大似然估计可以统一写成：</p>
 <p>$ \prod_{i=1}^n\frac{1}{1+e^{-y_i(wx_i+b)}}$</p>
-<p>因为：$p(y=1|x) = \frac{1}{1+e^{-(wx+b)}}$</p>
-<pre><code>$p(y=-1|x) = 1- p(y=1|x)= \frac{1}{1+e^{wx+b}}$
-</code></pre><p>将两个概率统一，即为最终的最大似然</p>
+<p>因为：$p(y=1|x) = \frac{1}{1+e^{-(wx+b)}}$<br>      $p(y=-1|x) = 1- p(y=1|x)= \frac{1}{1+e^{wx+b}}$</p>
+<p>将两个概率统一，即为最终的最大似然</p>
 <p>将上面式子转换成-log形式即为loss，</p>
 <p>$L(w,b) = -\sum_{i=1}^{n}log(\frac{1}{1+e^{-y_i(wx+b)}}) = \sum_{i=1}^{n}log(1+e^{-y_i(wx+b)})$</p>
 
@@ -541,7 +540,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
