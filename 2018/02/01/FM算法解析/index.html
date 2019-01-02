@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Soul of Light">
 <meta property="og:description" content="背景FM算法全称 : Factorization Machine, 即为因子分解机，在推荐场景下有很好的指导作用 我们面临的问题 特征组合问题：比如我们男性对电子类产品更感兴趣一些，女性对化妆品之类的产品更感兴趣一些，FM自动对特征进行组合。如果使用LR的话，需要自动设计一些组合特征。 高纬稀疏特征, 特征维度会太大， 降低了参数量，参数从 $\frac{n(n+1)}{2}$ 降到 $kn$ 模">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-02T14:35:24.238Z">
+<meta property="og:updated_time" content="2019-01-02T14:37:08.913Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM算法解析">
 <meta name="twitter:description" content="背景FM算法全称 : Factorization Machine, 即为因子分解机，在推荐场景下有很好的指导作用 我们面临的问题 特征组合问题：比如我们男性对电子类产品更感兴趣一些，女性对化妆品之类的产品更感兴趣一些，FM自动对特征进行组合。如果使用LR的话，需要自动设计一些组合特征。 高纬稀疏特征, 特征维度会太大， 降低了参数量，参数从 $\frac{n(n+1)}{2}$ 降到 $kn$ 模">
@@ -360,7 +360,7 @@
 <p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i) (\sum_{j=1}^{n}v_{j,f}x_j)  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
 <p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i)^2  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
 <h4 id="梯度下降求解参数"><a href="#梯度下降求解参数" class="headerlink" title="梯度下降求解参数"></a>梯度下降求解参数</h4><p>$loss = \frac{1}{2}(y -  \overline y) ^2$</p>
-<p>$\frac {\partial loss} {\partial w_0} = 1$</p>
+<p>$\frac {\partial loss} {\partial w_{0}} = 1$</p>
 <p>$\frac {\partial loss} {\partial x_i} = x_i$</p>
 <p>$\frac {\partial loss} { \partial v_{i,f}} = x_i\sum_{j=1}^{n}v_{j,f}x_j - v_{i,f}x_i^2$</p>
 
