@@ -86,13 +86,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Soul of Light">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="背景最近学习了rank-svm, gbrank等使用pairwise的思想来解决排序问题的方法，有些小感悟，先记录下来 思想排序的偏序关系$S_{ij}$是定义出来的,   if $x_i\succ x_j$, 则定义$S_{ij}=1$, if $x_j\succ x_i$, 则定义$S_{ij}=-1$, 相等的时候, $S_{ij} = 0$ $\frac{1 + S_{ij}}{2}$，正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="求解排序问题思想">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/rank_problem/index.html">
 <meta property="og:site_name" content="Soul of Light">
+<meta property="og:description" content="背景最近学习了rank-svm, gbrank等使用pairwise的思想来解决排序问题的方法，有些小感悟，先记录下来 思想排序的偏序关系$S_{ij}$是定义出来的,   if $x_i\succ x_j$, 则定义$S_{ij}=1$, if $x_j\succ x_i$, 则定义$S_{ij}=-1$, 相等的时候, $S_{ij} = 0$ $\frac{1 + S_{ij}}{2}$，正">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-04T15:17:29.141Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Soul of Light">
+<meta name="twitter:title" content="求解排序问题思想">
+<meta name="twitter:description" content="背景最近学习了rank-svm, gbrank等使用pairwise的思想来解决排序问题的方法，有些小感悟，先记录下来 思想排序的偏序关系$S_{ij}$是定义出来的,   if $x_i\succ x_j$, 则定义$S_{ij}=1$, if $x_j\succ x_i$, 则定义$S_{ij}=-1$, 相等的时候, $S_{ij} = 0$ $\frac{1 + S_{ij}}{2}$，正">
 
 
 
@@ -113,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/">
+  <link rel="canonical" href="http://yoursite.com/2018/06/15/rank_problem/">
 
 
-  <title> 归档 | Soul of Light </title>
+  <title> 求解排序问题思想 | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -137,7 +141,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="//schema.org/WPHeader">
@@ -258,659 +262,165 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 26 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/01/fast_text_supervised/" itemprop="url">
-              
-                <span itemprop="name">FastText之监督学习</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-01T23:59:50+08:00" content="2018-09-01">
-          09-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/03/wilson_interval/" itemprop="url">
-              
-                <span itemprop="name">威尔逊区间的应用</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-07-03T23:59:50+08:00" content="2018-07-03">
-          07-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/01/how_to_use_yaml/" itemprop="url">
-              
-                <span itemprop="name">如何使用yaml</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-07-01T23:59:50+08:00" content="2018-07-01">
-          07-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/15/rank_problem/" itemprop="url">
-              
-                <span itemprop="name">求解排序问题思想</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-15T23:59:50+08:00" content="2018-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/06/fasttext_c_plus_tricks/" itemprop="url">
-              
-                <span itemprop="name">fasttext中使用的c++技巧总结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-06T23:59:50+08:00" content="2018-03-06">
-          03-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/06/multi_thread_python/" itemprop="url">
-              
-                <span itemprop="name">python多线程处理文件</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-06T23:59:50+08:00" content="2018-03-06">
-          03-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/05/ld_problem/" itemprop="url">
-              
-                <span itemprop="name">cannot find -lxxx 解决方法</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-05T20:05:50+08:00" content="2018-03-05">
-          03-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/02/max_entropy/" itemprop="url">
-              
-                <span itemprop="name">最大熵定义理解</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-02T23:59:50+08:00" content="2018-03-02">
-          03-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/01/LR_other_loss/" itemprop="url">
-              
-                <span itemprop="name">逻辑斯蒂回归另一种loss</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-01T23:59:50+08:00" content="2018-03-01">
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/18/Logistic regression 推倒过程（使用gradient descent）/" itemprop="url">
-              
-                <span itemprop="name">Logistic regression 推倒过程（使用gradient descent）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-18T23:59:50+08:00" content="2018-02-18">
-          02-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/13/node_express/" itemprop="url">
-              
-                <span itemprop="name">使用nodejs + express搭建网站</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-13T23:59:50+08:00" content="2018-02-13">
-          02-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/10/ask_myselfs/" itemprop="url">
-              
-                <span itemprop="name">自己给自己提问(FAQ)</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-10T23:59:50+08:00" content="2018-02-10">
-          02-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/10/some_work_experience/" itemprop="url">
-              
-                <span itemprop="name">一些工作体会</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-10T23:59:50+08:00" content="2018-02-10">
-          02-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/05/useful_url/" itemprop="url">
-              
-                <span itemprop="name">经常看的一些链接</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-05T20:05:50+08:00" content="2018-02-05">
-          02-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/01/FM算法解析/" itemprop="url">
-              
-                <span itemprop="name">FM算法解析</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-01T23:59:50+08:00" content="2018-02-01">
-          02-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/01/Rank_SVM/" itemprop="url">
-              
-                <span itemprop="name">RANK_SVM算法解析</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-02-01T23:59:50+08:00" content="2018-02-01">
-          02-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/07/python调用so文件/" itemprop="url">
-              
-                <span itemprop="name">如何使用python调用so接口</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-01-07T20:05:50+08:00" content="2018-01-07">
-          01-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/01/Makefile小结/" itemprop="url">
-              
-                <span itemprop="name">Makefile小结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-01-01T20:05:50+08:00" content="2018-01-01">
-          01-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
+  
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                求解排序问题思想
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-06-15T23:59:50+08:00" content="2018-06-15">
+              2018-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近学习了rank-svm, gbrank等使用pairwise的思想来解决排序问题的方法，有些小感悟，先记录下来</p>
+<h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>排序的偏序关系$S_{ij}$是定义出来的, </p>
+<ol>
+<li>if $x_i\succ x_j$, 则定义$S_{ij}=1$,</li>
+<li>if $x_j\succ x_i$, 则定义$S_{ij}=-1$,</li>
+<li>相等的时候, $S_{ij} = 0$</li>
+<li>$\frac{1 + S_{ij}}{2}$，正好转化成了0-1区间，可以当作概率来用</li>
+</ol>
+<p>用gbrank举个例子，由于拟合的目标是多棵树h(x), 通过h(x)之间的偏序关系, 为了使用交叉熵来作为损失函数，我们只需将偏序关系<br>套入sigmoid函数转换成概率形式.</p>
+<ul>
+<li>$p_{ij} = p(x_i \succ x_j) = \frac{1}{1  +  exp^{(-h(x_i) + h(x_j) + \tau)}}$</li>
+<li>$\overline{p_{ij}} = \frac{1 + S_{ij}}{2}$</li>
+</ul>
+<p>因此，我们可以构造出cross-entropy loss:<br>$L(h) = \sum_{i,j} {-\overline{p_{ij}}logp_{ij} - (1 - \overline{p_{ij}})log(1 - p_{ij})}$</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以，我们可以这样想，如果我们要解决排序问题，只要我们能设计任意的函数f(x)能够表达偏序关系，都能套入cross entroy来解，我们需要求解的只是函数f(x)的参数.<br>比如rank_svm其实就是假设f(x)是一个线性函数，使用svm的loss函数（没有用crossEntropy）来求解f(x)的参数，当然我认为也是可以使用cross-entropy来解的（不过那样就不叫svm了）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+      
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/06/fasttext_c_plus_tricks/" rel="next" title="fasttext中使用的c++技巧总结">
+                <i class="fa fa-chevron-left"></i> fasttext中使用的c++技巧总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/01/how_to_use_yaml/" rel="prev" title="如何使用yaml">
+                如何使用yaml <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -918,6 +428,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -937,8 +451,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Soulight">
           <p class="site-author-name" itemprop="name">Soulight</p>
@@ -997,6 +520,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思想"><span class="nav-number">2.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1103,11 +637,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
 
 
   
