@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="背景点赞点踩是互联网上收集用户反馈的一个非常重要的手段，这些后验特征对于结果的排序是非常有用的；但是，我们经常会遇到这样的问题，一个结果有5条1分的评价, 0条0分的评价，一个结果有480个1分的评价，20个0分的评价，如果直接按照good / all来算，第一个结果是1.0，第二个结果是4.8；可是显然，第二条结果是大概率好于第一条结果的。由此，我们引入威尔逊区间的概念。 实现代码1234567">
+<meta name="description" content="理解word2vec最近在看斯坦福的课程，对word2vec有了更深刻的理解，在这里总结一下。 什么是word2vec传统的one hot的表达方式维度太大，并且无法表达词之间的语义之间的联系 word2vec原理（skip - gram来举例）skip gram是使用中心词预测背景词的概率，架构图如下： 我们使用最大似然估计来写出整体要优化的目标： $\prod_{t=1}^{T}\prod_{">
 <meta property="og:type" content="article">
-<meta property="og:title" content="威尔逊区间的应用">
-<meta property="og:url" content="http://yoursite.com/2018/05/01/wilson_interval/index.html">
+<meta property="og:title" content="word2vec算法解析">
+<meta property="og:url" content="http://yoursite.com/2017/10/01/word2vec_understand/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="背景点赞点踩是互联网上收集用户反馈的一个非常重要的手段，这些后验特征对于结果的排序是非常有用的；但是，我们经常会遇到这样的问题，一个结果有5条1分的评价, 0条0分的评价，一个结果有480个1分的评价，20个0分的评价，如果直接按照good / all来算，第一个结果是1.0，第二个结果是4.8；可是显然，第二条结果是大概率好于第一条结果的。由此，我们引入威尔逊区间的概念。 实现代码1234567">
+<meta property="og:description" content="理解word2vec最近在看斯坦福的课程，对word2vec有了更深刻的理解，在这里总结一下。 什么是word2vec传统的one hot的表达方式维度太大，并且无法表达词之间的语义之间的联系 word2vec原理（skip - gram来举例）skip gram是使用中心词预测背景词的概率，架构图如下： 我们使用最大似然估计来写出整体要优化的目标： $\prod_{t=1}^{T}\prod_{">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T07:28:08.113Z">
+<meta property="og:updated_time" content="2019-01-07T17:58:50.391Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="威尔逊区间的应用">
-<meta name="twitter:description" content="背景点赞点踩是互联网上收集用户反馈的一个非常重要的手段，这些后验特征对于结果的排序是非常有用的；但是，我们经常会遇到这样的问题，一个结果有5条1分的评价, 0条0分的评价，一个结果有480个1分的评价，20个0分的评价，如果直接按照good / all来算，第一个结果是1.0，第二个结果是4.8；可是显然，第二条结果是大概率好于第一条结果的。由此，我们引入威尔逊区间的概念。 实现代码1234567">
+<meta name="twitter:title" content="word2vec算法解析">
+<meta name="twitter:description" content="理解word2vec最近在看斯坦福的课程，对word2vec有了更深刻的理解，在这里总结一下。 什么是word2vec传统的one hot的表达方式维度太大，并且无法表达词之间的语义之间的联系 word2vec原理（skip - gram来举例）skip gram是使用中心词预测背景词的概率，架构图如下： 我们使用最大似然估计来写出整体要优化的目标： $\prod_{t=1}^{T}\prod_{">
 
 
 
@@ -117,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/01/wilson_interval/">
+  <link rel="canonical" href="http://yoursite.com/2017/10/01/word2vec_understand/">
 
 
-  <title> 威尔逊区间的应用 | Soul of Light </title>
+  <title> word2vec算法解析 | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +283,7 @@
             
             
               
-                威尔逊区间的应用
+                word2vec算法解析
               
             
           </h1>
@@ -295,8 +295,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-01T23:59:50+08:00" content="2018-05-01">
-              2018-05-01
+            <time itemprop="dateCreated" datetime="2017-10-01T23:59:50+08:00" content="2017-10-01">
+              2017-10-01
             </time>
           </span>
 
@@ -344,13 +344,19 @@
       
 
       
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>点赞点踩是互联网上收集用户反馈的一个非常重要的手段，这些后验特征对于结果的排序是非常有用的；但是，我们经常会遇到这样的问题，<br>一个结果有5条1分的评价, 0条0分的评价，一个结果有480个1分的评价，20个0分的评价，如果直接按照good / all来算，第一个结果是1.0，第二个结果<br>是4.8；可是显然，第二条结果是大概率好于第一条结果的。由此，我们引入威尔逊区间的概念。</p>
-<h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sqrt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">confidence</span><span class="params">(ups, downs, z)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    ups : 赞成</span></span><br><span class="line"><span class="string">    downs : 不赞成</span></span><br><span class="line"><span class="string">    z :  统计量，95%的置信水平，统计量值为1.96，可以通过查表实现</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    n = ups + downs</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    p = float(ups) / n</span><br><span class="line">    <span class="keyword">return</span> ((p + z*z/(<span class="number">2</span>*n) - z * sqrt((p*(<span class="number">1</span>-p)+z*z/(<span class="number">4</span>*n))/n))/(<span class="number">1</span>+z*z/n))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> confidence(<span class="number">5</span>, <span class="number">0</span>, <span class="number">1.96</span>)</span><br><span class="line">    <span class="keyword">print</span> confidence(<span class="number">50</span>, <span class="number">10</span>, <span class="number">1.96</span>)</span><br><span class="line">    <span class="keyword">print</span> confidence(<span class="number">500</span>, <span class="number">100</span>, <span class="number">1.96</span>)</span><br><span class="line">    <span class="keyword">print</span> confidence(<span class="number">5000</span>, <span class="number">1000</span>, <span class="number">1.96</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.565508505248</span><br><span class="line">0.719681485028</span><br><span class="line">0.801411699243</span><br><span class="line">0.823690598226</span><br></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>涉及到所有比例置信度的问题都可以用威尔逊区间来优化</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="http://www.ruanyifeng.com/blog/2012/03/ranking_algorithm_wilson_score_interval.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/03/ranking_algorithm_wilson_score_interval.html</a></li>
-<li><a href="https://stackoverflow.com/questions/10029588/python-implementation-of-the-wilson-score-interval" target="_blank" rel="noopener">https://stackoverflow.com/questions/10029588/python-implementation-of-the-wilson-score-interval</a></li>
+        <h3 id="理解word2vec"><a href="#理解word2vec" class="headerlink" title="理解word2vec"></a>理解word2vec</h3><p>最近在看斯坦福的课程，对word2vec有了更深刻的理解，在这里总结一下。</p>
+<h4 id="什么是word2vec"><a href="#什么是word2vec" class="headerlink" title="什么是word2vec"></a>什么是word2vec</h4><p>传统的one hot的表达方式维度太大，并且无法表达词之间的语义之间的联系</p>
+<h4 id="word2vec原理（skip-gram来举例）"><a href="#word2vec原理（skip-gram来举例）" class="headerlink" title="word2vec原理（skip - gram来举例）"></a>word2vec原理（skip - gram来举例）</h4><p>skip gram是使用中心词预测背景词的概率，架构图如下：</p>
+<p>我们使用最大似然估计来写出整体要优化的目标：</p>
+<p>$\prod_{t=1}^{T}\prod_{-m &lt;= j &lt;= m, j \neq 0}p(w_{t+j} | w_t; \theta)$</p>
+<p>其中：m表示窗口大小，T表示总共有T个词</p>
+<p>我们将最大似然转换为loss function只需要取-log，之后的结果为：</p>
+<p>$J(\theta) = - \frac{1}{T} \sum_{t=1}^{T} \sum_{-m &lt;= j &lt;= m, j \neq 0 }\log {p(w_{t+j} | w_t)}$<br>$p(o|c) = \frac{\exp(u_o^Tv_c)}{\sum_{w=1}^{v} \exp (u_w^Tv_c)}$，这里使用softmax对概率进行了归一化。</p>
+<p>c表示中心词索引，o表示背景词索引，$u_o$和$v_c$分别是对应的向量表示。这里让我先想到了fm也是对每个特征转换成了一个向量表示，然后求内积的inner product。</p>
+<h4 id="如何求解参数"><a href="#如何求解参数" class="headerlink" title="如何求解参数"></a>如何求解参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$\frac&#123;\partial \log&#123;\frac&#123;\exp(u_o^Tv_c)&#125;&#123;\sum_&#123;w=1&#125;^&#123;v&#125; \exp (u_w^Tv_c)&#125;&#125;&#125;&#123;\partial v_c&#125;$</span><br><span class="line">$=\frac&#123;\partial \lgroup \log&#123;&#123;\exp(u_o^Tv_c)&#125; - \log&#123;\sum_&#123;w=1&#125;^&#123;v&#125; \exp (u_w^Tv_c)&#125; \rgroup &#125;&#125;&#123;\partial v_c&#125;$</span><br><span class="line">$=\frac&#123;\partial \log&#123;\exp(u_o^Tv_c)&#125;&#125; &#123;\partial v_c&#125; - \frac &#123; \partial \log&#123;\sum_&#123;w=1&#125;^&#123;v&#125; \exp (u_w^Tv_c)&#125;&#125;&#123;\partial v_c&#125;$</span><br><span class="line">$= u_o - &#123;\frac&#123;1&#125;&#123; \sum_&#123;w=1&#125;^&#123;v&#125; exp(u_w^Tv_c) &#125; &#125; \frac &#123; \partial &#123; \sum_&#123;x=1&#125;^&#123;v&#125; \exp (u_x^Tv_c) &#125; &#123;&#125; &#125; &#123; \partial v_c &#125;$</span><br><span class="line">$= u_o - &#123;\frac&#123;1&#125;&#123; \sum_&#123;w=1&#125;^&#123;v&#125; exp(u_w^Tv_c) &#125; &#125;  &#123;  &#123; \sum_&#123;x=1&#125;^&#123;v&#125; \frac &#123;\partial &#123;\exp (u_x^Tv_c)&#125;&#125;&#123;\partial v_c&#125; &#125; &#125;$</span><br><span class="line">$= u_o - &#123;\frac&#123;1&#125;&#123; \sum_&#123;w=1&#125;^&#123;v&#125; exp(u_w^Tv_c) &#125; &#125;  &#123;  &#123; \sum_&#123;x=1&#125;^&#123;v&#125; \exp (u_x^Tv_c) u_x&#125;&#125;$</span><br><span class="line">$= u_o - &#123;&#123;  &#125; &#125;  &#123;  &#123; \sum_&#123;x=1&#125;^&#123;v&#125; \frac &#123;\exp (u_x^Tv_c)&#125; &#123;\sum_&#123;w=1&#125;^&#123;v&#125; exp(u_w^Tv_c)&#125; u_x&#125;&#125;$</span><br><span class="line">$=u_o - \sum_&#123;x=1&#125;^&#123;v&#125; p(x|c) u_x$</span><br></pre></td></tr></table></figure>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ol>
+<li><a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</a> </li>
+<li><a href="https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2</a></li>
 </ol>
 
       
@@ -387,16 +393,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/01/rank_problem/" rel="next" title="求解排序问题思想">
-                <i class="fa fa-chevron-left"></i> 求解排序问题思想
+              <a href="/2017/04/10/some-tricks/" rel="next" title="一些实用技巧">
+                <i class="fa fa-chevron-left"></i> 一些实用技巧
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/01/how_to_use_yaml/" rel="prev" title="如何使用yaml">
-                如何使用yaml <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/15/core调试技巧/" rel="prev" title="core调试技巧">
+                core调试技巧 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -463,7 +469,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -520,7 +526,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现代码"><span class="nav-number">2.</span> <span class="nav-text">实现代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解word2vec"><span class="nav-number">1.</span> <span class="nav-text">理解word2vec</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是word2vec"><span class="nav-number">1.1.</span> <span class="nav-text">什么是word2vec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#word2vec原理（skip-gram来举例）"><span class="nav-number">1.2.</span> <span class="nav-text">word2vec原理（skip - gram来举例）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何求解参数"><span class="nav-number">1.3.</span> <span class="nav-text">如何求解参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">1.4.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

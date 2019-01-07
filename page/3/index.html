@@ -874,25 +874,7 @@
       
         
           
-            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>FM算法全称 : Factorization Machine, 即为因子分解机，在推荐场景下有很好的指导作用</p>
-<h3 id="我们面临的问题"><a href="#我们面临的问题" class="headerlink" title="我们面临的问题"></a>我们面临的问题</h3><ol>
-<li>特征组合问题：比如我们男性对电子类产品更感兴趣一些，女性对化妆品之类的产品更感兴趣一些，<br>FM自动对特征进行组合。如果使用LR的话，需要自动设计一些组合特征。</li>
-<li>高纬稀疏特征, 特征维度会太大， 降低了参数量，参数从 $\frac{n(n+1)}{2}$ 降到 $kn$</li>
-<li>模型复杂度可以从$O(kn^2)$ 优化到$O(kn)$</li>
-<li>提升了泛化能力，即使训练样本中不存在的$&lt;a, b&gt;$交叉项，也可以通过学习出的隐向量来预估</li>
-</ol>
-<h4 id="具体公式"><a href="#具体公式" class="headerlink" title="具体公式"></a>具体公式</h4><p>$y = w_0 + \sum_{i=1}^{n}w_ix_i + \sum_{i=1}^{n}\sum_{j=i+1}^{n} &lt;v_i, v_j&gt;x_ix_j $</p>
-<p>其中$v_i​$ $v_j​$ 是对应$x_i​$ $x_j​$ 的隐向量，$&lt;v_i, v_j&gt;​$表示两个向量的内积(inner product) </p>
-<p>优化过程：$ab + bc + ca = \frac{1}{2}\lgroup (a + b +c)^2 - a^2 - b^2 - c^2 \rgroup $</p>
-<p>$\sum_{i=1}^{n}\sum_{j=i+1}^{n} x_ix_j$</p>
-<p>$=\frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n} &lt;v_i, v_j&gt;x_ix_j - \frac{1}{2}\sum_{i=1}^{n}&lt;v_i, v_i&gt;x_ix_i$</p>
-<p>$= \frac{1}{2} (\sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{f=1}^{k}v_{i,f}v_{j,f}x_ix_j - \sum_{i=1}^{n}\sum_{f =1}^{k}v_{i,f}v_{i,f}x_ix_i)$</p>
-<p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i) (\sum_{j=1}^{n}v_{j,f}x_j)  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
-<p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i)^2  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
-<h4 id="梯度下降求解参数"><a href="#梯度下降求解参数" class="headerlink" title="梯度下降求解参数"></a>梯度下降求解参数</h4><p>$loss = \frac{1}{2}(y -  \overline y) ^2$</p>
-<p>$\frac {\partial loss} {\partial w_{0}} = 1$</p>
-<p>$\frac {\partial loss} {\partial x_i} = x_i$</p>
-<p>$\frac {\partial loss} { \partial v_{i,f}} = x_i\sum_{j=1}^{n}v_{j,f}x_j - v_{i,f}x_i^2$</p>
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>FM算法全称</p>
 
           
         
@@ -968,7 +950,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
