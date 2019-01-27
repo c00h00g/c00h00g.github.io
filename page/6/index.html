@@ -282,6 +282,158 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/02/git用法/" itemprop="url">
+                  git用法总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-02T23:59:50+08:00" content="2017-04-02">
+              2017-04-02
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>1、git提交代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status 查看需要add哪些文件</span><br><span class="line">git add 修改的文件</span><br><span class="line">git commit -m "comments" </span><br><span class="line">git push（先输下这个命令，之后会提示正确的命令）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2、git 新建本地分支并关联到远程分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b branch_name : 新建本地分支</span><br><span class="line">git push origin branch_name : 提交分支到远程仓库</span><br><span class="line">git branch --set-upstream branch-name origin/branch-name : 关联远程分支</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3、git回退到某个分支的特定版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 版本号 ： 其中版本号可以通过git log命令查看</span><br></pre></td></tr></table></figure>
+<p>这儿需要注意的是，这个命令会导致当前修改的文件丢失，需要对修改的文件进行备份</p>
+</li>
+<li><p>4、git查看diff</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff version1 version2 ：一个分支的不同版本的diff, 注意中间没有冒号，这个和svn不一样</span><br><span class="line">git diff branch1..branch2 : 不同分支的diff</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5、git patch diff文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff xxx &gt; diff.patch</span><br><span class="line">git apply diff.patch</span><br></pre></td></tr></table></figure>
+<p>path后出错的解决方案：<a href="https://segmentfault.com/q/1010000008958193" target="_blank" rel="noopener">https://segmentfault.com/q/1010000008958193</a></p>
+</li>
+<li><p>6、如何拉取单个文件？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout 远程分支名  文件路径， 比如：git checkout branch_name  include/xxx/xxx.h，会将xxx.h文件拉取下来</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>7、如何不commit代码，就能pull回主干代码？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git pull</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+<p>git stash, stash是储藏的意思，用于保存当前的工作点；试想，当在某个分支上开发，突然需要切换分支，但还不能提交正在进行的工作，需要对这些修改进行存储，需要使用的命令就是git stash。当需要恢复之前的工作点时候，需要使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash list</span><br><span class="line">git stash apply</span><br><span class="line">git stash apply stash@&#123;2&#125; // 如果有多个stash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>8、回滚单个文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git log filename，找到要恢复的版本</span><br><span class="line">git reset 7f1a4c4055e93908818251596177bb476010d013 filename，这个时候能看到diff</span><br><span class="line">git checkout -- filename，丢弃工作区的修改</span><br></pre></td></tr></table></figure>
+<ul>
+<li>9、修改文件后，不重复commit<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add 修改的文件</span><br><span class="line">git commit --amend -m "注释", 其中amend的注释会作为最终的注释</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/10/grpc_install/" itemprop="url">
                   GRPC安装
                 </a>
@@ -563,7 +715,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

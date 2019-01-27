@@ -282,6 +282,175 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/18/Logistic regression 推倒过程（使用gradient descent）/" itemprop="url">
+                  Logistic regression 推倒过程（使用gradient descent）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-18T23:59:50+08:00" content="2018-02-18">
+              2018-02-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在学习李宏毅教授的机器学习课程，讲解的非常细致，推倒也非常详细，同时，也和线性回归做了类比，非常不错，现在这里总结一下。</p>
+<h4 id="LR二分类推倒过程"><a href="#LR二分类推倒过程" class="headerlink" title="LR二分类推倒过程"></a>LR二分类推倒过程</h4><p>Input ：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$x^1$</th>
+<th style="text-align:center">$x^2$</th>
+<th style="text-align:center">$x^3$</th>
+<th>…</th>
+<th>$x^n$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$C_1$</td>
+<td style="text-align:center">$C_1$</td>
+<td style="text-align:center">$C_2$</td>
+<td>…</td>
+<td>$C_2$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\hat{y^1}=1$</td>
+<td style="text-align:center">$\hat{y^2}=1$</td>
+<td style="text-align:center">$\hat{y^3}=0$</td>
+<td></td>
+<td>$\hat{y^n}=0$</td>
+</tr>
+</tbody>
+</table>
+<p>其中第一行表示所有的变量，第二行表示属于的类别，这里之后两类。</p>
+<h4 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h4><p>由于LR使用的是回归函数是$\frac{1}{1+e^{-x}}$, 值域是(0,1)，可以天然的表示概率，我们用$f_{w,b}(x)$表示x属于$C_1$ 的概率，w,b表示参数，那么属于$C_2$的概率可以表示为$1-f_{w,b}(x)$。这个时候，我们就能够用最大似然估计来解这个问题。</p>
+<p>定义 $L(w,b) = f_{w,b}(x^1)*f_{w,b}(x^2)(1-f_{w,b}(x^3))…$</p>
+<p>那么：$w^{*}, b^{*} = arg\, \underset{w,b}{max}L(w, b)​$</p>
+<p>​           $w^{*}, b^{*} = arg\, \underset{w,b}{min}-ln(L(w,b))$</p>
+<p>即：将最大似然估计转化成了loss，并且将之前的乘法转换成了加法，下面具体求解：</p>
+<p>$arg\,\underset{w,b}{min}-ln(L(w,b)) = -ln(f_{w,b}(x^1))-ln(f_{w,b}(x^2))-ln(1-f_{w,b}(x^3))$</p>
+<h4 id="符号变换"><a href="#符号变换" class="headerlink" title="符号变换"></a>符号变换</h4><p>下面需要做下符号变换，将所有的$C_1$看成1, 所有的$C_2$看成0, 并记为：$\hat{y^n}$</p>
+<p>那么，为了将两种格式的式子写成一个式子，我们做如下的变换：</p>
+<p>$-ln(f_{w,b}(x^1))=-[\hat{y^1}ln(f(x^1)) + (1-\hat{y^1})ln(1-f(x^1))]$</p>
+<p>$-ln(f_{w,b}(x^2))=-[\hat{y^2}ln(f(x^2)) + (1-\hat{y^2})ln(1-f(x^2))]$</p>
+<p>$-ln(f_{w,b}(x^3))=-[\hat{y^3}ln(f(x^3)) + (1-\hat{y^3})ln(1-f(x^3))]$</p>
+<p>只需要简单带入进去就可以理解了。</p>
+<p>合并起来：</p>
+<p>$\sum\limits_{n}-[\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1-f(x^n))]$，这个其实就是两个伯努利分布的交叉熵，也就是说LR的loss func使用的是交叉熵。</p>
+<h4 id="求导"><a href="#求导" class="headerlink" title="求导"></a>求导</h4><p>对其中一个变量$w_i$进行求导，我们只需要$ln(f(x^n))$和$ln(1-f(x^n))$对$w_i$进行求导。</p>
+<p>$\frac{\partial ln(f_{w,b}(x))}{\partial w_i} = \frac{\partial ln(f_{w,b}(x))}{\partial z}\frac{\partial z}{\partial w_i}$，$z=wx + b = \sum\limits_{i}w_ix_i+b$, $f_{w,b}(x)) = \frac{1}{1+e^{-z}}$</p>
+<p> 化简后可以得到：</p>
+<p>$\sum\limits_{n}-(\hat{y^n} - f_{w,b}(x^n))*{x^{n}_{i}}$</p>
+<p>由此得到参数更新的方法：</p>
+<p>$w_i \leftarrow w_i - \eta\sum\limits_{n}-(\hat{y^n} - f_{w,b}(x^n))*{x^{n}_{i}}$</p>
+<h4 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h4><p><a href="https://github.com/c00h00g/FastLR" target="_blank" rel="noopener">https://github.com/c00h00g/FastLR</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/13/node_express/" itemprop="url">
                   使用nodejs + express搭建网站
                 </a>
@@ -788,143 +957,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/01/FM算法解析/" itemprop="url">
-                  FM算法解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-01T23:59:50+08:00" content="2018-02-01">
-              2018-02-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>FM算法全称因子分解机，具有以下特点：</p>
-<ol>
-<li>降低了参数量，参数从 $\frac{n(n+1)}{2}$ 降到 $kn$</li>
-<li>表达了特征之间的交叉</li>
-<li>模型复杂度可以从$O(kn^2)$ 优化到$O(kn)$</li>
-<li>提升了泛化能力，即使训练样本中不存在的$&lt;a, b&gt;$交叉项，也可以通过学习出的隐向量来预估</li>
-</ol>
-<h4 id="具体公式"><a href="#具体公式" class="headerlink" title="具体公式"></a>具体公式</h4><p>$y = w_0 + \sum_{i=1}^{n}w_ix_i + \sum_{i=1}^{n}\sum_{j=i+1}^{n} &lt;v_i, v_j&gt;x_ix_j $</p>
-<p>其中$v_i​$ $v_j​$ 是对应$x_i​$ $x_j​$ 的隐向量，$&lt;v_i, v_j&gt;​$表示两个向量的内积(inner product) </p>
-<p>优化过程：$ab + bc + ca = \frac{1}{2}\lgroup (a + b +c)^2 - a^2 - b^2 - c^2 \rgroup $</p>
-<p>$\sum_{i=1}^{n}\sum_{j=i+1}^{n} &lt;v_i, v_j&gt;x_ix_j$</p>
-<p>$=\frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n} &lt;v_i, v_j&gt;x_ix_j - \frac{1}{2}\sum_{i=1}^{n}&lt;v_i, v_i&gt;x_ix_i$</p>
-<p>$= \frac{1}{2} (\sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{f=1}^{k}v_{i,f}v_{j,f}x_ix_j - \sum_{i=1}^{n}\sum_{f =1}^{k}v_{i,f}v_{i,f}x_ix_i)$</p>
-<p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i) (\sum_{j=1}^{n}v_{j,f}x_j)  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
-<p>$=\frac{1}{2} \sum_{f=1}^{k} \lgroup (\sum_{i=1}^{n}v_{i,f}x_i)^2  - \sum_{i=1}^{n} v_{i,f}^2x_i^2 \rgroup$</p>
-<h4 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h4><p>$loss = \frac{1}{2}(y -  \overline y) ^2$</p>
-<p>$\frac {\partial loss} {\partial w_0} = 1$</p>
-<p>$\frac {\partial loss} {\partial w_i} = x_i$</p>
-<p>$\frac {\partial loss} { \partial v_{i,f}} = x_i\sum_{j=1}^{n}v_{j,f}x_j - v_{i,f}x_i^2$</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -968,7 +1000,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
