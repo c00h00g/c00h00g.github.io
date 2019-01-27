@@ -282,6 +282,139 @@
             
               
                 
+                <a class="post-title-link" href="/2018/06/15/rank_problem/" itemprop="url">
+                  求解排序问题思想
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-06-15T23:59:50+08:00" content="2018-06-15">
+              2018-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近学习了rank-svm, gbrank等使用pairwise的思想来解决排序问题的方法，有些小感悟，先记录下来</p>
+<h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>排序的偏序关系$S_{ij}$是定义出来的, </p>
+<ol>
+<li>if $x_i\succ x_j$, 则定义$S_{ij}=1$,</li>
+<li>if $x_j\succ x_i$, 则定义$S_{ij}=-1$,</li>
+<li>相等的时候, $S_{ij} = 0$</li>
+<li>$\frac{1 + S_{ij}}{2}$，正好转化成了0-1区间，可以当作概率来用</li>
+</ol>
+<p>用gbrank举个例子，由于拟合的目标是多棵树h(x), 通过h(x)之间的偏序关系, 为了使用交叉熵来作为损失函数，我们只需将偏序关系<br>套入sigmoid函数转换成概率形式.</p>
+<ul>
+<li>$p_{ij} = p(x_i \succ x_j) = \frac{1}{1  +  exp^{(-h(x_i) + h(x_j) + \tau)}}$</li>
+<li>$\overline{p_{ij}} = \frac{1 + S_{ij}}{2}$</li>
+</ul>
+<p>因此，我们可以构造出cross-entropy loss:<br>$L(h) = \sum_{i,j} {-\overline{p_{ij}}logp_{ij} - (1 - \overline{p_{ij}})log(1 - p_{ij})}$</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以，我们可以这样想，如果我们要解决排序问题，只要我们能设计任意的函数f(x)能够表达偏序关系，都能套入cross entroy来解，我们需要求解的只是函数f(x)的参数.<br>比如rank_svm其实就是假设f(x)是一个线性函数，使用svm的loss函数（没有用crossEntropy）来求解f(x)的参数，当然我认为也是可以使用cross-entropy来解的（不过那样就不叫svm了）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/13/Flask web开发/" itemprop="url">
                   Flask web开发
                 </a>
@@ -767,131 +900,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/01/LR_other_loss/" itemprop="url">
-                  逻辑斯蒂回归另一种loss
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-01T23:59:50+08:00" content="2018-03-01">
-              2018-03-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>统计学习方法最后一章讲到了逻辑斯蒂回归的loss func为$log[1 + exp^{-yf(x)}]$一时难以理解，找波叔帮忙看了下，给了这篇 <a href="http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf" target="_blank" rel="noopener">http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf</a> 参考，瞬间理解了。</p>
-<p>这里主要将类别的符号变换从之前的0，1转变成了-1和1，那么最大似然估计可以统一写成：</p>
-<p>$ \prod_{i=1}^n\frac{1}{1+e^{-y_i(wx_i+b)}}$</p>
-<p>因为：<br>$p(y=1|x) = \frac{1}{1+e^{-(wx+b)}}$<br>$p(y=-1|x) = 1- p(y=1|x)= \frac{1}{1+e^{wx+b}}$</p>
-<p>将两个概率统一，即为最终的最大似然</p>
-<p>将上面式子转换成-log形式即为loss，</p>
-<p>$L(w,b) = -\sum_{i=1}^{n}log(\frac{1}{1+e^{-y_i(wx+b)}}) = \sum_{i=1}^{n}log(1+e^{-y_i(wx+b)})$</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -935,7 +943,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

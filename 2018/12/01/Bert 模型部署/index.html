@@ -86,13 +86,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Soul of Light">
-<meta property="og:url" content="http://yoursite.com/archives/2016/10/index.html">
+<meta name="description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上已经同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bert模型部署初探">
+<meta property="og:url" content="http://yoursite.com/2018/12/01/Bert 模型部署/index.html">
 <meta property="og:site_name" content="Soul of Light">
+<meta property="og:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上已经同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-27T18:08:10.098Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Soul of Light">
+<meta name="twitter:title" content="bert模型部署初探">
+<meta name="twitter:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上已经同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
 
 
 
@@ -113,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2016/10/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/01/Bert 模型部署/">
 
 
-  <title> 归档 | Soul of Light </title>
+  <title> bert模型部署初探 | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -137,7 +141,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="//schema.org/WPHeader">
@@ -258,64 +262,164 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 29 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
 
-      
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                bert模型部署初探
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-12-01T23:59:50+08:00" content="2018-12-01">
+              2018-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
       
 
       
+        <h3 id="Bert-模型部署"><a href="#Bert-模型部署" class="headerlink" title="Bert 模型部署"></a>Bert 模型部署</h3><p>最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上已经同事的思路，设计了一套通用的bert model查看效果的工具。</p>
+<h4 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h4><ol>
+<li><p>如何产出模型文件？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何避免重复加载？</p>
+<p>我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直接使用sess进行predict，export_dir 是模型的路径。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python.saved_model <span class="keyword">import</span> tag_constants</span><br><span class="line">self.graph_predict = tf.Graph()</span><br><span class="line">self.sess = tf.Session(graph = self.graph_predict)</span><br><span class="line">tf.saved_model.loader.load(self.sess, [tag_constants.SERVING], export_dir)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何结合web框架？</p>
+<p>本次使用的是flask，为什么要使用flask，因为tf使用的是python，使用flask的话，可以直接将sess的实例保存在内存中，每次请求来的时候进行预测。</p>
+<pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> predictor <span class="keyword">import</span> Predictor</span><br><span class="line">one_predictor = Predictor(args)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World!'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/test', methods=['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</span><br><span class="line">        query = (request.form.get(<span class="string">'se_query'</span>).strip())</span><br><span class="line">        result = one_predictor.predict_query(query)</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">'test.html'</span>, result)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    server = pywsgi.WSGIServer((<span class="string">'0.0.0.0'</span>, <span class="number">8001</span>), app)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>使用flask封装bert fine-tune后的模型，极大的提高了策略调研的效率，还是要多思考，多尝试，多看tf的api相关文档。</p>
+<h4 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h4><ol>
+<li><a href="https://github.com/c00h00g/bert_app_serving" target="_blank" rel="noopener">https://github.com/c00h00g/bert_app_serving</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+      
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------</div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/01/fast_text_supervised/" rel="next" title="FastText之监督学习">
+                <i class="fa fa-chevron-left"></i> FastText之监督学习
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
         </div>
       
-      
 
       
-
-  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/10/09/my-first-blog/" itemprop="url">
-              
-                <span itemprop="name">开始重新写博客</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2016-10-09T11:16:49+08:00" content="2016-10-09">
-          10-09
-        </time>
-      </div>
-
-    </header>
+      
+    </footer>
   </article>
 
 
 
-    
-
-  </section>
-
-  
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -323,6 +427,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -342,8 +450,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Soulight">
           <p class="site-author-name" itemprop="name">Soulight</p>
@@ -402,6 +519,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bert-模型部署"><span class="nav-number">1.</span> <span class="nav-text">Bert 模型部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主要内容"><span class="nav-number">1.1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关代码"><span class="nav-number">1.3.</span> <span class="nav-text">相关代码</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -508,11 +636,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
 
 
   
