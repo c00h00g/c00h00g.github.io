@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
+<meta name="description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 12estimator._export_to_tpu = Falseestimator.export_savedmodel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bert模型部署初探">
 <meta property="og:url" content="http://yoursite.com/2018/12/01/Bert 模型部署/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
+<meta property="og:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 12estimator._export_to_tpu = Falseestimator.export_savedmodel">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-27T18:10:59.463Z">
+<meta property="og:updated_time" content="2019-02-04T07:01:23.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bert模型部署初探">
-<meta name="twitter:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 1   如何避免重复加载？ 我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直">
+<meta name="twitter:description" content="Bert 模型部署最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。 主要内容 如何产出模型文件？ 12estimator._export_to_tpu = Falseestimator.export_savedmodel">
 
 
 
@@ -347,7 +347,7 @@
         <h3 id="Bert-模型部署"><a href="#Bert-模型部署" class="headerlink" title="Bert 模型部署"></a>Bert 模型部署</h3><p>最近在研究google的bert相关知识，使用fine-tune方法训练了一个模型，但是看效果比较麻烦，每次都要重新load模型导致效率非常低下。<br>因此，参考网上以及同事的思路，设计了一套通用的bert model查看效果的工具。</p>
 <h4 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h4><ol>
 <li><p>如何产出模型文件？</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">estimator._export_to_tpu = <span class="keyword">False</span></span><br><span class="line">estimator.export_savedmodel(<span class="string">"./export/"</span>, serving_input_fn)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>如何避免重复加载？</p>
 <p>我们通过graph建立了sess，启动一个web应用，将sess保存在内存中，请求来的时候，直接使用sess进行predict，export_dir 是模型的路径。</p>
