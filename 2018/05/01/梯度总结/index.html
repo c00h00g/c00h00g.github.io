@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="常用gdb命令 查看堆栈信息bt 进入到某个堆栈中f n : n是堆栈的id gdb打印结构体更漂亮set print pretty 查看函数参数信息info args 查看函数局部变量信息info locals 查看线程信息   info threads   thread n : 进入第n个线程  Mac上查看core 出core只有段错误信息，却没有core  需要执行命令：ulimit -c">
+<meta name="description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="core调试技巧">
-<meta property="og:url" content="http://yoursite.com/2017/10/15/core调试技巧/index.html">
+<meta property="og:title" content="梯度问题总结">
+<meta property="og:url" content="http://yoursite.com/2018/05/01/梯度总结/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="常用gdb命令 查看堆栈信息bt 进入到某个堆栈中f n : n是堆栈的id gdb打印结构体更漂亮set print pretty 查看函数参数信息info args 查看函数局部变量信息info locals 查看线程信息   info threads   thread n : 进入第n个线程  Mac上查看core 出core只有段错误信息，却没有core  需要执行命令：ulimit -c">
+<meta property="og:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T07:28:08.109Z">
+<meta property="og:updated_time" content="2019-02-12T15:45:00.595Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="core调试技巧">
-<meta name="twitter:description" content="常用gdb命令 查看堆栈信息bt 进入到某个堆栈中f n : n是堆栈的id gdb打印结构体更漂亮set print pretty 查看函数参数信息info args 查看函数局部变量信息info locals 查看线程信息   info threads   thread n : 进入第n个线程  Mac上查看core 出core只有段错误信息，却没有core  需要执行命令：ulimit -c">
+<meta name="twitter:title" content="梯度问题总结">
+<meta name="twitter:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
 
 
 
@@ -117,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/15/core调试技巧/">
+  <link rel="canonical" href="http://yoursite.com/2018/05/01/梯度总结/">
 
 
-  <title> core调试技巧 | Soul of Light </title>
+  <title> 梯度问题总结 | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +283,7 @@
             
             
               
-                core调试技巧
+                梯度问题总结
               
             
           </h1>
@@ -295,8 +295,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-10-15T20:05:50+08:00" content="2017-10-15">
-              2017-10-15
+            <time itemprop="dateCreated" datetime="2018-05-01T23:59:50+08:00" content="2018-05-01">
+              2018-05-01
             </time>
           </span>
 
@@ -309,8 +309,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/调试/" itemprop="url" rel="index">
-                    <span itemprop="name">调试</span>
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
                   </a>
                 </span>
 
@@ -344,23 +344,28 @@
       
 
       
-        <h4 id="常用gdb命令"><a href="#常用gdb命令" class="headerlink" title="常用gdb命令"></a>常用gdb命令</h4><ol>
-<li>查看堆栈信息<br>bt</li>
-<li>进入到某个堆栈中<br>f n : n是堆栈的id</li>
-<li>gdb打印结构体更漂亮<br>set print pretty</li>
-<li>查看函数参数信息<br>info args</li>
-<li>查看函数局部变量信息<br>info locals</li>
-<li>查看线程信息<br>   info threads<br>   thread n : 进入第n个线程</li>
-</ol>
-<h4 id="Mac上查看core"><a href="#Mac上查看core" class="headerlink" title="Mac上查看core"></a>Mac上查看core</h4><ol>
-<li>出core只有段错误信息，却没有core<br>  需要执行命令：ulimit -c unlimited </li>
-<li>Mac下core是被写入到/cores目录下的，需要在这个目录下查看core</li>
-<li>如何查看core<br>  lldb –core core.xxx</li>
-</ol>
-<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="[ 参考文档 ]"></a>[ <strong>参考文档</strong> ]</h4><ol>
-<li><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html" target="_blank" rel="noopener">http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html</a></li>
-<li><a href="https://wizardforcel.gitbooks.io/100-gdb-tips/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/100-gdb-tips/</a>  100个gdb小技巧</li>
-<li><a href="http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html" target="_blank" rel="noopener">http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html</a></li>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对</p>
+<p>常见的梯度计算方法进行总结。</p>
+<h3 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h3><p>回归问题的loss一般是平方loss，即：</p>
+<p>$loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$</p>
+<p>$y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$</p>
+<p>$\frac {\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
+<p>注：这里的n表示第几个样本，$x_i^n$表示第n个样本的第i个特征, 上标表示第几个样本，下标表示第几个特征</p>
+<p>###分类问题</p>
+<h4 id="二分类（LR举例说明）"><a href="#二分类（LR举例说明）" class="headerlink" title="二分类（LR举例说明）"></a>二分类（LR举例说明）</h4><h5 id="label使用0和1"><a href="#label使用0和1" class="headerlink" title="label使用0和1"></a>label使用0和1</h5><p>交叉熵loss</p>
+<p>$loss =  \sum \limits_n-\left[ {\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1 - f(x^n))} \right]$</p>
+<p>$\frac{\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
+<p>和上面的梯度是一模一样的，即预测值减去label值，再乘以$x_i^n$</p>
+<h5 id="label使用1和-1"><a href="#label使用1和-1" class="headerlink" title="label使用1和-1"></a>label使用1和-1</h5><p>当label使用1和-1的时候，就成了逻辑斯蒂损失函数</p>
+<p>$loss = \sum\limits_{n}log(1+e^{-\hat{y^n}(f_{w,b}(x^n))})$</p>
+<p>$\frac{\partial{loss}}{w_i} = -\sum\limits_n \frac{1}{1+e^{-\hat{y^n}f_{w,b}(x^n)}} e^{-\hat{y^n}f_{w,b}(x^n)}\hat{y^n} x_i^n$</p>
+<p>看起来比0 和1作为标签要复杂一些</p>
+<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><p>多分类使用softmax对y进行归一化生成z，然后做crossEntroy，先计算loss对y的梯度，然后计算y对最终参数的梯度，具体可以参考之前[博客][<a href="http://c00h00g.github.io/2018/11/01/fast_text_supervised/]" target="_blank" rel="noopener">http://c00h00g.github.io/2018/11/01/fast_text_supervised/]</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其他算法比如FM／DNN也都是类似的方法来计算梯度，根据具体应用，比如分类和回归，选择合适的loss函数，</p>
+<p>这样才能根据自己的业务需求，快速设计相应的模型。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html" target="_blank" rel="noopener">http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html</a></li>
+<li><a href="https://www.cnblogs.com/guoyaohua/p/9217206.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/9217206.html</a></li>
 </ol>
 
       
@@ -397,16 +402,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/01/word2vec_understand/" rel="next" title="word2vec算法解析">
-                <i class="fa fa-chevron-left"></i> word2vec算法解析
+              <a href="/2018/03/13/Flask web开发/" rel="next" title="Flask web开发">
+                <i class="fa fa-chevron-left"></i> Flask web开发
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/22/统计学习方法第一章习题/" rel="prev" title="统计学习方法第一章习题">
-                统计学习方法第一章习题 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/15/rank_problem/" rel="prev" title="求解排序问题思想">
+                求解排序问题思想 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,7 +535,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用gdb命令"><span class="nav-number">1.</span> <span class="nav-text">常用gdb命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mac上查看core"><span class="nav-number">2.</span> <span class="nav-text">Mac上查看core</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">[ 参考文档 ]</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回归问题"><span class="nav-number">1.1.</span> <span class="nav-text">回归问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二分类（LR举例说明）"><span class="nav-number">1.1.1.</span> <span class="nav-text">二分类（LR举例说明）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#label使用0和1"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">label使用0和1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#label使用1和-1"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">label使用1和-1</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多分类"><span class="nav-number">1.1.2.</span> <span class="nav-text">多分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">1.2.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>

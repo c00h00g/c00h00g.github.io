@@ -282,6 +282,246 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/10/some-tricks/" itemprop="url">
+                  一些实用技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-10T23:59:50+08:00" content="2017-04-10">
+              2017-04-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>sort排序的时候要加上 <font color="blue">LC_ALL=C</font>, 否则排序可能不符合预期，具体请参考<a href="http://unix.stackexchange.com/questions/87745/what-does-lc-all-c-do" target="_blank" rel="noopener">文章</a></li>
+<li>如何删除行尾的^M特殊符号：<font color="blue">%s/\r//g</font></li>
+<li><p>如何将urlencode后的编码还原</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> unquote</span><br><span class="line">str = <span class="string">'%E7%88%86%E6'</span></span><br><span class="line"><span class="keyword">print</span> unquote(str)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何将在一个版本上开发的代码移植到另一个版本上</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">svn diff &gt; code.diff</span><br><span class="line">patch -p0 -i code.diff</span><br><span class="line">注意：可能会有拒绝，以.rej结尾，所有patch完之后，一定别忘了执行命令：</span><br><span class="line">find . -name <span class="string">"*.rej"</span> 来合并下diff</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sort排序指定分隔符</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort -t $'\t' : 使用-t参数, 注意是单引号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>std::sort，cmp函数在元素相等时要返回false,否则会core掉，可以使用<strong>stable_sort</strong></p>
+</li>
+<li><p>求差集</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a-b : grep -F -v -f b a | sort | uniq</span><br><span class="line">b-a : grep -F -v -f a b | sort | uniq</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>grep</p>
+<ul>
+<li>忽略大小写：-i </li>
+<li>查询二进制文件：-a (相当于–binary-files=text)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>压缩 &amp; 解压</p>
+<ul>
+<li><p>tar</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">压缩：tar  -zcvf  xxx.tar.gz  yourdirectory</span><br><span class="line">解压：tar  -zxvf  xxx.tar.gz</span><br><span class="line"></span><br><span class="line">只打包不压缩 ：tar -cvf xxx.tar yourdirectory</span><br><span class="line">解包：tar -xvf xxx.tar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>zip</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压：unzip xxx.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tar.bz2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bzip2 -d filename.tar.bz2, 生成filename.tar</span><br><span class="line">tar -xvf filename.tar</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>wget</p>
+<ul>
+<li><strong>nohup wget -r -l0 –preserve-permissions ftp_file &amp;</strong></li>
+<li>preserve-permissions : 保存权限</li>
+<li>-l0 ：表示一直递归到最后一层，防止目标文件层次过多导致无法完全wget下来</li>
+<li>-nH –cut-dirs=5 表示wget的时候使用目录裁剪</li>
+</ul>
+</li>
+<li><p>lsof</p>
+<ul>
+<li>lsof -i:port_id : 查看端口号对应的进程id</li>
+</ul>
+</li>
+<li><p>删除文件中的^@</p>
+<ul>
+<li>^@就是\0, 执行命令: sed -r ‘s/\x0//g’</li>
+<li>输入ctrl+V ctrl+@, 可以在vim中打出来，直接在vim中替换</li>
+</ul>
+</li>
+<li>文档转换成unix格式, 删除文档中包含^M<ul>
+<li>dos2unix</li>
+</ul>
+</li>
+<li>linux安装需要注意的PATH<ul>
+<li>动态链接库：LD_LIBRARY_PATH，使用的时候需要: export LD_LIBRARY_PATH = new_installed:$LD_LIBRARY_PATH</li>
+<li>可执行程序的查找路径：PATH, 使用的时候需要: export PATH = new_installed:$PATH</li>
+</ul>
+</li>
+<li>删除源码软件安装<ul>
+<li>1.找到安装目录，执行命令make uninstall</li>
+<li>2.如果第一步无法删除成功，说明不支持这种卸载方式，可以通过执行whereis查看可执行文件／lib等文件安装到了什么位置，然后执行rm删除</li>
+</ul>
+</li>
+<li><p>使用python生成随机数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">rand_list = [ random.randint(<span class="number">0</span>, <span class="number">100000</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>) ]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将一个文件中特定的文件拷贝到另一个文件<br>比如：将a文件中所有cpp文件拷贝到b文件 使用xargs实现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find a -name "*.cpp" | xargs -i cp &#123;&#125; b</span><br></pre></td></tr></table></figure>
+<p>其中：-i表示find传递给xargs的结果由{}来代替</p>
+</li>
+<li>map和unordered_map的区别<ol>
+<li>map内部是红黑树实现的，内部是有序的</li>
+<li>unordered_map内部实现了一个哈希表，无序的</li>
+</ol>
+</li>
+<li><p>用vector接收用户输入参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char** argv) &#123;</span><br><span class="line">    std::vector&lt;std::string&gt; args(argv, argv + argc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>grep显示匹配行之前之后n行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-A n 显示匹配行和之后的n行</span><br><span class="line">-B n 显示匹配行和之前的n行</span><br><span class="line">-C n 显示匹配行之后和之后各n行</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mount硬盘</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsblk : 查看当前磁盘的情况</span><br><span class="line">mount /dev/sdb /disk : 前面是磁盘位置，后面是挂载目录</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多线程不要使用cout<br>多线程情况下使用cout &lt;&lt; a &lt;&lt; endl, &lt;&lt;中间可能被中断掉，建议使用printf</p>
+</li>
+<li>linux机器登录后很快自动退出<br>解决方案：/etc/profile 中设置TIMEOUT 改大一些</li>
+<li>查看进程id对应的程序路径<br>ll /proc/PID</li>
+<li>修改文件夹所有权<br>chown -R username:username /xxxx/xxxx/xxx</li>
+<li><p>shell计算绝对值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>&#123;res#-&#125;, 解释：$&#123;var#Pattern&#125; Remove from $var the shortest part of $Pattern that matches the front end of $var</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shell while忽略循环条件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while :; do</span><br><span class="line">    command</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BeautifulSoup避免标签自动转小写, 使用xml方式打开</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(open(<span class="string">"test.xml"</span>), <span class="string">'xml'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shell多行注释</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;EOF</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shell相等判断</p>
+<ol>
+<li>整型 : eq</li>
+<li>字符串 : =</li>
+</ol>
+</li>
+<li><p>shell获取日期</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">today=`date +%Y%m%d`</span><br><span class="line">yesterday=`date -d "1 days ago $today" +%Y%m%d`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将前台任务变成后台任务 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + z</span><br><span class="line">bg (将最近暂停的后台任务继续执行)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/06/define_multi_arg/" itemprop="url">
                   Define可变参数解决函数特殊条件判断
                 </a>
@@ -845,7 +1085,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

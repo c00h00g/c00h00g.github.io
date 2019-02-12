@@ -282,6 +282,131 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/02/max_entropy/" itemprop="url">
+                  最大熵定义理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-02T23:59:50+08:00" content="2018-03-02">
+              2018-03-02
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题：</p>
+<p>熵：$H(X) = -\sum_{x}p(x)log(p(x))$</p>
+<p>条件熵：$H(Y|X) = H(X, Y) - H(X)$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$<br>        $=-\sum_{x,y}p(x,y)log(p(x,y)) + \sum_x(\sum_yp(x,y))log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_{x,y}p(x,y)log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log\frac{p(x,y)}{p(x)}$<br>        $= - \sum_{x,y}p(x,y)log(p(y|x))$<br>        $=-\sum_{x,y}p(y|x)\overline{p(x)}log(p(y|x)$</p>
+<p>其中加横线的p(x)表示根据数据统计出来的经验分布。</p>
+<p>这里的条件熵就是统计学习方法中讲的最大熵模型，如果书本上能这样写的话，更能方便理解。</p>
+<p>参考资料：</p>
+<p>[1] <a href="https://kexue.fm/archives/3534/" target="_blank" rel="noopener">https://kexue.fm/archives/3534/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/01/LR_other_loss/" itemprop="url">
                   逻辑斯蒂回归另一种loss
                 </a>
@@ -829,131 +954,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/10/some_work_experience/" itemprop="url">
-                  一些工作体会
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-10T23:59:50+08:00" content="2018-02-10">
-              2018-02-10
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="工作总结"><a href="#工作总结" class="headerlink" title="工作总结"></a>工作总结</h3><ol>
-<li>经常对自己提问。能问出好的问题才能说明对这个问题有自己深入对思考了</li>
-<li>临时方案与理想方案。做事情的时候，不要只想到临时方案临时解决下问题，要想想理想方案是什么，否则，会导致系统越来越难维护</li>
-<li>看到问题的本质。看到问题的时候，要分析下是不是一类问题，而不是单独case by case</li>
-<li>问题分解。学会将问题分解，把复杂问题转化成小问题来做。</li>
-<li>前瞻性。要想到后面要做什么，甚至可以从公司的角度去思考，应该做那些布局，三年后应该做成什么样子，倒逼自己进步。</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -997,7 +997,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

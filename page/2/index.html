@@ -415,6 +415,147 @@
             
               
                 
+                <a class="post-title-link" href="/2018/05/01/梯度总结/" itemprop="url">
+                  梯度问题总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-01T23:59:50+08:00" content="2018-05-01">
+              2018-05-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对</p>
+<p>常见的梯度计算方法进行总结。</p>
+<h3 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h3><p>回归问题的loss一般是平方loss，即：</p>
+<p>$loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$</p>
+<p>$y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$</p>
+<p>$\frac {\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
+<p>注：这里的n表示第几个样本，$x_i^n$表示第n个样本的第i个特征, 上标表示第几个样本，下标表示第几个特征</p>
+<p>###分类问题</p>
+<h4 id="二分类（LR举例说明）"><a href="#二分类（LR举例说明）" class="headerlink" title="二分类（LR举例说明）"></a>二分类（LR举例说明）</h4><h5 id="label使用0和1"><a href="#label使用0和1" class="headerlink" title="label使用0和1"></a>label使用0和1</h5><p>交叉熵loss</p>
+<p>$loss =  \sum \limits_n-\left[ {\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1 - f(x^n))} \right]$</p>
+<p>$\frac{\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
+<p>和上面的梯度是一模一样的，即预测值减去label值，再乘以$x_i^n$</p>
+<h5 id="label使用1和-1"><a href="#label使用1和-1" class="headerlink" title="label使用1和-1"></a>label使用1和-1</h5><p>当label使用1和-1的时候，就成了逻辑斯蒂损失函数</p>
+<p>$loss = \sum\limits_{n}log(1+e^{-\hat{y^n}(f_{w,b}(x^n))})$</p>
+<p>$\frac{\partial{loss}}{w_i} = -\sum\limits_n \frac{1}{1+e^{-\hat{y^n}f_{w,b}(x^n)}} e^{-\hat{y^n}f_{w,b}(x^n)}\hat{y^n} x_i^n$</p>
+<p>看起来比0 和1作为标签要复杂一些</p>
+<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><p>多分类使用softmax对y进行归一化生成z，然后做crossEntroy，先计算loss对y的梯度，然后计算y对最终参数的梯度，具体可以参考之前[博客][<a href="http://c00h00g.github.io/2018/11/01/fast_text_supervised/]" target="_blank" rel="noopener">http://c00h00g.github.io/2018/11/01/fast_text_supervised/]</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其他算法比如FM／DNN也都是类似的方法来计算梯度，根据具体应用，比如分类和回归，选择合适的loss函数，</p>
+<p>这样才能根据自己的业务需求，快速设计相应的模型。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html" target="_blank" rel="noopener">http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html</a></li>
+<li><a href="https://www.cnblogs.com/guoyaohua/p/9217206.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/9217206.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/13/Flask web开发/" itemprop="url">
                   Flask web开发
                 </a>
@@ -775,131 +916,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/02/max_entropy/" itemprop="url">
-                  最大熵定义理解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-02T23:59:50+08:00" content="2018-03-02">
-              2018-03-02
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>第一眼看到最大熵模型，这是太突兀了，完全不知道如何想出来了，感觉国内这种直接给定义的方式限制了大家的想象力。下面解释一下这个问题：</p>
-<p>熵：$H(X) = -\sum_{x}p(x)log(p(x))$</p>
-<p>条件熵：$H(Y|X) = H(X, Y) - H(X)$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_xp(x)log(p(x))$<br>        $=-\sum_{x,y}p(x,y)log(p(x,y)) + \sum_x(\sum_yp(x,y))log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log(p(x,y)) + \sum_{x,y}p(x,y)log(p(x))$<br>        $= -\sum_{x,y}p(x,y)log\frac{p(x,y)}{p(x)}$<br>        $= - \sum_{x,y}p(x,y)log(p(y|x))$<br>        $=-\sum_{x,y}p(y|x)\overline{p(x)}log(p(y|x)$</p>
-<p>其中加横线的p(x)表示根据数据统计出来的经验分布。</p>
-<p>这里的条件熵就是统计学习方法中讲的最大熵模型，如果书本上能这样写的话，更能方便理解。</p>
-<p>参考资料：</p>
-<p>[1] <a href="https://kexue.fm/archives/3534/" target="_blank" rel="noopener">https://kexue.fm/archives/3534/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -943,7 +959,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
