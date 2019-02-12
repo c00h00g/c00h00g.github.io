@@ -487,8 +487,7 @@
 <p>$y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$</p>
 <p>$\frac {\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
 <p>注：这里的n表示第几个样本，$x_i^n$表示第n个样本的第i个特征, 上标表示第几个样本，下标表示第几个特征</p>
-<p>###分类问题</p>
-<h4 id="二分类（LR举例说明）"><a href="#二分类（LR举例说明）" class="headerlink" title="二分类（LR举例说明）"></a>二分类（LR举例说明）</h4><h5 id="label使用0和1"><a href="#label使用0和1" class="headerlink" title="label使用0和1"></a>label使用0和1</h5><p>交叉熵loss</p>
+<h3 id="分类问题"><a href="#分类问题" class="headerlink" title="分类问题"></a>分类问题</h3><h4 id="二分类（LR举例说明）"><a href="#二分类（LR举例说明）" class="headerlink" title="二分类（LR举例说明）"></a>二分类（LR举例说明）</h4><h5 id="label使用0和1"><a href="#label使用0和1" class="headerlink" title="label使用0和1"></a>label使用0和1</h5><p>交叉熵loss</p>
 <p>$loss =  \sum \limits_n-\left[ {\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1 - f(x^n))} \right]$</p>
 <p>$\frac{\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
 <p>和上面的梯度是一模一样的，即预测值减去label值，再乘以$x_i^n$</p>
