@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
+<meta name="description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="梯度问题总结">
 <meta property="og:url" content="http://yoursite.com/2018/05/01/梯度总结/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
+<meta property="og:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-12T15:46:13.643Z">
+<meta property="og:updated_time" content="2019-02-12T15:51:51.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="梯度问题总结">
-<meta name="twitter:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对 常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b">
+<meta name="twitter:description" content="背景计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对常见的梯度计算方法进行总结。 回归问题回归问题的loss一般是平方loss，即： $loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$ $y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$">
 
 
 
@@ -344,8 +344,7 @@
       
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对</p>
-<p>常见的梯度计算方法进行总结。</p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对<br>常见的梯度计算方法进行总结。</p>
 <h3 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h3><p>回归问题的loss一般是平方loss，即：</p>
 <p>$loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$</p>
 <p>$y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$</p>
@@ -359,7 +358,7 @@
 <p>$loss = \sum\limits_{n}log(1+e^{-\hat{y^n}(f_{w,b}(x^n))})$</p>
 <p>$\frac{\partial{loss}}{w_i} = -\sum\limits_n \frac{1}{1+e^{-\hat{y^n}f_{w,b}(x^n)}} e^{-\hat{y^n}f_{w,b}(x^n)}\hat{y^n} x_i^n$</p>
 <p>看起来比0 和1作为标签要复杂一些</p>
-<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><p>多分类使用softmax对y进行归一化生成z，然后做crossEntroy，先计算loss对y的梯度，然后计算y对最终参数的梯度，具体可以参考之前[博客][<a href="http://c00h00g.github.io/2018/11/01/fast_text_supervised/]" target="_blank" rel="noopener">http://c00h00g.github.io/2018/11/01/fast_text_supervised/]</a></p>
+<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><p>多分类使用softmax对y进行归一化生成z，然后做crossEntroy，先计算loss对y的梯度，然后计算y对最终参数的梯度，具体可以参考之前<a href="http://c00h00g.github.io/2018/11/01/fast_text_supervised/" target="_blank" rel="noopener">博客</a></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其他算法比如FM／DNN也都是类似的方法来计算梯度，根据具体应用，比如分类和回归，选择合适的loss函数，</p>
 <p>这样才能根据自己的业务需求，快速设计相应的模型。</p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
