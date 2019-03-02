@@ -468,6 +468,9 @@
 <li><p>将前台任务变成后台任务 </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + z</span><br><span class="line">bg (将最近暂停的后台任务继续执行)</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>python dict 按照value排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_dict = &#123;<span class="string">"a"</span> : <span class="number">15</span>, <span class="string">"b"</span> : <span class="number">5</span>, <span class="string">"c"</span> : <span class="number">7</span>&#125;</span><br><span class="line"><span class="comment">#&lt;type 'dict'&gt;</span></span><br><span class="line"><span class="keyword">print</span> type(my_dict)</span><br><span class="line"></span><br><span class="line">sort_dict = sorted(my_dict.items(), key = <span class="keyword">lambda</span> item : item[<span class="number">1</span>])</span><br><span class="line"><span class="comment">#&lt;type 'list'&gt;</span></span><br><span class="line"><span class="keyword">print</span> type(sort_dict)</span><br><span class="line"></span><br><span class="line"><span class="comment">#[('b', 5), ('c', 7), ('a', 15)]</span></span><br><span class="line"><span class="keyword">print</span> sort_dict</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
           
