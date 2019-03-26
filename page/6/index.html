@@ -282,6 +282,138 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/01/word2vec_understand/" itemprop="url">
+                  word2vec算法解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-01T23:59:50+08:00" content="2017-10-01">
+              2017-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="理解word2vec"><a href="#理解word2vec" class="headerlink" title="理解word2vec"></a>理解word2vec</h3><p>最近在看斯坦福的课程，对word2vec有了更深刻的理解，在这里总结一下。</p>
+<h4 id="什么是word2vec"><a href="#什么是word2vec" class="headerlink" title="什么是word2vec"></a>什么是word2vec</h4><p>传统的one hot的表达方式维度太大，并且无法表达词之间的语义之间的联系</p>
+<h4 id="word2vec原理（skip-gram来举例）"><a href="#word2vec原理（skip-gram来举例）" class="headerlink" title="word2vec原理（skip - gram来举例）"></a>word2vec原理（skip - gram来举例）</h4><p>skip gram是使用中心词预测背景词的概率，架构图如下：<br><img src="/images/word2vec.png" alt=""></p>
+<p>我们使用最大似然估计来写出整体要优化的目标：</p>
+<p>$\prod_{t=1}^{T}\prod_{-m &lt;= j &lt;= m, j \neq 0}p(w_{t+j} | w_t; \theta)$</p>
+<p>其中：m表示窗口大小，T表示总共有T个词</p>
+<p>我们将最大似然转换为loss function只需要取-log，之后的结果为：</p>
+<p>$J(\theta) = - \frac{1}{T} \sum_{t=1}^{T} \sum_{-m &lt;= j &lt;= m, j \neq 0 }\log {p(w_{t+j} | w_t)}$<br>$p(o|c) = \frac{\exp(u_o^Tv_c)}{\sum_{w=1}^{v} \exp (u_w^Tv_c)}$，这里使用softmax对概率进行了归一化。</p>
+<p>c表示中心词索引，o表示背景词索引，$u_o$和$v_c$分别是对应的向量表示。这里让我先想到了fm也是对每个特征转换成了一个向量表示，然后求内积的inner product。</p>
+<h4 id="如何求解参数"><a href="#如何求解参数" class="headerlink" title="如何求解参数"></a>如何求解参数</h4><p>$\frac{\partial \log{\frac{\exp(u_o^Tv_c)}{\sum_{w=1}^{v} \exp (u_w^T v_c)}}}{\partial v_c}$<br>$=\frac{\partial \lgroup \log{ {\exp(u_o^T v_c)} - \log{ \sum_{w=1}^{v} \exp (u_w^Tv_c) } \rgroup } } {\partial v_c}$<br>$=\frac{\partial \log{\exp(u_o^Tv_c)} } {\partial v_c} - \frac { \partial \log{\sum_{w=1}^{v} \exp (u_w^Tv_c)} } {\partial v_c}$<br>$= u_o - {\frac{1}{ \sum_{w=1}^{v} exp(u_w^Tv_c) } } \frac { \partial { \sum_{x=1}^{v} \exp (u_x^Tv_c) } } { \partial v_c }$<br>$= u_o - {\frac{1} { \sum_{w=1}^{v} exp(u_w^Tv_c) } }  {  { \sum_{x=1}^{v} \frac {\partial {\exp (u_x^Tv_c)} } {\partial v_c} } }$<br>$= u_o - {\frac{1} { \sum_{w=1}^{v} exp(u_w^Tv_c) } }  {  { \sum_{x=1}^{v} \exp (u_x^Tv_c) u_x} }$<br>$= u_o - { {  } }  {  { \sum_{x=1}^{v} \frac {\exp (u_x^Tv_c)} {\sum_{w=1}^{v} exp(u_w^Tv_c)} u_x} }$<br>$=u_o - \sum_{x=1}^{v} p(x|c) u_x$</p>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ol>
+<li><a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</a> </li>
+<li><a href="https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/10/some-tricks/" itemprop="url">
                   一些实用技巧
                 </a>
@@ -922,137 +1054,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/09/my-first-blog/" itemprop="url">
-                  开始重新写博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-09T11:16:49+08:00" content="2016-10-09">
-              2016-10-09
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>翻了一下自己之前写过的最后一篇博客，日期是2013年12月13日，距离现在已经有3年了。之前写博客主要是将自己做过的编程题目记录下来，也算坚持了很长时间。这是之前<a href="http://blog.csdn.net/chen895281773/" target="_blank" rel="noopener">博客地址</a>。</p>
-<p>工作之后发现，写一些东西还是很能够加深对问题的理解的，很多你想逃避的知识点，由于必须写下来，也必须弄清楚了。</p>
-<p>之后的博客内容主要关注一下几点：</p>
-<ul>
-<li>机器学习读书、视频笔记</li>
-<li>自己的一些思考</li>
-</ul>
-<p>希望自己可以坚持下来！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1091,7 +1097,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

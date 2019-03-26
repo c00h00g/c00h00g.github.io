@@ -282,6 +282,140 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/05/ld_problem/" itemprop="url">
+                  cannot find -lxxx 解决方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-05T20:05:50+08:00" content="2018-03-05">
+              2018-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/编译/" itemprop="url" rel="index">
+                    <span itemprop="name">编译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当从github上下载一个程序，去进行编译，经常发现系统找不到so文件，试了很多中方法都不行，非常苦恼; 这里为大家介绍下几种解决方案。</p>
+<h4 id="通常解决方法"><a href="#通常解决方法" class="headerlink" title="通常解决方法"></a>通常解决方法</h4><ol>
+<li>将so查找路径添加到LD_LIBRARY_PATH中</li>
+<li>将so查找路径添加到LD_LIBRARY_PATH中</li>
+<li>将so查找路径添加到 /etc/ld.so.conf </li>
+</ol>
+<h4 id="通过编写makefile解决"><a href="#通过编写makefile解决" class="headerlink" title="通过编写makefile解决"></a>通过编写makefile解决</h4><p>最近从github上下载了一个工具line，试了各种方法就是找不到库，想了下这种应该在makefile中直接指定位置, makefle如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">RM=rm -rf</span><br><span class="line">CC=g++</span><br><span class="line"></span><br><span class="line">FLAGS= -I/usr/local/include/gsl -L/usr/local/lib/ -lgsl -lgslcblas -lpthread -O1 -g</span><br><span class="line"></span><br><span class="line">line: line.o</span><br><span class="line">    $(CC) -o $@ $^ $(FLAGS)</span><br><span class="line"></span><br><span class="line">line.o : line.cpp</span><br><span class="line">    $(CC) -c line.cpp $(FLAGS)</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    $(RM) line *.o</span><br></pre></td></tr></table></figure>
+<p>需要注意的是：</p>
+<ol>
+<li>我们的gsllib名称是libgsl.so, 但是在引用的时候要把前面的lib去掉，使用-lgsl</li>
+<li>还需要添加 gslcblas 和 pthread才能编译通过</li>
+</ol>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="[ 参考文档 ]"></a>[ <strong>参考文档</strong> ]</h4><ol>
+<li><a href="https://github.com/tangjianpku/LINE" target="_blank" rel="noopener">https://github.com/tangjianpku/LINE</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/02/max_entropy/" itemprop="url">
                   最大熵定义理解
                 </a>
@@ -825,140 +959,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/10/ask_myselfs/" itemprop="url">
-                  自己给自己提问(FAQ)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-10T23:59:50+08:00" content="2018-02-10">
-              2018-02-10
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="收集自己每天想到的一些问题"><a href="#收集自己每天想到的一些问题" class="headerlink" title="收集自己每天想到的一些问题"></a>收集自己每天想到的一些问题</h3><ol>
-<li>机器学习中都有哪些采样算法？</li>
-<li>LR多分类如何推导的？</li>
-<li>机器学习中的一些指标具体是指什么？比如AUC，ROC，F1等</li>
-<li>LR为什么要对特征归一化？</li>
-<li>最大似然估计取-log之后是否就是loss？</li>
-<li>朴素贝叶斯哪儿使用到了EM算法？</li>
-<li>皮尔森系数？</li>
-<li>jensen不等式？</li>
-<li>LR和最大熵的关系？</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -997,7 +1002,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
