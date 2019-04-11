@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Soul of Light">
 <meta property="og:description" content="sort排序的时候要加上 LC_ALL=C, 否则排序可能不符合预期，具体请参考文章 如何删除行尾的^M特殊符号：%s/\r//g 如何将urlencode后的编码还原 123from urllib import unquotestr = &apos;%E7%88%86%E6&apos;print unquote(str)  如何将在一个版本上开发的代码移植到另一个版本上 1234svn diff &amp;gt; cod">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-02T09:24:50.579Z">
+<meta property="og:updated_time" content="2019-04-11T16:32:30.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些实用技巧">
 <meta name="twitter:description" content="sort排序的时候要加上 LC_ALL=C, 否则排序可能不符合预期，具体请参考文章 如何删除行尾的^M特殊符号：%s/\r//g 如何将urlencode后的编码还原 123from urllib import unquotestr = &apos;%E7%88%86%E6&apos;print unquote(str)  如何将在一个版本上开发的代码移植到另一个版本上 1234svn diff &amp;gt; cod">
@@ -470,6 +470,9 @@
 </li>
 <li><p>python好用的进度条工具</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tqdm import tqdm</span><br><span class="line">my_list = [x for x in range(1000)]</span><br><span class="line">for i in tqdm(range(len(my_list))):</span><br><span class="line">    time.sleep(0.1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>linux文件删除后空间仍没释放</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">找到进程后，杀死进程</span><br><span class="line">sudo /usr/sbin/lsof | grep deleted</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 

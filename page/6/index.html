@@ -606,6 +606,9 @@
 <li><p>python好用的进度条工具</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tqdm import tqdm</span><br><span class="line">my_list = [x for x in range(1000)]</span><br><span class="line">for i in tqdm(range(len(my_list))):</span><br><span class="line">    time.sleep(0.1)</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>linux文件删除后空间仍没释放</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">找到进程后，杀死进程</span><br><span class="line">sudo /usr/sbin/lsof | grep deleted</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
           
