@@ -547,6 +547,128 @@
             
               
                 
+                <a class="post-title-link" href="/2018/06/01/activation/" itemprop="url">
+                  常用激活函数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-06-01T23:59:50+08:00" content="2018-06-01">
+              2018-06-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>激活函数在nn中有着重要用途，我们不但要理解其中的原理，还要能够将激活函数相关的性质牢记在心。</p>
+<h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><ol>
+<li>sigmoid</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/05/01/梯度总结/" itemprop="url">
                   梯度问题总结
                 </a>
@@ -790,128 +912,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/06/multi_thread_python/" itemprop="url">
-                  python多线程处理文件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-06T23:59:50+08:00" content="2018-03-06">
-              2018-03-06
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当文件特别大的时候，逐行读取文件并处理是很废时间的，目前有两种解决办法</p>
-<h4 id="每次读取多行"><a href="#每次读取多行" class="headerlink" title="每次读取多行"></a>每次读取多行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">READ_SIZE是设置的读取多少个字节, 如果size小于缓冲区的大小，则读取缓冲区大小的数据;</span><br><span class="line">如果size大于缓冲区的大小，读取size大小的数据，但不是完全的等于size的大小;</span><br><span class="line">一般读取比size大的整行的数据, size最小值是1024*8. readlines不会丢失行，当size大小不处在行边界当时候。</span><br><span class="line"></span><br><span class="line">f = open(file_name)</span><br><span class="line">while True:</span><br><span class="line">    lines = f.readlines(READ_SIZE)</span><br><span class="line">    if not lines:</span><br><span class="line">        break</span><br><span class="line">    for line in lines:</span><br><span class="line">        deal_one_line()</span><br></pre></td></tr></table></figure>
-<h4 id="多线程读取"><a href="#多线程读取" class="headerlink" title="多线程读取"></a>多线程读取</h4><p>思路是，主线程负责往队列中放每一行, 很多自线程并行对数据进行处理<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">queue = Queue.Queue()</span><br><span class="line">class MultiThreadFile(threading.Thread):</span><br><span class="line">    def __init__(self, queue):</span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.queue = queue</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        while True:</span><br><span class="line">            line = self.queue.get()</span><br><span class="line">            deal_line()</span><br><span class="line">            self.queue.task_done()</span><br><span class="line"></span><br><span class="line">if __name__  == '__main__':</span><br><span class="line">    for i in range(30):</span><br><span class="line">        t = MultiThreadFile(queue)</span><br><span class="line">        t.setDaemon(True)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">        f = open(USER_TERM_FILE)</span><br><span class="line">        while True:</span><br><span class="line">            lines = f.readlines(READ_SIZE)</span><br><span class="line">            if not lines:</span><br><span class="line">                break</span><br><span class="line">                for line in lines:</span><br><span class="line">                    line = line.rstrip()</span><br><span class="line">                    queue.put(line)</span><br><span class="line">        queue.join()</span><br></pre></td></tr></table></figure></p>
-<h4 id="对数据切成batch处理"><a href="#对数据切成batch处理" class="headerlink" title="对数据切成batch处理"></a>对数据切成batch处理</h4><p>这个程序是将数据切成200个batch，每5个batch进行并行跑，最后将batch合并下<br>感觉和hadoop的思想是一样的<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for((i = 1; i &lt;= 200; i++))</span><br><span class="line">do</span><br><span class="line">    sh your_program.sh $file_$i &amp;</span><br><span class="line">    let mod=i%5</span><br><span class="line">    if [ $mod -eq 0 ]</span><br><span class="line">    then</span><br><span class="line">        wait</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -955,7 +955,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

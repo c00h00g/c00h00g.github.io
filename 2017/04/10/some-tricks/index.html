@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Soul of Light">
 <meta property="og:description" content="sort排序的时候要加上 LC_ALL=C, 否则排序可能不符合预期，具体请参考文章 如何删除行尾的^M特殊符号：%s/\r//g 如何将urlencode后的编码还原 123from urllib import unquotestr = &apos;%E7%88%86%E6&apos;print unquote(str)  如何将在一个版本上开发的代码移植到另一个版本上 1234svn diff &amp;gt; cod">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-11T16:32:30.191Z">
+<meta property="og:updated_time" content="2019-05-09T15:07:18.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些实用技巧">
 <meta name="twitter:description" content="sort排序的时候要加上 LC_ALL=C, 否则排序可能不符合预期，具体请参考文章 如何删除行尾的^M特殊符号：%s/\r//g 如何将urlencode后的编码还原 123from urllib import unquotestr = &apos;%E7%88%86%E6&apos;print unquote(str)  如何将在一个版本上开发的代码移植到另一个版本上 1234svn diff &amp;gt; cod">
@@ -474,6 +474,9 @@
 <li><p>linux文件删除后空间仍没释放</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">找到进程后，杀死进程</span><br><span class="line">sudo /usr/sbin/lsof | grep deleted</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>python调用shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参数需要用%s传递</span><br><span class="line">import os</span><br><span class="line">os.system(&apos;cat %s | sort -u &gt; %s&apos; %(f1, f2))</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
       
@@ -586,7 +589,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

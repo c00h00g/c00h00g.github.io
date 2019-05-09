@@ -282,6 +282,151 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/13/node_express/" itemprop="url">
+                  使用nodejs + express搭建网站
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-13T23:59:50+08:00" content="2018-02-13">
+              2018-02-13
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在一个项目中，经常会遇到一些case需要追查，直接到数据中进行grep，效率太低，耗费大量时间，于是学习了express搭建一个可视化前端，对程序进行打点，追查到底哪一部分出了问题。现在总结一下：</p>
+<h3 id="如何入门？"><a href="#如何入门？" class="headerlink" title="如何入门？"></a>如何入门？</h3><p>入门可以直接参考byvoid的Nodejs开发指南，内容讲的非常详细，直接有实例代码。需要说明的是express目前生成的模版不是ejs，而是jade。</p>
+<p>对于javascript／css／jquery的学习，可以使用xxx菜鸟教程，里面的实例也比较清晰。</p>
+<h3 id="如何安装express"><a href="#如何安装express" class="headerlink" title="如何安装express"></a>如何安装express</h3><p>目前支持两个版本，之前书上讲的不可用，需要按照下面的方式安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g express-generator@3</span><br><span class="line">npm install -g express-generator@4</span><br></pre></td></tr></table></figure></p>
+<h3 id="一些细节问题"><a href="#一些细节问题" class="headerlink" title="一些细节问题"></a>一些细节问题</h3><h4 id="1-如何从后端向前端传递数据"><a href="#1-如何从后端向前端传递数据" class="headerlink" title="1. 如何从后端向前端传递数据"></a>1. 如何从后端向前端传递数据</h4><p>使用如下方式, 其中key是jade可以拿到的访问数据的key，data是具体的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res.render(&apos;index&apos;,&#123;</span><br><span class="line">    key : data,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在jade中获取的数据可以通过#{key}来获取</p>
+<h4 id="2-后端如何获取前端传递过来的数据？"><a href="#2-后端如何获取前端传递过来的数据？" class="headerlink" title="2. 后端如何获取前端传递过来的数据？"></a>2. 后端如何获取前端传递过来的数据？</h4><p>首先，前端的控件，比如文本框，必须要有name字段, 后段是根据name字段来取到最终的数据的。<br>后端使用方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">获取控件上的值 ： req.body.name</span><br><span class="line">打印body全部数据 ： JSON.stringify(req.body）</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-jade中如何使用js"><a href="#3-jade中如何使用js" class="headerlink" title="3. jade中如何使用js"></a>3. jade中如何使用js</h4><p>比如弹出一个提示框 &amp;&amp; 添加onclick操作(需要在button添加onclick事件)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script.</span><br><span class="line">  alert(&apos;use js in jade&apos;);</span><br><span class="line">  function click_func() &#123;</span><br><span class="line">    alert(&apos;use js in jade&apos;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外：jade本身就支持for／if等语法，如果要打印数据需要使用#{xx}来修饰变量</p>
+<h4 id="4-如何使用bootstrap"><a href="#4-如何使用bootstrap" class="headerlink" title="4. 如何使用bootstrap"></a>4. 如何使用bootstrap</h4><ol>
+<li><p>安装bootstrap, 在app.js同级目录下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install bootstrap --save</span><br><span class="line">npm install jquery --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开app.js, 找到express.static, 下面添加一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#app.use(express.static(path.join(__dirname, &apos;public&apos;)))</span><br><span class="line">app.use(&apos;/lib&apos;,express.static(path.join(__dirname, &apos;node_modules&apos;)));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在views下创建includes目录，在目录下新建head.jade, 写入如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">link(href=&quot;/lib/bootstrap/dist/css/bootstrap.min.css&quot;, rel=&quot;stylesheet&quot;)</span><br><span class="line">script(src=&quot;/libs/jquery/dist/jquery.min.js&quot;) </span><br><span class="line">script(src=&quot;/libs/bootstrap/dist/js/bootstrap.min.js&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在layout.jade中引入head.jade</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">doctype html</span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    title= title</span><br><span class="line">    link(rel=&apos;stylesheet&apos;, href=&apos;/stylesheets/style.css&apos;)</span><br><span class="line">    include ./includes/head</span><br><span class="line">  body</span><br><span class="line">    block content</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="5-如何同步读取大文件"><a href="#5-如何同步读取大文件" class="headerlink" title="5. 如何同步读取大文件"></a>5. 如何同步读取大文件</h4><p>超过一定大小的文件，直接使用readFileSync会读取失败，网上提供了一些异步readline的方法，如果要同步读取的话，可以使用如下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;)</span><br><span class="line">var offset = 0;</span><br><span class="line">var chunkSize = 204800;</span><br><span class="line">var chunkBuffer = new Buffer(chunkSize);</span><br><span class="line">var fp = fs.openSync(path, &apos;r&apos;);</span><br><span class="line">var bytesRead = 0;</span><br><span class="line">while(bytesRead = fs.readSync(fp, chunkBuffer, 0, chunkSize, offset)) &#123;</span><br><span class="line">    offset += bytesRead;</span><br><span class="line">    var str = chunkBuffer.slice(0, bytesRead).toString();</span><br><span class="line">    var arr = str.split(&apos;\n&apos;);</span><br><span class="line"></span><br><span class="line">    #最后一个可能不是完整的一行，需要删掉</span><br><span class="line">    if(arr.length &gt; 1) &#123;</span><br><span class="line">        offset -= arr.pop().length;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">这个程序的每次读取的大小的代码根据需要微调下。</span><br></pre></td></tr></table></figure></p>
+<h4 id="6-一些有用的网址"><a href="#6-一些有用的网址" class="headerlink" title="6. 一些有用的网址"></a>6. 一些有用的网址</h4><ol>
+<li>html to Jade : <a href="http://html2jade.vida.io/" target="_blank" rel="noopener">http://html2jade.vida.io/</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/10/ask_myselfs/" itemprop="url">
                   自己给自己提问(FAQ)
                 </a>
@@ -782,155 +927,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/01/Rank_SVM/" itemprop="url">
-                  RANK_SVM算法解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-01T23:59:50+08:00" content="2018-02-01">
-              2018-02-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RANK-SVM-原理"><a href="#RANK-SVM-原理" class="headerlink" title="RANK_SVM 原理"></a>RANK_SVM 原理</h3><p>RankSVM基于SVM算法，将pair-wise的排序问题，转化为分类问题</p>
-<h3 id="SVM算法回顾"><a href="#SVM算法回顾" class="headerlink" title="SVM算法回顾"></a>SVM算法回顾</h3><ol>
-<li><p>SVM的优化目标<br>$min \frac{1}{2}||w^2|| $<br>$s.t. y_i(w^Tx_i+b) &gt;= 1(i = 1, 2, 3 … n)$</p>
-</li>
-<li><p>使用拉格朗日函数 –&gt; 转化为对偶问题来求解</p>
-</li>
-<li>SVM使用的loss func为hinge loss(合页损失函数)<br>$min_{w,b}[1 - y_i(w*x + b)]_+ + \lambda||w||_2^2$</li>
-</ol>
-<h3 id="RANK-SVM介绍"><a href="#RANK-SVM介绍" class="headerlink" title="RANK_SVM介绍"></a>RANK_SVM介绍</h3><ol>
-<li><p>定义1：f是排序函数，$x_i\succ x_j \Longleftrightarrow f(x_i) &gt; f(x_j)$, 表示如果$f(x_i) &gt; f(x_j)$，$x_i$需要排在$x_j$的前面</p>
-</li>
-<li><p>定义2：假设f(x)是一个线性函数，$f(x) = \langle w, x \rangle$ 表示参数向量w和特征向量x的点乘(inner product)</p>
-</li>
-<li><p>定义3，我们可以将排序问题转换为分类问题<br>$f(x_i) &gt; f(x_j) \Longleftrightarrow  \langle w, x_i - x_j \rangle &gt; 0$</p>
-</li>
-<li><p>定义4定义y表示label值, 区值范围+1和-1，</p>
-<ul>
-<li>y = +1, $if \langle w, x_i - x_j \rangle &gt; 0$</li>
-<li>y = -1, $if \langle w, x_i - x_j \rangle &lt; 0$<br>这样，我们就将排序问题转换成了分类问题</li>
-</ul>
-</li>
-</ol>
-<h3 id="如何求解"><a href="#如何求解" class="headerlink" title="如何求解"></a>如何求解</h3><p>这里，传统的SMO优化方法，我们这里不再做具体的介绍，在实做上，我们一般使用的是SGD方法<br>既然我们已经有了loss function，我们当然可以通过sgd的方法来解</p>
-<h4 id="loss-func"><a href="#loss-func" class="headerlink" title="loss func"></a>loss func</h4><ul>
-<li>loss = $min_w  \frac{\lambda}{2}||w||^2 + \sum_{(d_i, d_j)}max(0,  1 - y_{(d_i, d_j)}\langle w, x_{d_i} - x_{d_j} \rangle)$</li>
-<li>grad = $\lambda w - \sum_{i,j}I(y_{i,j} \langle w, x_i - x_j\rangle &lt; 1)y_{i,j}(x_i - x_j)$</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="https://github.com/glycerine/sofia-ml" target="_blank" rel="noopener">https://github.com/glycerine/sofia-ml</a>, google实现的ranksvm</li>
-<li>learning to rank by lihang</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -974,7 +970,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

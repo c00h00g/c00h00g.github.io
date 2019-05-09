@@ -282,6 +282,142 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/15/core调试技巧/" itemprop="url">
+                  core调试技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-15T20:05:50+08:00" content="2017-10-15">
+              2017-10-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/调试/" itemprop="url" rel="index">
+                    <span itemprop="name">调试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="常用gdb命令"><a href="#常用gdb命令" class="headerlink" title="常用gdb命令"></a>常用gdb命令</h4><ol>
+<li>查看堆栈信息<br>bt</li>
+<li>进入到某个堆栈中<br>f n : n是堆栈的id</li>
+<li>gdb打印结构体更漂亮<br>set print pretty</li>
+<li>查看函数参数信息<br>info args</li>
+<li>查看函数局部变量信息<br>info locals</li>
+<li>查看线程信息<br>   info threads<br>   thread n : 进入第n个线程</li>
+</ol>
+<h4 id="Mac上查看core"><a href="#Mac上查看core" class="headerlink" title="Mac上查看core"></a>Mac上查看core</h4><ol>
+<li>出core只有段错误信息，却没有core<br>  需要执行命令：ulimit -c unlimited </li>
+<li>Mac下core是被写入到/cores目录下的，需要在这个目录下查看core</li>
+<li>如何查看core<br>  lldb –core core.xxx</li>
+</ol>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="[ 参考文档 ]"></a>[ <strong>参考文档</strong> ]</h4><ol>
+<li><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html" target="_blank" rel="noopener">http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html</a></li>
+<li><a href="https://wizardforcel.gitbooks.io/100-gdb-tips/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/100-gdb-tips/</a>  100个gdb小技巧</li>
+<li><a href="http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html" target="_blank" rel="noopener">http://blog.afantree.com/unixlinux/how-to-generate-core-dumps-in-mac-os-x.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/10/01/word2vec_understand/" itemprop="url">
                   word2vec算法解析
                 </a>
@@ -609,6 +745,9 @@
 <li><p>linux文件删除后空间仍没释放</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">找到进程后，杀死进程</span><br><span class="line">sudo /usr/sbin/lsof | grep deleted</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>python调用shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参数需要用%s传递</span><br><span class="line">import os</span><br><span class="line">os.system(&apos;cat %s | sort -u &gt; %s&apos; %(f1, f2))</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
           
@@ -924,139 +1063,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/10/grpc_install/" itemprop="url">
-                  GRPC安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-10T23:59:50+08:00" content="2017-02-10">
-              2017-02-10
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">程序技巧</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>grpc是google发布的一款开源的rpc框架，使用protobuf作为序列化工具，相关代码都可以在github上搜到。rpc即远程过程调用，可以在客户端调用服务端的程序，同时可以支持不同语言之间的相互调用，比如：使用php作为前端的架构，c++作为后端语言，可以使用php调用后端c++服务端的函数接口。</p>
-<h4 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h4><ol>
-<li><p>下载源码并编译安装</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone -b $(curl -L https:<span class="comment">//grpc.io/release) https://github.com/grpc/grpc</span></span><br><span class="line">cd grpc</span><br><span class="line">git submodule update --init</span><br><span class="line">make</span><br><span class="line">[sudo] make install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入grpc/examples/cpp/helloworld目录，并make，这个时候会提示protobuf没有安装</p>
-</li>
-<li>进入目录grpc/third_party/protobuf, 编译并安装protobuf<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>[<strong>参考文档</strong>]</p>
-<ol>
-<li><a href="https://doc.oschina.net/grpc" target="_blank" rel="noopener">https://doc.oschina.net/grpc</a> grpc文档</li>
-<li><a href="https://github.com/grpc/grpc" target="_blank" rel="noopener">https://github.com/grpc/grpc</a> grpc</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1100,7 +1106,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
