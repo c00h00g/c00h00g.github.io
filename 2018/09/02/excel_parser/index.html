@@ -86,23 +86,17 @@
 
 
 
-<meta name="description" content="最近，在学习fasttext相关源码，这篇文章主要分享下学习监督学习相关的学习心得。 主要架构  输入：term级别词向量，比如输入“中国” “新” “说唱”三个term，每个词进入系统前都被随机初始化成了dim纬度的向量 hidden : 将所有term的向量进行相加，然后求解平均值，组成短片段的向量表示 输出：label个向量, 即我们要分类的个数 对输出对值求softmax，loss函数使用">
+<meta name="description" content="背景在平常的工作中，我们经常要操作excel；但这不是程序猿的思维，程序员应该把excel当成程序可以操作的数据。 读写excel对excel的操作主要是读取和写入操作，分别介绍下 读取数据 读取excel中的所有sheet 1234567891011121314151617import xlrddef get_all_sheets_names(self):    &amp;quot;&amp;quot;&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FastText之监督学习">
-<meta property="og:url" content="http://yoursite.com/2018/11/01/fast_text_supervised/index.html">
+<meta property="og:title" content="python操作excel">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/excel_parser/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="最近，在学习fasttext相关源码，这篇文章主要分享下学习监督学习相关的学习心得。 主要架构  输入：term级别词向量，比如输入“中国” “新” “说唱”三个term，每个词进入系统前都被随机初始化成了dim纬度的向量 hidden : 将所有term的向量进行相加，然后求解平均值，组成短片段的向量表示 输出：label个向量, 即我们要分类的个数 对输出对值求softmax，loss函数使用">
+<meta property="og:description" content="背景在平常的工作中，我们经常要操作excel；但这不是程序猿的思维，程序员应该把excel当成程序可以操作的数据。 读写excel对excel的操作主要是读取和写入操作，分别介绍下 读取数据 读取excel中的所有sheet 1234567891011121314151617import xlrddef get_all_sheets_names(self):    &amp;quot;&amp;quot;&amp;quo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/fast.png">
-<meta property="og:image" content="http://yoursite.com/images/closs_entropy.png">
-<meta property="og:image" content="http://yoursite.com/images/closs_define.png">
-<meta property="og:image" content="http://yoursite.com/images/closs_equal.png">
-<meta property="og:image" content="http://yoursite.com/images/not_closs_equal.png">
-<meta property="og:updated_time" content="2019-01-27T18:08:09.583Z">
+<meta property="og:updated_time" content="2019-05-11T14:44:58.950Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FastText之监督学习">
-<meta name="twitter:description" content="最近，在学习fasttext相关源码，这篇文章主要分享下学习监督学习相关的学习心得。 主要架构  输入：term级别词向量，比如输入“中国” “新” “说唱”三个term，每个词进入系统前都被随机初始化成了dim纬度的向量 hidden : 将所有term的向量进行相加，然后求解平均值，组成短片段的向量表示 输出：label个向量, 即我们要分类的个数 对输出对值求softmax，loss函数使用">
-<meta name="twitter:image" content="http://yoursite.com/images/fast.png">
+<meta name="twitter:title" content="python操作excel">
+<meta name="twitter:description" content="背景在平常的工作中，我们经常要操作excel；但这不是程序猿的思维，程序员应该把excel当成程序可以操作的数据。 读写excel对excel的操作主要是读取和写入操作，分别介绍下 读取数据 读取excel中的所有sheet 1234567891011121314151617import xlrddef get_all_sheets_names(self):    &amp;quot;&amp;quot;&amp;quo">
 
 
 
@@ -123,10 +117,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/01/fast_text_supervised/">
+  <link rel="canonical" href="http://yoursite.com/2018/09/02/excel_parser/">
 
 
-  <title> FastText之监督学习 | Soul of Light </title>
+  <title> python操作excel | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -289,7 +283,7 @@
             
             
               
-                FastText之监督学习
+                python操作excel
               
             
           </h1>
@@ -301,8 +295,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-11-01T23:59:50+08:00" content="2018-11-01">
-              2018-11-01
+            <time itemprop="dateCreated" datetime="2018-09-02T23:59:50+08:00" content="2018-09-02">
+              2018-09-02
             </time>
           </span>
 
@@ -315,8 +309,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
                   </a>
                 </span>
 
@@ -350,33 +344,19 @@
       
 
       
-        <p>最近，在学习fasttext相关源码，这篇文章主要分享下学习监督学习相关的学习心得。</p>
-<h3 id="主要架构"><a href="#主要架构" class="headerlink" title="主要架构"></a>主要架构</h3><p><img src="/images/fast.png" alt=""></p>
-<ol>
-<li>输入：term级别词向量，比如输入“中国” “新” “说唱”三个term，每个词进入系统前都被随机初始化成了dim纬度的向量</li>
-<li>hidden : 将所有term的向量进行相加，然后求解平均值，组成短片段的向量表示</li>
-<li>输出：label个向量, 即我们要分类的个数</li>
-<li>对输出对值求softmax，loss函数使用crossEntroy loss</li>
-</ol>
-<h3 id="求解的参数"><a href="#求解的参数" class="headerlink" title="求解的参数"></a>求解的参数</h3><p>和传统lr的区别是：传统lr我们是知道特征的值的，只需要求解w的值；但是，这里我们词向量也是未知的，也是需要求解的, 因此需要求解的参数是以下两个：</p>
-<ol>
-<li>hidder layer和最终输出的矩阵权重w</li>
-<li>每个单词的词向量</li>
-</ol>
-<h3 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h3><p><img src="/images/closs_entropy.png" alt=""></p>
-<ol>
-<li><p>crossEntropy loss梯度<br><img src="/images/closs_define.png" alt=""></p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在平常的工作中，我们经常要操作excel；但这不是程序猿的思维，程序员应该把excel当成程序可以操作的数据。</p>
+<h3 id="读写excel"><a href="#读写excel" class="headerlink" title="读写excel"></a>读写excel</h3><p>对excel的操作主要是读取和写入操作，分别介绍下</p>
+<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><ol>
+<li><p>读取excel中的所有sheet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import xlrd</span><br><span class="line"></span><br><span class="line">def get_all_sheets_names(self):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    读取excel里所有的sheet</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.sheet_names = dict()</span><br><span class="line">    idx = 0</span><br><span class="line">    rd = xlrd.open_workbook(self.excel_r_path)</span><br><span class="line">    for one_name in rd.sheet_names():</span><br><span class="line">        self.sheet_names[one_name] = idx</span><br><span class="line">        idx += 1</span><br><span class="line"></span><br><span class="line">    if DEBUG_SWITCH == 1:</span><br><span class="line">        for key, value in self.sheet_names.items():</span><br><span class="line">            print key, value</span><br><span class="line">    return</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>求解梯度<br>当i == j时:<br><img src="/images/closs_equal.png" alt=""></p>
-</li>
-<li><p>求解梯度<br>当i != j时:<br><img src="/images/not_closs_equal.png" alt=""></p>
-</li>
-<li><p>结合代码分析</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">real Model::softmax(<span class="keyword">int32_t</span> target, real lr) &#123;</span><br><span class="line">  grad_.zero();</span><br><span class="line">  computeOutputSoftmax();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int32_t</span> i = <span class="number">0</span>; i &lt; osz_; i++) &#123;</span><br><span class="line">    <span class="comment">//alpha就是loss对softmax之前变量梯度的计算</span></span><br><span class="line">    <span class="comment">//如果i == target, 梯度为output[i] - label</span></span><br><span class="line">    <span class="comment">//如果i != target, 梯度为output[i]</span></span><br><span class="line">    <span class="comment">//这儿用的label - ouput[i], 因为减去梯度，相当于加上负梯度</span></span><br><span class="line">    real label = (i == target) ? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">    real alpha = lr * (label - output_[i]);</span><br><span class="line">    grad_.addRow(*wo_, i, alpha);</span><br><span class="line">    wo_-&gt;addRow(hidden_, i, alpha);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="built_in">log</span>(output_[target]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>举例<br>如果类别一共三维，经过softmax后的向量为[0.1, 0.3, 0.6], 第二维label为1，则loss对原始输入的梯度为[0.1, -0.7, 0.6], 可见需要在第二维上重点调整，以调到最大。</p>
+<li><p>读取其中一个sheet中的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def read_one_excel_data(self, index):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    读取一个excel中的数据</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    one_sheet = self.rd.sheet_by_index(index)</span><br><span class="line">    # 行数&amp; 列数</span><br><span class="line">    rows = one_sheet.nrows</span><br><span class="line">    columns = one_sheet.ncols</span><br><span class="line"></span><br><span class="line">    for i in range(rows):</span><br><span class="line">        one_list = []</span><br><span class="line">        for j in range(columns):</span><br><span class="line">            one_elem = one_sheet.cell(i, j).value.encode(&apos;utf-8&apos;)</span><br><span class="line">            one_list.append(one_elem)</span><br><span class="line">        self.data.append(one_list)</span><br><span class="line"></span><br><span class="line">    if DEBUG_SWITCH == 1:</span><br><span class="line">        for row in self.data:</span><br><span class="line">            for dt in row:</span><br><span class="line">                print dt,</span><br><span class="line">            print</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">def set_style(self, name, height, bold = False):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    初始化样式, 字体等</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    style = xlwt.XFStyle()  # 初始化样式</span><br><span class="line">    font = xlwt.Font()  # 为样式创建字体</span><br><span class="line">    font.name = name # &apos;Times New Roman&apos;</span><br><span class="line">    font.bold = bold</span><br><span class="line">    font.color_index = 4</span><br><span class="line">    font.height = height</span><br><span class="line">    style.font = font</span><br><span class="line">    return style</span><br><span class="line"></span><br><span class="line">def write_excel_sheet(self, sheet_name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    写excel</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.wt = self.wt_excel.add_sheet(sheet_name, cell_overwrite_ok = True) </span><br><span class="line">    write_data = [(&apos;a1&apos;, &apos;a2&apos;, &apos;a3&apos;), (&apos;b1&apos;, &apos;b2&apos;, &apos;b3&apos;), (&apos;c1&apos;, &apos;c2&apos;, &apos;c3&apos;)]</span><br><span class="line">    heads = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</span><br><span class="line"></span><br><span class="line">    #写第几行</span><br><span class="line">    line_num = 0</span><br><span class="line"></span><br><span class="line">    #write head</span><br><span class="line">    for i in range(len(heads)):</span><br><span class="line">        self.wt.write(line_num, i, heads[i], self.set_style(&apos;Times New Roman&apos;, 220, True))</span><br><span class="line">    line_num += 1</span><br><span class="line"></span><br><span class="line">    #write cont</span><br><span class="line">    for elem in write_data:</span><br><span class="line">        for i in range(len(elem)):</span><br><span class="line">            self.wt.write(line_num, i, elem[i], self.set_style(&apos;Times New Roman&apos;, 220))</span><br><span class="line">        line_num += 1</span><br><span class="line"></span><br><span class="line">    self.wt_excel.save(self.excel_w_path)</span><br><span class="line">    return</span><br></pre></td></tr></table></figure>
+<h4 id="做成web版本"><a href="#做成web版本" class="headerlink" title="做成web版本"></a>做成web版本</h4><p>只需要将数据加载起来，通过web框架展现出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;&quot; enctype=&apos;multipart/form-data&apos; method=&apos;POST&apos;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&#123;% if data_row_num %&#125;</span><br><span class="line">&lt;table class=&quot;table table-bordered table-hover&quot;&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">    &#123;% for i in range(data_row_num) %&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">        &#123;% for j in range(col_num) %&#125;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                &#123;&#123; data_csv[i][j] &#125;&#125;</span><br><span class="line">            &lt;/td&gt;</span><br><span class="line">        &#123;% endfor %&#125;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;/tbody&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们既能操纵excel里的数据进行快速分析，也能通过网页的方式查看excel中的数据；更进一步，我们可以让用户提交处理数据的逻辑，将逻辑传递到后台，定制化数据输出</p>
 
       
     </div>
@@ -412,16 +392,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/02/excel_parser/" rel="next" title="python操作excel">
-                <i class="fa fa-chevron-left"></i> python操作excel
+              <a href="/2018/08/06/fasttext_c_plus_tricks/" rel="next" title="fasttext中使用的c++技巧总结">
+                <i class="fa fa-chevron-left"></i> fasttext中使用的c++技巧总结
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/01/Bert 模型部署/" rel="prev" title="bert模型部署初探">
-                bert模型部署初探 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/01/fast_text_supervised/" rel="prev" title="FastText之监督学习">
+                FastText之监督学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +525,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要架构"><span class="nav-number">1.</span> <span class="nav-text">主要架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求解的参数"><span class="nav-number">2.</span> <span class="nav-text">求解的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论基础"><span class="nav-number">3.</span> <span class="nav-text">理论基础</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写excel"><span class="nav-number">2.</span> <span class="nav-text">读写excel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数据"><span class="nav-number">2.1.</span> <span class="nav-text">读取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写入数据"><span class="nav-number">2.2.</span> <span class="nav-text">写入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#做成web版本"><span class="nav-number">2.3.</span> <span class="nav-text">做成web版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
         </section>

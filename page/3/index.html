@@ -282,6 +282,131 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/13/Flask web开发/" itemprop="url">
+                  Flask web开发
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-13T23:59:50+08:00" content="2018-03-13">
+              2018-03-13
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Flask-web开发"><a href="#Flask-web开发" class="headerlink" title="Flask web开发"></a>Flask web开发</h3><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>python语言目前在机器学习领域也是大放异彩，基本上所有的开源工具都支持python，因此，还是有必要学习下python前端框架相关知识。Flask是python的一个前端框架，类似的还有django等。</p>
+<h3 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h3><h4 id="服务端代码"><a href="#服务端代码" class="headerlink" title="服务端代码"></a>服务端代码</h4><p>建立一个web路径test，并支持get和post两种方式。当使用get方式的话，直接渲染一个页面； 当使用post方式的时候，可以通过request.form方式获取用户提交的内容，在后端做相应的查询，并通过labels_results传递，在前端重新渲染。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route('/test', methods=['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'GET'</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">'test.html'</span>, results = <span class="keyword">None</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        query = (request.form.get(<span class="string">'se_query'</span>).strip())</span><br><span class="line">        q_split = trans_query(query)</span><br><span class="line">        </span><br><span class="line">        labels_results = &#123;</span><br><span class="line">            <span class="string">'query'</span> : q_split,</span><br><span class="line">            <span class="string">'data_len'</span> : len(q_split)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">'test.html'</span>, **labels_results)</span><br></pre></td></tr></table></figure>
+<h4 id="前端代码"><a href="#前端代码" class="headerlink" title="前端代码"></a>前端代码</h4><p>最开始的部分是引用bootstrap相关的css / js，使页面更加漂亮，中间是自定义一些css，控制控件的位置信息；最后是jinjia2模版引擎，读取后端传递的数据并展现。</p>
+<p>还需要注意的一点是，自己下载的css和js文件必须放在static路径下，模版必须放在template目录下。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"static/js/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"static/css/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"static/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .form-control &#123;</span></span><br><span class="line"><span class="undefined">            text-align : center;</span></span><br><span class="line"><span class="undefined">            width : 600px;</span></span><br><span class="line"><span class="undefined">            margin-top : 100px;</span></span><br><span class="line"><span class="undefined">            margin-left : 400px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-bordered"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>Query<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">th</span>&gt;</span>Seq Label Result<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">        &#123;% for i in range(data_len)%&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; query[i] &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; label_res[i] &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">        &#123;% endfor %&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>之前自学过node.js相关的知识，这次学习了python相关的内容，感觉都是相通的，学习起来非常快。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/06/multi_thread_python/" itemprop="url">
                   python多线程处理文件
                 </a>
@@ -735,175 +860,6 @@
 <p>将两个概率统一，即为最终的最大似然</p>
 <p>将上面式子转换成-log形式即为loss，</p>
 <p>$L(w,b) = -\sum_{i=1}^{n}log(\frac{1}{1+e^{-y_i(wx+b)}}) = \sum_{i=1}^{n}log(1+e^{-y_i(wx+b)})$</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/18/Logistic regression 推倒过程（使用gradient descent）/" itemprop="url">
-                  Logistic regression 推倒过程（使用gradient descent）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-18T23:59:50+08:00" content="2018-02-18">
-              2018-02-18
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在学习李宏毅教授的机器学习课程，讲解的非常细致，推倒也非常详细，同时，也和线性回归做了类比，非常不错，现在这里总结一下。</p>
-<h4 id="LR二分类推倒过程"><a href="#LR二分类推倒过程" class="headerlink" title="LR二分类推倒过程"></a>LR二分类推倒过程</h4><p>Input ：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">$x^1$</th>
-<th style="text-align:center">$x^2$</th>
-<th style="text-align:center">$x^3$</th>
-<th>…</th>
-<th>$x^n$</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">$C_1$</td>
-<td style="text-align:center">$C_1$</td>
-<td style="text-align:center">$C_2$</td>
-<td>…</td>
-<td>$C_2$</td>
-</tr>
-<tr>
-<td style="text-align:center">$\hat{y^1}=1$</td>
-<td style="text-align:center">$\hat{y^2}=1$</td>
-<td style="text-align:center">$\hat{y^3}=0$</td>
-<td></td>
-<td>$\hat{y^n}=0$</td>
-</tr>
-</tbody>
-</table>
-<p>其中第一行表示所有的变量，第二行表示属于的类别，这里之后两类。</p>
-<h4 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h4><p>由于LR使用的是回归函数是$\frac{1}{1+e^{-x}}$, 值域是(0,1)，可以天然的表示概率，我们用$f_{w,b}(x)$表示x属于$C_1$ 的概率，w,b表示参数，那么属于$C_2$的概率可以表示为$1-f_{w,b}(x)$。这个时候，我们就能够用最大似然估计来解这个问题。</p>
-<p>定义 $L(w,b) = f_{w,b}(x^1)*f_{w,b}(x^2)(1-f_{w,b}(x^3))…$</p>
-<p>那么：$w^{*}, b^{*} = arg\, \underset{w,b}{max}L(w, b)​$</p>
-<p>​           $w^{*}, b^{*} = arg\, \underset{w,b}{min}-ln(L(w,b))$</p>
-<p>即：将最大似然估计转化成了loss，并且将之前的乘法转换成了加法，下面具体求解：</p>
-<p>$arg\,\underset{w,b}{min}-ln(L(w,b)) = -ln(f_{w,b}(x^1))-ln(f_{w,b}(x^2))-ln(1-f_{w,b}(x^3))$</p>
-<h4 id="符号变换"><a href="#符号变换" class="headerlink" title="符号变换"></a>符号变换</h4><p>下面需要做下符号变换，将所有的$C_1$看成1, 所有的$C_2$看成0, 并记为：$\hat{y^n}$</p>
-<p>那么，为了将两种格式的式子写成一个式子，我们做如下的变换：</p>
-<p>$-ln(f_{w,b}(x^1))=-[\hat{y^1}ln(f(x^1)) + (1-\hat{y^1})ln(1-f(x^1))]$</p>
-<p>$-ln(f_{w,b}(x^2))=-[\hat{y^2}ln(f(x^2)) + (1-\hat{y^2})ln(1-f(x^2))]$</p>
-<p>$-ln(f_{w,b}(x^3))=-[\hat{y^3}ln(f(x^3)) + (1-\hat{y^3})ln(1-f(x^3))]$</p>
-<p>只需要简单带入进去就可以理解了。</p>
-<p>合并起来：</p>
-<p>$\sum\limits_{n}-[\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1-f(x^n))]$，这个其实就是两个伯努利分布的交叉熵，也就是说LR的loss func使用的是交叉熵。</p>
-<h4 id="求导"><a href="#求导" class="headerlink" title="求导"></a>求导</h4><p>对其中一个变量$w_i$进行求导，我们只需要$ln(f(x^n))$和$ln(1-f(x^n))$对$w_i$进行求导。</p>
-<p>$\frac{\partial ln(f_{w,b}(x))}{\partial w_i} = \frac{\partial ln(f_{w,b}(x))}{\partial z}\frac{\partial z}{\partial w_i}$，$z=wx + b = \sum\limits_{i}w_ix_i+b$, $f_{w,b}(x)) = \frac{1}{1+e^{-z}}$</p>
-<p> 化简后可以得到：</p>
-<p>$\sum\limits_{n}-(\hat{y^n} - f_{w,b}(x^n))*{x^{n}_{i}}$</p>
-<p>由此得到参数更新的方法：</p>
-<p>$w_i \leftarrow w_i - \eta\sum\limits_{n}-(\hat{y^n} - f_{w,b}(x^n))*{x^{n}_{i}}$</p>
-<h4 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h4><p><a href="https://github.com/c00h00g/FastLR" target="_blank" rel="noopener">https://github.com/c00h00g/FastLR</a></p>
 
           
         
