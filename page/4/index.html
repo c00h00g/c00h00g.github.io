@@ -282,6 +282,131 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/01/LR_other_loss/" itemprop="url">
+                  逻辑斯蒂回归另一种loss
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-01T23:59:50+08:00" content="2018-03-01">
+              2018-03-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>统计学习方法最后一章讲到了逻辑斯蒂回归的loss func为$log[1 + exp^{-yf(x)}]$一时难以理解，找波叔帮忙看了下，给了这篇 <a href="http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf" target="_blank" rel="noopener">http://pages.cs.wisc.edu/~jerryzhu/cs769/lr.pdf</a> 参考，瞬间理解了。</p>
+<p>这里主要将类别的符号变换从之前的0，1转变成了-1和1，那么最大似然估计可以统一写成：</p>
+<p>$ \prod_{i=1}^n\frac{1}{1+e^{-y_i(wx_i+b)}}$</p>
+<p>因为：<br>$p(y=1|x) = \frac{1}{1+e^{-(wx+b)}}$<br>$p(y=-1|x) = 1- p(y=1|x)= \frac{1}{1+e^{wx+b}}$</p>
+<p>将两个概率统一，即为最终的最大似然</p>
+<p>将上面式子转换成-log形式即为loss，</p>
+<p>$L(w,b) = -\sum_{i=1}^{n}log(\frac{1}{1+e^{-y_i(wx+b)}}) = \sum_{i=1}^{n}log(1+e^{-y_i(wx+b)})$</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/18/Logistic regression 推倒过程（使用gradient descent）/" itemprop="url">
                   Logistic regression 推倒过程（使用gradient descent）
                 </a>
@@ -831,134 +956,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/05/useful_url/" itemprop="url">
-                  经常看的一些链接
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-05T20:05:50+08:00" content="2018-02-05">
-              2018-02-05
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">程序技巧</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="常用链接"><a href="#常用链接" class="headerlink" title="常用链接"></a>常用链接</h4><ol>
-<li>机器学习：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html" target="_blank" rel="noopener">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html</a></li>
-<li>深度学习：<a href="https://www.csie.ntu.edu.tw/~yvchen/f106-adl/syllabus.html" target="_blank" rel="noopener">https://www.csie.ntu.edu.tw/~yvchen/f106-adl/syllabus.html</a></li>
-<li>deeplearning &amp; nlp <ul>
-<li><a href="http://cs224n.stanford.edu/syllabus.html" target="_blank" rel="noopener">http://cs224n.stanford.edu/syllabus.html</a> </li>
-<li><a href="http://cs224d.stanford.edu/syllabus.html" target="_blank" rel="noopener">http://cs224d.stanford.edu/syllabus.html</a></li>
-</ul>
-</li>
-<li>cnn &amp; cv : <a href="http://cs224d.stanford.edu/syllabus.html" target="_blank" rel="noopener">http://cs224d.stanford.edu/syllabus.html</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1002,7 +999,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

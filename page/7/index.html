@@ -282,6 +282,136 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/06/define_multi_arg/" itemprop="url">
+                  Define可变参数解决函数特殊条件判断
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-06T23:59:50+08:00" content="2017-04-06">
+              2017-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在写c／c++程序的时候，经常要处理很多异常的情况，我们希望设计一个通用的判断错误的功能：</p>
+<ol>
+<li>能够在函数内部返回值</li>
+<li>能够打印log</li>
+</ol>
+<p>define可以实现此功能，因为宏具有可以将代码展开的功能，因此能够实现return的功能。我们看个例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR_LOG(expr, ret, msg, args...) do&#123; \</span></span><br><span class="line"><span class="keyword">if</span> (expr) &#123; \</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, msg, ## args); \</span><br><span class="line">    <span class="keyword">return</span> ret; \</span><br><span class="line">    &#125; \</span><br><span class="line">&#125; <span class="keyword">while</span>(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">    ERROR_LOG(a &lt; <span class="number">5</span>, <span class="number">-1</span>, <span class="string">"a &lt; 5 is forbidden! a= [%d] \n"</span>, a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res = fun(<span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"res=[%d]\n"</span>, res);</span><br><span class="line"></span><br><span class="line">    res = fun(<span class="number">6</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"res=[%d]\n"</span>, res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码的输出是：<br>a &lt; 5 is forbidden! a= [3]<br>res=[-1]<br>res=[0]</p>
+<p>这样设计的好处是，宏直接在函数中展开，可以返回值，使得代码更加简洁<br>另外：</p>
+<ol>
+<li>为什么要使用do while（0）请参考：@<a href="https://stackoverflow.com/questions/257418/do-while-0-what-is-it-good-for" target="_blank" rel="noopener">stackoverflow</a>.</li>
+<li>define中，单个#表示使后面的参数变为字符串，而##表示两个参数拼接成字符串.</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/02/git用法/" itemprop="url">
                   git用法总结
                 </a>
@@ -715,7 +845,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

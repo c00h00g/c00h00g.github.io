@@ -282,6 +282,154 @@
             
               
                 
+                <a class="post-title-link" href="/2018/08/06/fasttext_c_plus_tricks/" itemprop="url">
+                  fasttext中使用的c++技巧总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-08-06T23:59:50+08:00" content="2018-08-06">
+              2018-08-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在研究fasttext源码，这篇文章主要分析一些非理论层面的c++的技巧。</p>
+<h3 id="编译方面"><a href="#编译方面" class="headerlink" title="编译方面"></a>编译方面</h3><ol>
+<li>由于需要对多线程进行支持使用了-pthread参数</li>
+<li>-std=c++0x : C++11之前被称为C++0x，因为原本计划在2010年发布，所以之前一些编译器使用C++11的编译参数是：-std=c++0x，后面使用：-std=c++11</li>
+</ol>
+<h3 id="代码方面"><a href="#代码方面" class="headerlink" title="代码方面"></a>代码方面</h3><ol>
+<li><p>reserve 和 resize对区别？</p>
+<ul>
+<li><p>reserve的作用是预留空间，不会创建对象，真正的数据填充需要使用push_back操作来进行。为什么要这样做？下面这个代码会导致capacity多次重新分配，去预申请内存，然后将原来地址上的所有元素拷贝到新地址上。因为vector在发现当前空间不够时，一般会把capacity进行翻倍，如果再次不够就再次翻倍, 这种效率是很低的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; ++i) &#123;</span><br><span class="line">    v.push_back(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resize是直接调整size，改变容器的大小，并且创建对象。如果new_size &gt; old_size, 则在vector增加new_size - old_size默认构造出来的元素；反之，将多出的部分删掉，但不改变capacity。</p>
+</li>
+</ul>
+</li>
+<li><p>lambad表达式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int32_t</span> i = <span class="number">0</span>; i &lt; args_-&gt;thread; i++) &#123;</span><br><span class="line">    <span class="comment">//lambda表达式</span></span><br><span class="line">    threads.push_back(<span class="built_in">std</span>::thread([=]() &#123; trainThread(i); &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  lambda表达式的定义如下：[capture list] (parameter list) -&gt; return type { function body }<br>其中capture_list的官方解释是：capture list is an (often empty) list of local variables defined in the enclosing function, 指的是lambda所在的函数中的局部变量<br>parameter list 指的是函数的参数，return type指的是返回类型，function body指的是函数主题。<br>那么，上面这段代码的意思是：lambda表达式所在函数中所有的局部变量为capture list，没有参数，没有返回值的函数。下面再举个例子说明下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_equal</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">auto</span> f2 = [=]() &#123;<span class="keyword">return</span> a + b + c;&#125;;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    test_equal(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码的输出是：5+3+5=13</p>
+</li>
+<li>shared_ptr智能指针<br>具体问题请参考这篇博客：<a href="https://www.cnblogs.com/heleifz/p/shared-principle-application.html" target="_blank" rel="noopener">https://www.cnblogs.com/heleifz/p/shared-principle-application.html</a></li>
+<li><p>使用int32_t／int64_t<br>为了程序的可移植性之后要这样使用, 我们在stdint.html(<a href="https://sites.uclouvain.be/SystInfo/usr/include/stdint.h.html)中可以看到long在64位机器上是8字节的，但在32位机器上是32字节的，long是会随着机器的不同而改变的，长度是不确定的，但是使用int32_t就能保证是32位的。" target="_blank" rel="noopener">https://sites.uclouvain.be/SystInfo/usr/include/stdint.h.html)中可以看到long在64位机器上是8字节的，但在32位机器上是32字节的，long是会随着机器的不同而改变的，长度是不确定的，但是使用int32_t就能保证是32位的。</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ifndef __int8_t_defined</span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> __int8_t_defined</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">signed</span> <span class="keyword">char</span>                <span class="keyword">int8_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">short</span> <span class="keyword">int</span>                <span class="keyword">int16_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>                        <span class="keyword">int32_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">if</span> __WORDSIZE == 64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">int</span>                <span class="keyword">int64_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">else</span></span></span><br><span class="line">__extension__</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span>                <span class="keyword">int64_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Unsigned.  */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>                <span class="keyword">uint8_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span>        <span class="keyword">uint16_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __uint32_t_defined</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span>                <span class="keyword">uint32_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> __uint32_t_defined</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> __WORDSIZE == 64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>        <span class="keyword">uint64_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">__extension__</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span>        <span class="keyword">uint64_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>utf-8编码边界在线检测<br>参考下阮一峰的这篇博客：<br><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a><br>如果一个字符的前两个字节是10的话，那么utf-8完整字符一定还没有结束<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Dictionary::computeSubwords(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; word,</span><br><span class="line">                <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int32_t</span>&gt;&amp; ngrams) <span class="keyword">const</span> &#123;</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; word.size(); i++) &#123;</span><br><span class="line">          <span class="built_in">std</span>::<span class="built_in">string</span> ngram;</span><br><span class="line">          <span class="keyword">if</span> ((word[i] &amp; <span class="number">0xC0</span>) == <span class="number">0x80</span>) <span class="keyword">continue</span>;</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">size_t</span> j = i, n = <span class="number">1</span>; j &lt; word.size() &amp;&amp; n &lt;= args_-&gt;maxn; n++) &#123;</span><br><span class="line">              ngram.push_back(word[j++]);</span><br><span class="line">              <span class="keyword">while</span> (j &lt; word.size() &amp;&amp; (word[j] &amp; <span class="number">0xC0</span>) == <span class="number">0x80</span>) &#123;</span><br><span class="line">                  ngram.push_back(word[j++]);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (n &gt;= args_-&gt;minn &amp;&amp; !(n == <span class="number">1</span> &amp;&amp; (i == <span class="number">0</span> || j == word.size()))) &#123;</span><br><span class="line">                  <span class="keyword">int32_t</span> h = hash(ngram) % args_-&gt;bucket;</span><br><span class="line">                  pushHash(ngrams, h);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/07/03/wilson_interval/" itemprop="url">
                   威尔逊区间的应用
                 </a>
@@ -774,145 +922,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/05/01/梯度总结/" itemprop="url">
-                  梯度问题总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-01T23:59:50+08:00" content="2018-05-01">
-              2018-05-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>计算梯度是机器学习问题很重要的部分，对于常见的梯度计算方法，我们要达到脱口而出的程度，本篇文章主要对<br>常见的梯度计算方法进行总结。</p>
-<h3 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h3><p>回归问题的loss一般是平方loss，即：</p>
-<p>$loss = \frac{1}{2} \sum\limits_{n} (f(x^n) - \hat{y}^n)^2$</p>
-<p>$y = f_{w,b}(x) = \sum \limits_{i} w_i x_i + b$</p>
-<p>$\frac {\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
-<p>注：这里的n表示第几个样本，$x_i^n$表示第n个样本的第i个特征, 上标表示第几个样本，下标表示第几个特征</p>
-<h3 id="分类问题"><a href="#分类问题" class="headerlink" title="分类问题"></a>分类问题</h3><h4 id="二分类（LR举例说明）"><a href="#二分类（LR举例说明）" class="headerlink" title="二分类（LR举例说明）"></a>二分类（LR举例说明）</h4><h5 id="label使用0和1"><a href="#label使用0和1" class="headerlink" title="label使用0和1"></a>label使用0和1</h5><p>交叉熵loss</p>
-<p>$loss =  \sum \limits_n-\left[ {\hat{y^n}ln(f(x^n)) + (1-\hat{y^n})ln(1 - f(x^n))} \right]$</p>
-<p>$\frac{\partial{loss}}{w_i} = \sum\limits_n(f(x^n) - \hat{y}^n) * x_i^n$</p>
-<p>和上面的梯度是一模一样的，即预测值减去label值，再乘以$x_i^n$</p>
-<h5 id="label使用1和-1"><a href="#label使用1和-1" class="headerlink" title="label使用1和-1"></a>label使用1和-1</h5><p>当label使用1和-1的时候，就成了逻辑斯蒂损失函数</p>
-<p>$loss = \sum\limits_{n}log(1+e^{-\hat{y^n}(f_{w,b}(x^n))})$</p>
-<p>$\frac{\partial{loss}}{w_i} = -\sum\limits_n \frac{1}{1+e^{-\hat{y^n}f_{w,b}(x^n)}} e^{-\hat{y^n}f_{w,b}(x^n)}\hat{y^n} x_i^n$</p>
-<p>看起来比0 和1作为标签要复杂一些</p>
-<h4 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h4><p>多分类使用softmax对y进行归一化生成z，然后做crossEntroy，先计算loss对y的梯度，然后计算y对最终参数的梯度，具体可以参考之前<a href="http://c00h00g.github.io/2018/11/01/fast_text_supervised/" target="_blank" rel="noopener">博客</a></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其他算法比如FM／DNN也都是类似的方法来计算梯度，根据具体应用，比如分类和回归，选择合适的loss函数，</p>
-<p>这样才能根据自己的业务需求，快速设计相应的模型。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
-<li><a href="http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html" target="_blank" rel="noopener">http://bourneli.github.io/ml/fm/2017/07/02/fm-remove-combine-features-by-yourself.html</a></li>
-<li><a href="https://www.cnblogs.com/guoyaohua/p/9217206.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/9217206.html</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -956,7 +965,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

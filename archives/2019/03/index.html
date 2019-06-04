@@ -86,17 +86,13 @@
 
 
 
-<meta name="description" content="基本概念 session window panel  主要命令session 新建一个tmux session  直接在终端输入tmux 或者tmux new -s session_name  列出所有session tmux ls">
-<meta property="og:type" content="article">
-<meta property="og:title" content="tmux常用命令">
-<meta property="og:url" content="http://yoursite.com/2017/10/22/tmux常用命令/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Soul of Light">
+<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="基本概念 session window panel  主要命令session 新建一个tmux session  直接在终端输入tmux 或者tmux new -s session_name  列出所有session tmux ls">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-30T07:28:08.111Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tmux常用命令">
-<meta name="twitter:description" content="基本概念 session window panel  主要命令session 新建一个tmux session  直接在终端输入tmux 或者tmux new -s session_name  列出所有session tmux ls">
+<meta name="twitter:title" content="Soul of Light">
 
 
 
@@ -117,10 +113,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/22/tmux常用命令/">
+  <link rel="canonical" href="http://yoursite.com/archives/2019/03/">
 
 
-  <title> tmux常用命令 | Soul of Light </title>
+  <title> 归档 | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -141,7 +137,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="//schema.org/WPHeader">
@@ -262,212 +258,63 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+       
+      
+      OK! 目前共计 34 篇日志。 继续努力。
+    </span>
+
     
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                tmux常用命令
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-10-22T23:59:50+08:00" content="2017-10-22">
-              2017-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">程序技巧</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
-      
-        <h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><ol>
-<li>session</li>
-<li>window</li>
-<li>panel</li>
-</ol>
-<h4 id="主要命令"><a href="#主要命令" class="headerlink" title="主要命令"></a>主要命令</h4><h5 id="session"><a href="#session" class="headerlink" title="session"></a>session</h5><ol>
-<li><p>新建一个tmux session </p>
-<pre><code>直接在终端输入tmux
-或者tmux new -s session_name
-</code></pre></li>
-<li><p>列出所有session</p>
-<pre><code>tmux ls
-</code></pre></li>
-</ol>
-<a id="more"></a>
-<ol start="3">
-<li><p>加载一个session</p>
-<pre><code>tmux a -t session_id 
-</code></pre></li>
-<li><p>脱离当前session</p>
-<pre><code>prefix + d
-</code></pre></li>
-<li><p>删除session</p>
-<pre><code>tmux kill-session -t session_id
-</code></pre></li>
-<li><p>重命名session</p>
-<pre><code>prefix + $
-</code></pre></li>
-</ol>
-<h5 id="window"><a href="#window" class="headerlink" title="window"></a>window</h5><ol>
-<li><p>新建窗口</p>
-<pre><code>prefix + c
-</code></pre></li>
-<li><p>重命名窗口</p>
-<pre><code>prefix + ，
-</code></pre></li>
-<li><p>切换到具体某个窗口</p>
-<pre><code>prefix + window_id
-</code></pre></li>
-<li><p>关闭当前窗口</p>
-<pre><code>prefix + &amp;
-</code></pre></li>
-</ol>
-<h5 id="panel"><a href="#panel" class="headerlink" title="panel"></a>panel</h5><ol>
-<li><p>上下分屏</p>
-<pre><code>prefix + %
-</code></pre></li>
-<li><p>左右分屏</p>
-<pre><code>prefix + ”
-</code></pre></li>
-<li><p>取消分屏</p>
-<pre><code>prefix + x
-</code></pre></li>
-<li><p>如何滚屏</p>
-<pre><code>prefix + pageUp/PageDown(mac上对应fn+上下键)
-</code></pre></li>
-</ol>
-<p><em>注意</em></p>
-<ol>
-<li>prefix指的是操作的快捷键ctrl + b</li>
-<li>当然这些都是用到的一些最基础的操作，也可以通过修改.tmux.conf来自己配制</li>
-</ol>
-
-      
-    </div>
-
-    <div>
       
         
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-      
-<div style="text-align:center;color: #ccc;font-size:14px;">
------- 本文结束 ------</div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/10/22/统计学习方法第一章习题/" rel="next" title="统计学习方法第一章习题">
-                <i class="fa fa-chevron-left"></i> 统计学习方法第一章习题
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/01/Makefile小结/" rel="prev" title="Makefile小结">
-                Makefile小结 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
         </div>
       
+      
 
       
-      
-    </footer>
+
+  <article class="post post-type-normal" itemscope="" itemtype="//schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2019/03/01/bert_pretrainning/" itemprop="url">
+              
+                <span itemprop="name">bert pretraining源码刨析</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-03-01T23:59:50+08:00" content="2019-03-01">
+          03-01
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+
 
 
           </div>
@@ -475,10 +322,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -498,17 +341,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Soulight">
           <p class="site-author-name" itemprop="name">Soulight</p>
@@ -567,17 +401,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要命令"><span class="nav-number">2.</span> <span class="nav-text">主要命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#session"><span class="nav-number">2.1.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#window"><span class="nav-number">2.2.</span> <span class="nav-text">window</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#panel"><span class="nav-number">2.3.</span> <span class="nav-text">panel</span></a></li></ol></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -684,9 +507,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   

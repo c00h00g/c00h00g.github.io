@@ -282,6 +282,143 @@
             
               
                 
+                <a class="post-title-link" href="/2019/03/01/bert_pretrainning/" itemprop="url">
+                  bert pretraining源码刨析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-03-01T23:59:50+08:00" content="2019-03-01">
+              2019-03-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Bert-Pretraining代码刨析"><a href="#Bert-Pretraining代码刨析" class="headerlink" title="Bert Pretraining代码刨析"></a>Bert Pretraining代码刨析</h3><p>本篇文章结合实际例子对bert pretraining源码进行刨析，更清晰的展现bert的整个过程。pretraining主要包括三个文件，create_pretraining_data.py, run_pretraining.py, modeling.py。</p>
+<h4 id="create-pretraining-data"><a href="#create-pretraining-data" class="headerlink" title="create_pretraining_data"></a>create_pretraining_data</h4><p> 构造pretraining的训练数据，我们使用的数据(chg_data)是周杰伦的四句歌词</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">素胚勾勒出青花笔锋浓转淡转淡</span><br><span class="line">瓶身描绘的牡丹一如你初妆初妆</span><br><span class="line"></span><br><span class="line">冉冉檀香透过窗心事我了然了然</span><br><span class="line">宣纸上走笔至此搁一半一半</span><br></pre></td></tr></table></figure>
+<p>构造训练数据的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=<span class="number">3</span> python create_pretraining_data.py \</span><br><span class="line">                   --input_file=./chg_data \</span><br><span class="line">                   --output_file=./tmp/tf_examples.tfrecord \</span><br><span class="line">                   --vocab_file=$BERT_BASE_DIR/vocab.txt \</span><br><span class="line">                   --do_lower_case=<span class="keyword">True</span> \</span><br><span class="line">                   --max_seq_length=<span class="number">128</span> \</span><br><span class="line">                   --max_predictions_per_seq=<span class="number">20</span> \</span><br><span class="line">                   --masked_lm_prob=<span class="number">0.15</span> \</span><br><span class="line">                   --random_seed=<span class="number">12345</span> \</span><br><span class="line">                   --dupe_factor=<span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>下面对create_pretraining_data的代码进行一下解析。首先，create_training_instances函数读取chg_data数据，根据空行，将数据分成两个文档，如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[&apos;素&apos;, &apos;胚&apos;, &apos;勾&apos;, &apos;勒&apos;, &apos;出&apos;, &apos;青&apos;, &apos;花&apos;, &apos;笔&apos;, &apos;锋&apos;, &apos;浓&apos;, &apos;转&apos;, &apos;淡&apos;], [&apos;瓶&apos;, &apos;身&apos;, &apos;描&apos;, &apos;绘&apos;, &apos;的&apos;, &apos;牡&apos;, &apos;丹&apos;, &apos;一&apos;, &apos;如&apos;, &apos;你&apos;, &apos;初&apos;, &apos;妆&apos;]], [[&apos;冉&apos;, &apos;冉&apos;,     &apos;檀&apos;, &apos;香&apos;, &apos;透&apos;, &apos;过&apos;, &apos;窗&apos;, &apos;心&apos;, &apos;事&apos;, &apos;我&apos;, &apos;了&apos;, &apos;然&apos;], [&apos;宣&apos;, &apos;纸&apos;, &apos;上&apos;, &apos;走&apos;, &apos;笔&apos;, &apos;至&apos;, &apos;此&apos;, &apos;搁&apos;, &apos;一&apos;, &apos;半&apos;]]]</span><br></pre></td></tr></table></figure>
+<p>create_training_instances中的关键代码如下，功能是将数据进行拆分，构造sentence／next_sentence对</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造多组first_sen &amp; next_sen对，并对数据进行mask</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(dupe_factor):</span><br><span class="line">  <span class="keyword">for</span> document_index <span class="keyword">in</span> range(len(all_documents)):</span><br><span class="line">    instances.extend(</span><br><span class="line">        create_instances_from_document(</span><br><span class="line">            all_documents, document_index, max_seq_length, short_seq_prob,</span><br><span class="line">            masked_lm_prob, max_predictions_per_seq, vocab_words, rng))</span><br></pre></td></tr></table></figure>
+<p>最终生成的数据instance如下，并将数据写入tf_examples.tfrecord，用于之后的pertaining。当然这是命中80%概率进行mask的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tokens : [CLS] [MASK] 胚 勾 勒 出 青 花 [MASK] 锋 浓 转 淡 [SEP] 瓶 身 描 绘 的 牡 丹 一 如 [MASK] 初 [MASK] [SEP]</span><br><span class="line">segment_ids :  0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1</span><br><span class="line">is_random_next : False</span><br><span class="line">masked_lm_positions: 1 8 23 25</span><br><span class="line">masked_lm_labels: 素 笔 你 妆</span><br></pre></td></tr></table></figure>
+<p>tf_record格式的数据如下，需要注意的是next_sentence_labels中0表示是next_sentence, 1表示不是next_sentence。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tokens: [CLS] [MASK] 胚 勾 勒 出 青 花 [MASK] 锋 浓 转 淡 [SEP] 瓶 身 描 绘 的 牡 丹 一 如 [MASK] 初 [MASK] [SEP]</span><br><span class="line">input_ids: 101 103 5524 1256 1239 1139 7471 5709 103 7226 3849 6760 3909 102 4486 6716 2989 5313 4638 4285 710 671 1963 103 1159 103 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">intput_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">segment_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_positions: 1 8 23 25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_ids: 5162 5011 872 1966 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_weights: 1.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</span><br><span class="line">next_sentence_labels: 0</span><br></pre></td></tr></table></figure>
+<h4 id="run-pretraining"><a href="#run-pretraining" class="headerlink" title="run_pretraining"></a>run_pretraining</h4><p>主要包括两个loss，一个是get_masked_lm_output用于预测mask后的词，一个是get_next_sentence_output用来预测next_sen的概率。最终的loss是这两个loss的和，用来作为优化目标。</p>
+<h4 id="modeling"><a href="#modeling" class="headerlink" title="modeling"></a>modeling</h4><p>该模块完整实现了transformer的encoder部分的代码，实现了multi-head attention结构。</p>
+<p>最终的输出包括get_sequence_output返回所有token的隐层表示，get_pooled_output返回[CLS]对应的隐层表示。</p>
+<p>下面这段代码要表达的是，[CLS]位置不是直接使用encode的输出，而是又增加了一个hidden layer，作为最终[CLS]的输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">with tf.variable_scope(&quot;pooler&quot;):</span><br><span class="line"># We &quot;pool&quot; the model by simply taking the hidden state corresponding</span><br><span class="line"># to the first token. We assume that this has been pre-trained</span><br><span class="line">    first_token_tensor = tf.squeeze(self.sequence_output[:, 0:1, :], axis=1)</span><br><span class="line">    self.pooled_output = tf.layers.dense(</span><br><span class="line">            first_token_tensor,</span><br><span class="line">            config.hidden_size,</span><br><span class="line">            activation=tf.tanh,</span><br><span class="line">            kernel_initializer=create_initializer(config.initializer_range))</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>看论文的同时还要去看下源代码来加深理解，更需要我们跑一些case来验证我们的想法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2019/02/05/tensorflow/" itemprop="url">
                   tensorflow 常用命令
                 </a>
@@ -811,154 +948,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/08/06/fasttext_c_plus_tricks/" itemprop="url">
-                  fasttext中使用的c++技巧总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-08-06T23:59:50+08:00" content="2018-08-06">
-              2018-08-06
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index">
-                    <span itemprop="name">c++</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在研究fasttext源码，这篇文章主要分析一些非理论层面的c++的技巧。</p>
-<h3 id="编译方面"><a href="#编译方面" class="headerlink" title="编译方面"></a>编译方面</h3><ol>
-<li>由于需要对多线程进行支持使用了-pthread参数</li>
-<li>-std=c++0x : C++11之前被称为C++0x，因为原本计划在2010年发布，所以之前一些编译器使用C++11的编译参数是：-std=c++0x，后面使用：-std=c++11</li>
-</ol>
-<h3 id="代码方面"><a href="#代码方面" class="headerlink" title="代码方面"></a>代码方面</h3><ol>
-<li><p>reserve 和 resize对区别？</p>
-<ul>
-<li><p>reserve的作用是预留空间，不会创建对象，真正的数据填充需要使用push_back操作来进行。为什么要这样做？下面这个代码会导致capacity多次重新分配，去预申请内存，然后将原来地址上的所有元素拷贝到新地址上。因为vector在发现当前空间不够时，一般会把capacity进行翻倍，如果再次不够就再次翻倍, 这种效率是很低的。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; ++i) &#123;</span><br><span class="line">    v.push_back(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>resize是直接调整size，改变容器的大小，并且创建对象。如果new_size &gt; old_size, 则在vector增加new_size - old_size默认构造出来的元素；反之，将多出的部分删掉，但不改变capacity。</p>
-</li>
-</ul>
-</li>
-<li><p>lambad表达式</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int32_t</span> i = <span class="number">0</span>; i &lt; args_-&gt;thread; i++) &#123;</span><br><span class="line">    <span class="comment">//lambda表达式</span></span><br><span class="line">    threads.push_back(<span class="built_in">std</span>::thread([=]() &#123; trainThread(i); &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  lambda表达式的定义如下：[capture list] (parameter list) -&gt; return type { function body }<br>其中capture_list的官方解释是：capture list is an (often empty) list of local variables defined in the enclosing function, 指的是lambda所在的函数中的局部变量<br>parameter list 指的是函数的参数，return type指的是返回类型，function body指的是函数主题。<br>那么，上面这段代码的意思是：lambda表达式所在函数中所有的局部变量为capture list，没有参数，没有返回值的函数。下面再举个例子说明下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_equal</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">auto</span> f2 = [=]() &#123;<span class="keyword">return</span> a + b + c;&#125;;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    test_equal(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码的输出是：5+3+5=13</p>
-</li>
-<li>shared_ptr智能指针<br>具体问题请参考这篇博客：<a href="https://www.cnblogs.com/heleifz/p/shared-principle-application.html" target="_blank" rel="noopener">https://www.cnblogs.com/heleifz/p/shared-principle-application.html</a></li>
-<li><p>使用int32_t／int64_t<br>为了程序的可移植性之后要这样使用, 我们在stdint.html(<a href="https://sites.uclouvain.be/SystInfo/usr/include/stdint.h.html)中可以看到long在64位机器上是8字节的，但在32位机器上是32字节的，long是会随着机器的不同而改变的，长度是不确定的，但是使用int32_t就能保证是32位的。" target="_blank" rel="noopener">https://sites.uclouvain.be/SystInfo/usr/include/stdint.h.html)中可以看到long在64位机器上是8字节的，但在32位机器上是32字节的，long是会随着机器的不同而改变的，长度是不确定的，但是使用int32_t就能保证是32位的。</a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ifndef __int8_t_defined</span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> __int8_t_defined</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">signed</span> <span class="keyword">char</span>                <span class="keyword">int8_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">short</span> <span class="keyword">int</span>                <span class="keyword">int16_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>                        <span class="keyword">int32_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">if</span> __WORDSIZE == 64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">int</span>                <span class="keyword">int64_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">else</span></span></span><br><span class="line">__extension__</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span>                <span class="keyword">int64_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Unsigned.  */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>                <span class="keyword">uint8_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span>        <span class="keyword">uint16_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __uint32_t_defined</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span>                <span class="keyword">uint32_t</span>;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> __uint32_t_defined</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> __WORDSIZE == 64</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>        <span class="keyword">uint64_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">__extension__</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span>        <span class="keyword">uint64_t</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>utf-8编码边界在线检测<br>参考下阮一峰的这篇博客：<br><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a><br>如果一个字符的前两个字节是10的话，那么utf-8完整字符一定还没有结束<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Dictionary::computeSubwords(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; word,</span><br><span class="line">                <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int32_t</span>&gt;&amp; ngrams) <span class="keyword">const</span> &#123;</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; word.size(); i++) &#123;</span><br><span class="line">          <span class="built_in">std</span>::<span class="built_in">string</span> ngram;</span><br><span class="line">          <span class="keyword">if</span> ((word[i] &amp; <span class="number">0xC0</span>) == <span class="number">0x80</span>) <span class="keyword">continue</span>;</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">size_t</span> j = i, n = <span class="number">1</span>; j &lt; word.size() &amp;&amp; n &lt;= args_-&gt;maxn; n++) &#123;</span><br><span class="line">              ngram.push_back(word[j++]);</span><br><span class="line">              <span class="keyword">while</span> (j &lt; word.size() &amp;&amp; (word[j] &amp; <span class="number">0xC0</span>) == <span class="number">0x80</span>) &#123;</span><br><span class="line">                  ngram.push_back(word[j++]);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (n &gt;= args_-&gt;minn &amp;&amp; !(n == <span class="number">1</span> &amp;&amp; (i == <span class="number">0</span> || j == word.size()))) &#123;</span><br><span class="line">                  <span class="keyword">int32_t</span> h = hash(ngram) % args_-&gt;bucket;</span><br><span class="line">                  pushHash(ngrams, h);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1002,7 +991,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
