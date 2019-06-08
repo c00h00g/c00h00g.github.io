@@ -754,20 +754,11 @@
 <h4 id="如何求解参数"><a href="#如何求解参数" class="headerlink" title="如何求解参数"></a>如何求解参数</h4><p>对中心词$v_c$求导</p>
 <p>$\frac{\partial \log{\frac{\exp(u_o^Tv_c)}{\sum_{w=1}^{v} \exp (u_w^T v_c)}}}{\partial v_c}$<br>$=\frac{\partial \lgroup \log{ {\exp(u_o^T v_c)} - \log{ \sum_{w=1}^{v} \exp (u_w^Tv_c) } \rgroup } } {\partial v_c}$<br>$=\frac{\partial \log{\exp(u_o^Tv_c)} } {\partial v_c} - \frac { \partial \log{\sum_{w=1}^{v} \exp (u_w^Tv_c)} } {\partial v_c}$<br>$= u_o - {\frac{1}{ \sum_{w=1}^{v} exp(u_w^Tv_c) } } \frac { \partial { \sum_{x=1}^{v} \exp (u_x^Tv_c) } } { \partial v_c }$<br>$= u_o - {\frac{1} { \sum_{w=1}^{v} exp(u_w^Tv_c) } }  {  { \sum_{x=1}^{v} \frac {\partial {\exp (u_x^Tv_c)} } {\partial v_c} } }$<br>$= u_o - {\frac{1} { \sum_{w=1}^{v} exp(u_w^Tv_c) } }  {  { \sum_{x=1}^{v} \exp (u_x^Tv_c) u_x} }$<br>$= u_o - { {  } }  {  { \sum_{x=1}^{v} \frac {\exp (u_x^Tv_c)} {\sum_{w=1}^{v} exp(u_w^Tv_c)} u_x} }$<br>$=u_o - \sum_{x=1}^{v} p(x|c) u_x$</p>
 <p>问题：比如一个句子 a1 a2 a3 a4 a5，5个term构成，窗口为1；a2这个term既可以作为中心词，也可以作为背景词，需要注意的是，a2这个term作为中心词和背景词的vector是不一样的，更新的不是一个vector。</p>
-<h4 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h4><h5 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h5><p>$    \sigma(-x) = 1 - \sigma(x)$</p>
-<p>$\sigma(x) = \frac {1} {1 + e^{-x}}$</p>
-<h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>如果考虑整个V集合的负样本，计算量太大，因此提出了负采样的方法</p>
-<p>$J(\theta) = \frac{1}{T} \sum_{t=1}^{T}J_t(\theta)$</p>
-<p>$J_t(\theta) = log{\sigma(u_o^Tv_c)} + \sum_{j=1}^{k}E_{j \sim P(w)}[log{\sigma(-u_j^Tv_c)}]$</p>
-<p>其中 k 表示从分布$P(w)$中随机负采样出的负例个数，t表示第t个window</p>
-<h5 id="推倒"><a href="#推倒" class="headerlink" title="推倒"></a>推倒</h5><p>D=1 表示中心词$w_c$和背景词$w_o$同时出现在一个窗口内</p>
-<p>D=0 表示中心词$w_c$和背景词$w_o$没有同时出现在一个窗口内</p>
-<p>转换成了二分类的问题</p>
-<p>$P(D=1| w_o, w_c) = \sigma(u_{o}^{T}v_c)$</p>
-<p>$P(D = 0 |w_o, w_c) = 1 - P(D = 1 | w_o, w_c) = \sigma(-u_{o}^{T}v_c)$</p>
-<p>最大似然估计可以转化为：</p>
-<p>$P(w_o | w_c) = P(D=1|w_o, w_c) \prod_{j=1, w_j \sim P(w) }^{k}P(D=0|w_j, w_c)$</p>
-<p>取-log后即为最终的loss function。</p>
+<h4 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h4><h5 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h5><p>$\sigma(-x) = 1 - \sigma(x)$<br>$\sigma(x) = \frac {1} {1 + e^{-x}}$</p>
+<h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>如果考虑整个V集合的负样本，计算量太大，因此提出了负采样的方法<br>$J(\theta) = \frac{1}{T} \sum_{t=1}^{T}J_t(\theta)$<br>$J_t(\theta) = log{\sigma(u_o^Tv_c)} + \sum_{j=1}^{k}E_{j \sim P(w)}[log{\sigma(-u_j^Tv_c)}]$<br>其中 k 表示从分布$P(w)$中随机负采样出的负例个数，t表示第t个window</p>
+<h5 id="推倒"><a href="#推倒" class="headerlink" title="推倒"></a>推倒</h5><p>D=1 表示中心词$w_c$和背景词$w_o$同时出现在一个窗口内<br>D=0 表示中心词$w_c$和背景词$w_o$没有同时出现在一个窗口内</p>
+<p>转换成了二分类的问题<br>$P(D=1| w_o, w_c) = \sigma(u_{o}^{T}v_c)$<br>$P(D = 0 |w_o, w_c) = 1 - P(D = 1 | w_o, w_c) = \sigma(-u_{o}^{T}v_c)$</p>
+<p>最大似然估计可以转化为：<br>$P(w_o | w_c) = P(D=1|w_o, w_c) \prod_{j=1, w_j \sim P(w) }^{k}P(D=0|w_j, w_c)$<br>取-log后即为最终的loss function。</p>
 <h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ol>
 <li><a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/</a> </li>
 <li><a href="https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ERibwqs9p38&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6&amp;index=2</a></li>
