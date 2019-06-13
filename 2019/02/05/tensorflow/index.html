@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Soul of Light">
 <meta property="og:description" content="常用命令 查看tensorboard 12在estimator模式下查看tensorboardtensorboard --logdir model_dir --host 0.0.0.0 --port 8888  指定gpu 12import osos.environ[&amp;quot;CUDA_VISIBLE_DEVICES&amp;quot;] = &amp;quot;3&amp;quot;  查看gpu使用情况  1nvi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-04T18:12:18.896Z">
+<meta property="og:updated_time" content="2019-06-13T08:46:52.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow 常用命令">
 <meta name="twitter:description" content="常用命令 查看tensorboard 12在estimator模式下查看tensorboardtensorboard --logdir model_dir --host 0.0.0.0 --port 8888  指定gpu 12import osos.environ[&amp;quot;CUDA_VISIBLE_DEVICES&amp;quot;] = &amp;quot;3&amp;quot;  查看gpu使用情况  1nvi">
@@ -353,6 +353,9 @@
 </li>
 <li><p>查看gpu使用情况 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看tensorflow版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">print(tf.__version__)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
