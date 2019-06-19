@@ -282,6 +282,126 @@
             
               
                 
+                <a class="post-title-link" href="/2019/06/19/理解RNN/" itemprop="url">
+                  未命名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-06-19T11:26:53+08:00" content="2019-06-19">
+              2019-06-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="理解RNN"><a href="#理解RNN" class="headerlink" title="理解RNN"></a>理解RNN</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>Rnn全名Recurrent Neural Network，对时序进行了建模，能够记忆之前看到的信息。</p>
+<p>举例来说：订一张从北京到上海的机票 vs 订一张从上海到北京的机票，如果直接用bow模型是无法区分这两个文本的，而使用rnn可以刻画出时序关系。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>rnn有两个输入，一个是真实输入$X^t$，一个是上一层的输入$H^{t-1}$，上一层的输入能够对上一个cell的状态进行记忆。模型将$X^t$和$H^{t-1}$进行拼接后，通过一个ffc（W）得到下一层的$H^t$，同时再通过一个FFC得到输出$Y^t$。</p>
+<p>具体公式：</p>
+<p>$H^t  = \sigma{(W^{hh}h^{t - 1}+ W^{hx}X^t + b)}$</p>
+<p>$Y^t = softmax(W^{S}h^t)$</p>
+<p>具体流程如下：</p>
+<p><img src="/Users/chenhongguang01/Desktop/chg/rnn/rnn.jpeg" alt="rnn"></p>
+<h4 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h4><p>计算$H^t$相关代码，将inputs 和 state拼接后，和_kernel矩阵相乘，加bias和激活函数，得到最终的输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">  &quot;&quot;&quot;Most basic RNN: output = new_state = act(W * input + U * state + B).&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">  gate_inputs = math_ops.matmul(</span><br><span class="line">      array_ops.concat([inputs, state], 1), self._kernel)</span><br><span class="line">  gate_inputs = nn_ops.bias_add(gate_inputs, self._bias)</span><br><span class="line">  output = self._activation(gate_inputs)</span><br><span class="line">  return output, output</span><br></pre></td></tr></table></figure>
+<p>kernel相关定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self._kernel = self.add_variable(</span><br><span class="line">        _WEIGHTS_VARIABLE_NAME,</span><br><span class="line">        shape=[input_depth + self._num_units, self._num_units])</span><br></pre></td></tr></table></figure>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ol>
+<li>所有的rnn cell的权重是共享的。可以想象成输入是不动的，使rnn_cell在输入上不断的滑动。</li>
+<li>rnn容易出现梯度消失和梯度爆炸，可以考虑使用lstm。</li>
+<li>无法并行，可以考虑使用transformer。</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45" target="_blank" rel="noopener">https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45</a></li>
+<li><a href="https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/python/ops/rnn_cell_impl.py" target="_blank" rel="noopener">https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/python/ops/rnn_cell_impl.py</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2019/03/01/bert_pretrainning/" itemprop="url">
                   bert pretraining源码刨析
                 </a>
@@ -497,9 +617,153 @@
 <li><p>查看tensorflow版本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">print(tf.__version__)</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>查看cuda版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/version.txt</span><br><span class="line">CUDA Version 8.0.44</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
 <li><a href="https://github.com/c00h00g/tf_chg/" target="_blank" rel="noopener">https://github.com/c00h00g/tf_chg/</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/02/01/理解LSTM/" itemprop="url">
+                  理解LSTM
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-02-01T23:59:50+08:00" content="2019-02-01">
+              2019-02-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习理论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>rnn可以解决时序问题，但是容易出现梯度爆炸／梯度爆炸的问题，当文本较长的时候，效果并不好。LSTM，是Long Short-Term Memory，中文可以理解成比较长的Short-Term Memory，因为当文本非常长的时候，效果也会有问题（可以通过加入attention方式解决）。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="具体网络结构"><a href="#具体网络结构" class="headerlink" title="具体网络结构"></a>具体网络结构</h4><p>下面这张图，是目前我看到的最清晰的描述LSTM网络结构的图片，使用一个实例描述了整个过程。其中S表示该神经元使用sigmoid激活函数触发，T表示该神经元使用tanh函数触发。输入的纬度是3，隐层的纬度是2。</p>
+<p><img src="/images/lstm_cell.png" alt="lstm_cell"></p>
+<h3 id="抽象网络结构"><a href="#抽象网络结构" class="headerlink" title="抽象网络结构"></a>抽象网络结构</h3><p>下面这张图画的也很不错，从抽象的角度定义了LSTM，可以对比来看，一个是抽象，一个是实例。</p>
+<p><img src="/images/lstm_cell_con.png" alt="lstm_cell_con"></p>
+<p><img src="/images/lstm_single_cell.png" alt="lstm_single_cell"></p>
+<p>几个公式：</p>
+<ol>
+<li>遗忘门：$f_t = \sigma(W_f  [h_{t-1}, x_t] + b_f)$</li>
+<li>输入门：$i_t = \sigma(W_i[h_{t-1}, x_t] + b_i)$</li>
+<li>$\tilde{C_t} = tanh(W_C [h_{t-1}, x_t] + b_C)$</li>
+<li>$C_t = f_t <em> C_{t - 1} + i_t </em> \tilde{C_t} $</li>
+<li>$O_t = \sigma(W_o[h_{t-1}, x_t] + b_o)$</li>
+<li>$h_t = o_t * tanh(C_t)$</li>
+</ol>
+<h3 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h3><p>下面代码构造网络参数，我们可以看出来_kernel用来存储模型参数，可以看出来存储了4倍的参数，因为我们有四个FFC网络。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def build(self, inputs_shape):</span><br><span class="line">    if inputs_shape[-1] is None:</span><br><span class="line">      raise ValueError(&quot;Expected inputs.shape[-1] to be known, saw shape: %s&quot;</span><br><span class="line">                       % str(inputs_shape))</span><br><span class="line"></span><br><span class="line">    input_depth = inputs_shape[-1]</span><br><span class="line">    h_depth = self._num_units</span><br><span class="line">    self._kernel = self.add_variable(</span><br><span class="line">        _WEIGHTS_VARIABLE_NAME,</span><br><span class="line">        shape=[input_depth + h_depth, 4 * self._num_units])</span><br><span class="line">    self._bias = self.add_variable(</span><br><span class="line">        _BIAS_VARIABLE_NAME,</span><br><span class="line">        shape=[4 * self._num_units],</span><br><span class="line">        initializer=init_ops.zeros_initializer(dtype=self.dtype))</span><br><span class="line"></span><br><span class="line">    self.built = True</span><br></pre></td></tr></table></figure>
+<p>下面这段代码是实际的计算过程，需要注意的是，每次更新，需要返回两个状态$h_t$和$C_t$。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">    &quot;&quot;&quot;Long short-term memory cell (LSTM).</span><br><span class="line">    Args:</span><br><span class="line">      inputs: `2-D` tensor with shape `[batch_size, input_size]`.</span><br><span class="line">      state: An `LSTMStateTuple` of state tensors, each shaped</span><br><span class="line">        `[batch_size, num_units]`, if `state_is_tuple` has been set to</span><br><span class="line">        `True`.  Otherwise, a `Tensor` shaped</span><br><span class="line">        `[batch_size, 2 * num_units]`.</span><br><span class="line">    Returns:</span><br><span class="line">      A pair containing the new hidden state, and the new state (either a</span><br><span class="line">        `LSTMStateTuple` or a concatenated state, depending on</span><br><span class="line">        `state_is_tuple`).</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    sigmoid = math_ops.sigmoid</span><br><span class="line">    one = constant_op.constant(1, dtype=dtypes.int32)</span><br><span class="line">    # Parameters of gates are concatenated into one multiply for efficiency.</span><br><span class="line">    if self._state_is_tuple:</span><br><span class="line">      c, h = state</span><br><span class="line">    else:</span><br><span class="line">      c, h = array_ops.split(value=state, num_or_size_splits=2, axis=one)</span><br><span class="line"></span><br><span class="line">    gate_inputs = math_ops.matmul(</span><br><span class="line">        array_ops.concat([inputs, h], 1), self._kernel)</span><br><span class="line">    gate_inputs = nn_ops.bias_add(gate_inputs, self._bias)</span><br><span class="line"></span><br><span class="line">    # i = input_gate, j = new_input, f = forget_gate, o = output_gate</span><br><span class="line">    i, j, f, o = array_ops.split(</span><br><span class="line">        value=gate_inputs, num_or_size_splits=4, axis=one)</span><br><span class="line"></span><br><span class="line">    forget_bias_tensor = constant_op.constant(self._forget_bias, dtype=f.dtype)</span><br><span class="line">    # Note that using `add` and `multiply` instead of `+` and `*` gives a</span><br><span class="line">    # performance improvement. So using those at the cost of readability.</span><br><span class="line">    add = math_ops.add</span><br><span class="line">    multiply = math_ops.multiply</span><br><span class="line">    new_c = add(multiply(c, sigmoid(add(f, forget_bias_tensor))),</span><br><span class="line">                multiply(sigmoid(i), self._activation(j)))</span><br><span class="line">    new_h = multiply(self._activation(new_c), sigmoid(o))</span><br><span class="line"></span><br><span class="line">    if self._state_is_tuple:</span><br><span class="line">      new_state = LSTMStateTuple(new_c, new_h)</span><br><span class="line">    else:</span><br><span class="line">      new_state = array_ops.concat([new_c, new_h], 1)</span><br><span class="line">    return new_h, new_state</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45" target="_blank" rel="noopener">https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45</a></li>
+<li><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></li>
 </ol>
 
           
@@ -669,296 +933,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/11/01/fast_text_supervised/" itemprop="url">
-                  FastText之监督学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-11-01T23:59:50+08:00" content="2018-11-01">
-              2018-11-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习理论/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习理论</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近，在学习fasttext相关源码，这篇文章主要分享下学习监督学习相关的学习心得。</p>
-<h3 id="主要架构"><a href="#主要架构" class="headerlink" title="主要架构"></a>主要架构</h3><p><img src="/images/fast.png" alt=""></p>
-<ol>
-<li>输入：term级别词向量，比如输入“中国” “新” “说唱”三个term，每个词进入系统前都被随机初始化成了dim纬度的向量</li>
-<li>hidden : 将所有term的向量进行相加，然后求解平均值，组成短片段的向量表示</li>
-<li>输出：label个向量, 即我们要分类的个数</li>
-<li>对输出对值求softmax，loss函数使用crossEntroy loss</li>
-</ol>
-<h3 id="求解的参数"><a href="#求解的参数" class="headerlink" title="求解的参数"></a>求解的参数</h3><p>和传统lr的区别是：传统lr我们是知道特征的值的，只需要求解w的值；但是，这里我们词向量也是未知的，也是需要求解的, 因此需要求解的参数是以下两个：</p>
-<ol>
-<li>hidder layer和最终输出的矩阵权重w</li>
-<li>每个单词的词向量</li>
-</ol>
-<h3 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h3><p><img src="/images/closs_entropy.png" alt=""></p>
-<ol>
-<li><p>crossEntropy loss梯度<br><img src="/images/closs_define.png" alt=""></p>
-</li>
-<li><p>求解梯度<br>当i == j时:<br><img src="/images/closs_equal.png" alt=""></p>
-</li>
-<li><p>求解梯度<br>当i != j时:<br><img src="/images/not_closs_equal.png" alt=""></p>
-</li>
-<li><p>结合代码分析</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">real Model::softmax(<span class="keyword">int32_t</span> target, real lr) &#123;</span><br><span class="line">  grad_.zero();</span><br><span class="line">  computeOutputSoftmax();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int32_t</span> i = <span class="number">0</span>; i &lt; osz_; i++) &#123;</span><br><span class="line">    <span class="comment">//alpha就是loss对softmax之前变量梯度的计算</span></span><br><span class="line">    <span class="comment">//如果i == target, 梯度为output[i] - label</span></span><br><span class="line">    <span class="comment">//如果i != target, 梯度为output[i]</span></span><br><span class="line">    <span class="comment">//这儿用的label - ouput[i], 因为减去梯度，相当于加上负梯度</span></span><br><span class="line">    real label = (i == target) ? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">    real alpha = lr * (label - output_[i]);</span><br><span class="line">    grad_.addRow(*wo_, i, alpha);</span><br><span class="line">    wo_-&gt;addRow(hidden_, i, alpha);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="built_in">log</span>(output_[target]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>举例<br>如果类别一共三维，经过softmax后的向量为[0.1, 0.3, 0.6], 第二维label为1，则loss对原始输入的梯度为[0.1, -0.7, 0.6], 可见需要在第二维上重点调整，以调到最大。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/09/02/excel_parser/" itemprop="url">
-                  python操作excel
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-09-02T23:59:50+08:00" content="2018-09-02">
-              2018-09-02
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">程序技巧</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在平常的工作中，我们经常要操作excel；但这不是程序猿的思维，程序员应该把excel当成程序可以操作的数据。</p>
-<h3 id="读写excel"><a href="#读写excel" class="headerlink" title="读写excel"></a>读写excel</h3><p>对excel的操作主要是读取和写入操作，分别介绍下</p>
-<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><ol>
-<li><p>读取excel中的所有sheet</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import xlrd</span><br><span class="line"></span><br><span class="line">def get_all_sheets_names(self):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    读取excel里所有的sheet</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.sheet_names = dict()</span><br><span class="line">    idx = 0</span><br><span class="line">    rd = xlrd.open_workbook(self.excel_r_path)</span><br><span class="line">    for one_name in rd.sheet_names():</span><br><span class="line">        self.sheet_names[one_name] = idx</span><br><span class="line">        idx += 1</span><br><span class="line"></span><br><span class="line">    if DEBUG_SWITCH == 1:</span><br><span class="line">        for key, value in self.sheet_names.items():</span><br><span class="line">            print key, value</span><br><span class="line">    return</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>读取其中一个sheet中的数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def read_one_excel_data(self, index):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    读取一个excel中的数据</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    one_sheet = self.rd.sheet_by_index(index)</span><br><span class="line">    # 行数&amp; 列数</span><br><span class="line">    rows = one_sheet.nrows</span><br><span class="line">    columns = one_sheet.ncols</span><br><span class="line"></span><br><span class="line">    for i in range(rows):</span><br><span class="line">        one_list = []</span><br><span class="line">        for j in range(columns):</span><br><span class="line">            one_elem = one_sheet.cell(i, j).value.encode(&apos;utf-8&apos;)</span><br><span class="line">            one_list.append(one_elem)</span><br><span class="line">        self.data.append(one_list)</span><br><span class="line"></span><br><span class="line">    if DEBUG_SWITCH == 1:</span><br><span class="line">        for row in self.data:</span><br><span class="line">            for dt in row:</span><br><span class="line">                print dt,</span><br><span class="line">            print</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">def set_style(self, name, height, bold = False):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    初始化样式, 字体等</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    style = xlwt.XFStyle()  # 初始化样式</span><br><span class="line">    font = xlwt.Font()  # 为样式创建字体</span><br><span class="line">    font.name = name # &apos;Times New Roman&apos;</span><br><span class="line">    font.bold = bold</span><br><span class="line">    font.color_index = 4</span><br><span class="line">    font.height = height</span><br><span class="line">    style.font = font</span><br><span class="line">    return style</span><br><span class="line"></span><br><span class="line">def write_excel_sheet(self, sheet_name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    写excel</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.wt = self.wt_excel.add_sheet(sheet_name, cell_overwrite_ok = True) </span><br><span class="line">    write_data = [(&apos;a1&apos;, &apos;a2&apos;, &apos;a3&apos;), (&apos;b1&apos;, &apos;b2&apos;, &apos;b3&apos;), (&apos;c1&apos;, &apos;c2&apos;, &apos;c3&apos;)]</span><br><span class="line">    heads = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</span><br><span class="line"></span><br><span class="line">    #写第几行</span><br><span class="line">    line_num = 0</span><br><span class="line"></span><br><span class="line">    #write head</span><br><span class="line">    for i in range(len(heads)):</span><br><span class="line">        self.wt.write(line_num, i, heads[i], self.set_style(&apos;Times New Roman&apos;, 220, True))</span><br><span class="line">    line_num += 1</span><br><span class="line"></span><br><span class="line">    #write cont</span><br><span class="line">    for elem in write_data:</span><br><span class="line">        for i in range(len(elem)):</span><br><span class="line">            self.wt.write(line_num, i, elem[i], self.set_style(&apos;Times New Roman&apos;, 220))</span><br><span class="line">        line_num += 1</span><br><span class="line"></span><br><span class="line">    self.wt_excel.save(self.excel_w_path)</span><br><span class="line">    return</span><br></pre></td></tr></table></figure>
-<h4 id="做成web版本"><a href="#做成web版本" class="headerlink" title="做成web版本"></a>做成web版本</h4><p>只需要将数据加载起来，通过web框架展现出来</p>
-<ol>
-<li><p>上传 &amp; 展现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;&quot; enctype=&apos;multipart/form-data&apos; method=&apos;POST&apos;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&#123;% if data_row_num %&#125;</span><br><span class="line">&lt;table class=&quot;table table-bordered table-hover&quot;&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">    &#123;% for i in range(data_row_num) %&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">        &#123;% for j in range(col_num) %&#125;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                &#123;&#123; data_csv[i][j] &#125;&#125;</span><br><span class="line">            &lt;/td&gt;</span><br><span class="line">        &#123;% endfor %&#125;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;/tbody&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下载</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;&quot; enctype=&apos;multipart/form-data&apos; method=&apos;POST&apos;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;upload&quot;, name=&quot;upload&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;download&quot;, name=&quot;download&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>服务端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if request.form.get(&apos;upload&apos;) == &apos;upload&apos;:</span><br><span class="line">    pass</span><br><span class="line">elif request.form.get(&apos;download&apos;) == &apos;download&apos;:</span><br><span class="line">    path = os.getcwd()</span><br><span class="line">    #写入数据到chg.xls</span><br><span class="line">    write_excel(path + &apos;/chg.xls&apos;, data)</span><br><span class="line">    return send_from_directory(path, &apos;chg.xls&apos;, as_attachment = True)</span><br></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们既能操纵excel里的数据进行快速分析，也能通过网页的方式查看excel中的数据；更进一步，我们可以让用户提交处理数据的逻辑，将逻辑传递到后台，定制化数据输出</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -997,7 +976,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
