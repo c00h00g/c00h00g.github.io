@@ -86,17 +86,19 @@
 
 
 
-<meta name="description" content="Bert Pretraining代码刨析本篇文章结合实际例子对bert pretraining源码进行刨析，更清晰的展现bert的整个过程。pretraining主要包括三个文件，create_pretraining_data.py, run_pretraining.py, modeling.py。 create_pretraining_data 构造pretraining的训练数据，我们使用的数">
+<meta name="description" content="背景Rnn全名Recurrent Neural Network，对时序进行了建模，能够记忆之前看到的信息。 举例来说：订一张从北京到上海的机票 vs 订一张从上海到北京的机票，如果直接用bow模型是无法区分这两个文本的，而使用rnn可以刻画出时序关系。 介绍模型结构rnn有两个输入，一个是真实输入$X^t$，一个是上一层的输入$H^{t-1}$，上一层的输入能够对上一个cell的状态进行记忆。模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bert pretraining源码刨析">
-<meta property="og:url" content="http://yoursite.com/2019/03/01/bert_pretrainning/index.html">
+<meta property="og:title" content="理解RNN">
+<meta property="og:url" content="http://yoursite.com/2019/02/06/理解RNN/index.html">
 <meta property="og:site_name" content="Soul of Light">
-<meta property="og:description" content="Bert Pretraining代码刨析本篇文章结合实际例子对bert pretraining源码进行刨析，更清晰的展现bert的整个过程。pretraining主要包括三个文件，create_pretraining_data.py, run_pretraining.py, modeling.py。 create_pretraining_data 构造pretraining的训练数据，我们使用的数">
+<meta property="og:description" content="背景Rnn全名Recurrent Neural Network，对时序进行了建模，能够记忆之前看到的信息。 举例来说：订一张从北京到上海的机票 vs 订一张从上海到北京的机票，如果直接用bow模型是无法区分这两个文本的，而使用rnn可以刻画出时序关系。 介绍模型结构rnn有两个输入，一个是真实输入$X^t$，一个是上一层的输入$H^{t-1}$，上一层的输入能够对上一个cell的状态进行记忆。模型">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-04T18:08:49.692Z">
+<meta property="og:image" content="http://yoursite.com/images/rnn.jpeg">
+<meta property="og:updated_time" content="2019-06-19T03:37:18.402Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bert pretraining源码刨析">
-<meta name="twitter:description" content="Bert Pretraining代码刨析本篇文章结合实际例子对bert pretraining源码进行刨析，更清晰的展现bert的整个过程。pretraining主要包括三个文件，create_pretraining_data.py, run_pretraining.py, modeling.py。 create_pretraining_data 构造pretraining的训练数据，我们使用的数">
+<meta name="twitter:title" content="理解RNN">
+<meta name="twitter:description" content="背景Rnn全名Recurrent Neural Network，对时序进行了建模，能够记忆之前看到的信息。 举例来说：订一张从北京到上海的机票 vs 订一张从上海到北京的机票，如果直接用bow模型是无法区分这两个文本的，而使用rnn可以刻画出时序关系。 介绍模型结构rnn有两个输入，一个是真实输入$X^t$，一个是上一层的输入$H^{t-1}$，上一层的输入能够对上一个cell的状态进行记忆。模型">
+<meta name="twitter:image" content="http://yoursite.com/images/rnn.jpeg">
 
 
 
@@ -117,10 +119,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/01/bert_pretrainning/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/06/理解RNN/">
 
 
-  <title> bert pretraining源码刨析 | Soul of Light </title>
+  <title> 理解RNN | Soul of Light </title>
 </head>
 
 <body itemscope="" itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +285,7 @@
             
             
               
-                bert pretraining源码刨析
+                理解RNN
               
             
           </h1>
@@ -295,8 +297,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2019-03-01T23:59:50+08:00" content="2019-03-01">
-              2019-03-01
+            <time itemprop="dateCreated" datetime="2019-02-06T12:19:50+08:00" content="2019-02-06">
+              2019-02-06
             </time>
           </span>
 
@@ -344,25 +346,27 @@
       
 
       
-        <h3 id="Bert-Pretraining代码刨析"><a href="#Bert-Pretraining代码刨析" class="headerlink" title="Bert Pretraining代码刨析"></a>Bert Pretraining代码刨析</h3><p>本篇文章结合实际例子对bert pretraining源码进行刨析，更清晰的展现bert的整个过程。pretraining主要包括三个文件，create_pretraining_data.py, run_pretraining.py, modeling.py。</p>
-<h4 id="create-pretraining-data"><a href="#create-pretraining-data" class="headerlink" title="create_pretraining_data"></a>create_pretraining_data</h4><p> 构造pretraining的训练数据，我们使用的数据(chg_data)是周杰伦的四句歌词</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">素胚勾勒出青花笔锋浓转淡转淡</span><br><span class="line">瓶身描绘的牡丹一如你初妆初妆</span><br><span class="line"></span><br><span class="line">冉冉檀香透过窗心事我了然了然</span><br><span class="line">宣纸上走笔至此搁一半一半</span><br></pre></td></tr></table></figure>
-<p>构造训练数据的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=<span class="number">3</span> python create_pretraining_data.py \</span><br><span class="line">                   --input_file=./chg_data \</span><br><span class="line">                   --output_file=./tmp/tf_examples.tfrecord \</span><br><span class="line">                   --vocab_file=$BERT_BASE_DIR/vocab.txt \</span><br><span class="line">                   --do_lower_case=<span class="keyword">True</span> \</span><br><span class="line">                   --max_seq_length=<span class="number">128</span> \</span><br><span class="line">                   --max_predictions_per_seq=<span class="number">20</span> \</span><br><span class="line">                   --masked_lm_prob=<span class="number">0.15</span> \</span><br><span class="line">                   --random_seed=<span class="number">12345</span> \</span><br><span class="line">                   --dupe_factor=<span class="number">5</span></span><br></pre></td></tr></table></figure>
-<p>下面对create_pretraining_data的代码进行一下解析。首先，create_training_instances函数读取chg_data数据，根据空行，将数据分成两个文档，如下所示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[&apos;素&apos;, &apos;胚&apos;, &apos;勾&apos;, &apos;勒&apos;, &apos;出&apos;, &apos;青&apos;, &apos;花&apos;, &apos;笔&apos;, &apos;锋&apos;, &apos;浓&apos;, &apos;转&apos;, &apos;淡&apos;], [&apos;瓶&apos;, &apos;身&apos;, &apos;描&apos;, &apos;绘&apos;, &apos;的&apos;, &apos;牡&apos;, &apos;丹&apos;, &apos;一&apos;, &apos;如&apos;, &apos;你&apos;, &apos;初&apos;, &apos;妆&apos;]], [[&apos;冉&apos;, &apos;冉&apos;,     &apos;檀&apos;, &apos;香&apos;, &apos;透&apos;, &apos;过&apos;, &apos;窗&apos;, &apos;心&apos;, &apos;事&apos;, &apos;我&apos;, &apos;了&apos;, &apos;然&apos;], [&apos;宣&apos;, &apos;纸&apos;, &apos;上&apos;, &apos;走&apos;, &apos;笔&apos;, &apos;至&apos;, &apos;此&apos;, &apos;搁&apos;, &apos;一&apos;, &apos;半&apos;]]]</span><br></pre></td></tr></table></figure>
-<p>create_training_instances中的关键代码如下，功能是将数据进行拆分，构造sentence／next_sentence对</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造多组first_sen &amp; next_sen对，并对数据进行mask</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(dupe_factor):</span><br><span class="line">  <span class="keyword">for</span> document_index <span class="keyword">in</span> range(len(all_documents)):</span><br><span class="line">    instances.extend(</span><br><span class="line">        create_instances_from_document(</span><br><span class="line">            all_documents, document_index, max_seq_length, short_seq_prob,</span><br><span class="line">            masked_lm_prob, max_predictions_per_seq, vocab_words, rng))</span><br></pre></td></tr></table></figure>
-<p>最终生成的数据instance如下，并将数据写入tf_examples.tfrecord，用于之后的pertaining。当然这是命中80%概率进行mask的情况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tokens : [CLS] [MASK] 胚 勾 勒 出 青 花 [MASK] 锋 浓 转 淡 [SEP] 瓶 身 描 绘 的 牡 丹 一 如 [MASK] 初 [MASK] [SEP]</span><br><span class="line">segment_ids :  0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1</span><br><span class="line">is_random_next : False</span><br><span class="line">masked_lm_positions: 1 8 23 25</span><br><span class="line">masked_lm_labels: 素 笔 你 妆</span><br></pre></td></tr></table></figure>
-<p>tf_record格式的数据如下，需要注意的是next_sentence_labels中0表示是next_sentence, 1表示不是next_sentence。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tokens: [CLS] [MASK] 胚 勾 勒 出 青 花 [MASK] 锋 浓 转 淡 [SEP] 瓶 身 描 绘 的 牡 丹 一 如 [MASK] 初 [MASK] [SEP]</span><br><span class="line">input_ids: 101 103 5524 1256 1239 1139 7471 5709 103 7226 3849 6760 3909 102 4486 6716 2989 5313 4638 4285 710 671 1963 103 1159 103 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">intput_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">segment_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_positions: 1 8 23 25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_ids: 5162 5011 872 1966 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">masked_lm_weights: 1.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</span><br><span class="line">next_sentence_labels: 0</span><br></pre></td></tr></table></figure>
-<h4 id="run-pretraining"><a href="#run-pretraining" class="headerlink" title="run_pretraining"></a>run_pretraining</h4><p>主要包括两个loss，一个是get_masked_lm_output用于预测mask后的词，一个是get_next_sentence_output用来预测next_sen的概率。最终的loss是这两个loss的和，用来作为优化目标。</p>
-<h4 id="modeling"><a href="#modeling" class="headerlink" title="modeling"></a>modeling</h4><p>该模块完整实现了transformer的encoder部分的代码，实现了multi-head attention结构。</p>
-<p>最终的输出包括get_sequence_output返回所有token的隐层表示，get_pooled_output返回[CLS]对应的隐层表示。</p>
-<p>下面这段代码要表达的是，[CLS]位置不是直接使用encode的输出，而是又增加了一个hidden layer，作为最终[CLS]的输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">with tf.variable_scope(&quot;pooler&quot;):</span><br><span class="line"># We &quot;pool&quot; the model by simply taking the hidden state corresponding</span><br><span class="line"># to the first token. We assume that this has been pre-trained</span><br><span class="line">    first_token_tensor = tf.squeeze(self.sequence_output[:, 0:1, :], axis=1)</span><br><span class="line">    self.pooled_output = tf.layers.dense(</span><br><span class="line">            first_token_tensor,</span><br><span class="line">            config.hidden_size,</span><br><span class="line">            activation=tf.tanh,</span><br><span class="line">            kernel_initializer=create_initializer(config.initializer_range))</span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>看论文的同时还要去看下源代码来加深理解，更需要我们跑一些case来验证我们的想法。</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>Rnn全名Recurrent Neural Network，对时序进行了建模，能够记忆之前看到的信息。</p>
+<p>举例来说：订一张从北京到上海的机票 vs 订一张从上海到北京的机票，如果直接用bow模型是无法区分这两个文本的，而使用rnn可以刻画出时序关系。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>rnn有两个输入，一个是真实输入$X^t$，一个是上一层的输入$H^{t-1}$，上一层的输入能够对上一个cell的状态进行记忆。模型将$X^t$和$H^{t-1}$进行拼接后，通过一个ffc（W）得到下一层的$H^t$，同时再通过一个FFC得到输出$Y^t$。</p>
+<p>具体公式：</p>
+<p>$H^t  = \sigma{(W^{hh}h^{t - 1}+ W^{hx}X^t + b)}$</p>
+<p>$Y^t = softmax(W^{S}h^t)$</p>
+<p>具体流程如下：</p>
+<p><img src="/images/rnn.jpeg" alt="rnn"></p>
+<h4 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h4><p>计算$H^t$相关代码，将inputs 和 state拼接后，和_kernel矩阵相乘，加bias和激活函数，得到最终的输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">  &quot;&quot;&quot;Most basic RNN: output = new_state = act(W * input + U * state + B).&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">  gate_inputs = math_ops.matmul(</span><br><span class="line">      array_ops.concat([inputs, state], 1), self._kernel)</span><br><span class="line">  gate_inputs = nn_ops.bias_add(gate_inputs, self._bias)</span><br><span class="line">  output = self._activation(gate_inputs)</span><br><span class="line">  return output, output</span><br></pre></td></tr></table></figure>
+<p>kernel相关定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self._kernel = self.add_variable(</span><br><span class="line">        _WEIGHTS_VARIABLE_NAME,</span><br><span class="line">        shape=[input_depth + self._num_units, self._num_units])</span><br></pre></td></tr></table></figure>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ol>
+<li>所有的rnn cell的权重是共享的。可以想象成输入是不动的，使rnn_cell在输入上不断的滑动。</li>
+<li>rnn容易出现梯度消失和梯度爆炸，可以考虑使用lstm。</li>
+<li>无法并行，可以考虑使用transformer。</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45" target="_blank" rel="noopener">https://towardsdatascience.com/animated-rnn-lstm-and-gru-ef124d06cf45</a></li>
+<li><a href="https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/python/ops/rnn_cell_impl.py" target="_blank" rel="noopener">https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/python/ops/rnn_cell_impl.py</a></li>
+</ol>
 
       
     </div>
@@ -398,13 +402,17 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/06/理解RNN/" rel="next" title="理解RNN">
-                <i class="fa fa-chevron-left"></i> 理解RNN
+              <a href="/2019/02/05/tensorflow/" rel="next" title="tensorflow 常用命令">
+                <i class="fa fa-chevron-left"></i> tensorflow 常用命令
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/01/bert_pretrainning/" rel="prev" title="bert pretraining源码刨析">
+                bert pretraining源码刨析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,7 +535,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bert-Pretraining代码刨析"><span class="nav-number">1.</span> <span class="nav-text">Bert Pretraining代码刨析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#create-pretraining-data"><span class="nav-number">1.1.</span> <span class="nav-text">create_pretraining_data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run-pretraining"><span class="nav-number">1.2.</span> <span class="nav-text">run_pretraining</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#modeling"><span class="nav-number">1.3.</span> <span class="nav-text">modeling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型结构"><span class="nav-number">2.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关代码"><span class="nav-number">2.2.</span> <span class="nav-text">相关代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">3.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
