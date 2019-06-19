@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://yoursite.com/images/lstm_cell.png">
 <meta property="og:image" content="http://yoursite.com/images/lstm_cell_con.png">
 <meta property="og:image" content="http://yoursite.com/images/lstm_single_cell.png">
-<meta property="og:updated_time" content="2019-06-19T03:34:02.514Z">
+<meta property="og:updated_time" content="2019-06-19T03:36:00.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解LSTM">
 <meta name="twitter:description" content="背景rnn可以解决时序问题，但是容易出现梯度爆炸／梯度爆炸的问题，当文本较长的时候，效果并不好。LSTM，是Long Short-Term Memory，中文可以理解成比较长的Short-Term Memory，因为当文本非常长的时候，效果也会有问题（可以通过加入attention方式解决）。 介绍具体网络结构下面这张图，是目前我看到的最清晰的描述LSTM网络结构的图片，使用一个实例描述了整个过程">
@@ -359,7 +359,7 @@
 <li>遗忘门：$f_t = \sigma(W_f  [h_{t-1}, x_t] + b_f)$</li>
 <li>输入门：$i_t = \sigma(W_i[h_{t-1}, x_t] + b_i)$</li>
 <li>$\tilde{C_t} = tanh(W_C [h_{t-1}, x_t] + b_C)$</li>
-<li>$C_t = f_t <em> C_{t - 1} + i_t </em> \tilde{C_t}$</li>
+<li>$C_t = f_t <em> C_{t - 1} + i_t </em> \tilde {C_t}$</li>
 <li>$O_t = \sigma(W_o[h_{t-1}, x_t] + b_o)$</li>
 <li>$h_t = o_t * tanh(C_t)$</li>
 </ol>
