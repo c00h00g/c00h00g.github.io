@@ -282,6 +282,138 @@
             
               
                 
+                <a class="post-title-link" href="/2018/07/01/how_to_use_yaml/" itemprop="url">
+                  如何使用yaml
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-07-01T23:59:50+08:00" content="2018-07-01">
+              2018-07-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="如何使用yaml"><a href="#如何使用yaml" class="headerlink" title="如何使用yaml"></a>如何使用yaml</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>一开始是使用ConfigParser这个python自带的库种，但发现这个parser能力有限，很多多级的操作都不支持，因此，选择了yaml</p>
+<h4 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h4><ol>
+<li><p>load xml</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> yaml</span><br><span class="line">f = open(<span class="string">"path"</span>)</span><br><span class="line">yaml_res = yaml.load(f)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key-value格式的，value和冒号之前必须加一个空格(不能使用tab键), 比如, video: 0.7</p>
+</li>
+<li>嵌套数组形式<br>假设路径是这种形式：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">path_all:</span><br><span class="line"> - path_1_1: <span class="number">1</span></span><br><span class="line">   path_1_2: <span class="number">2</span></span><br><span class="line"> - path_2_1: <span class="number">2</span></span><br><span class="line">   path_2_2: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>则通过yaml解析出来的json是:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'path_all'</span>: [&#123;<span class="string">'path_1_1'</span>: <span class="number">1</span>, <span class="string">'path_1_2'</span>: <span class="number">2</span>&#125;, &#123;<span class="string">'path_2_2'</span>: <span class="number">2</span>, <span class="string">'path_2_1'</span>: <span class="number">2</span>&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="参考文件"><a href="#参考文件" class="headerlink" title="参考文件"></a>参考文件</h4><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2016/07/yaml.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/07/yaml.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/06/15/rank_problem/" itemprop="url">
                   求解排序问题思想
                 </a>
@@ -780,128 +912,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/03/06/multi_thread_python/" itemprop="url">
-                  python多线程处理文件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-06T23:59:50+08:00" content="2018-03-06">
-              2018-03-06
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-	  
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当文件特别大的时候，逐行读取文件并处理是很废时间的，目前有两种解决办法</p>
-<h4 id="每次读取多行"><a href="#每次读取多行" class="headerlink" title="每次读取多行"></a>每次读取多行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">READ_SIZE是设置的读取多少个字节, 如果size小于缓冲区的大小，则读取缓冲区大小的数据;</span><br><span class="line">如果size大于缓冲区的大小，读取size大小的数据，但不是完全的等于size的大小;</span><br><span class="line">一般读取比size大的整行的数据, size最小值是1024*8. readlines不会丢失行，当size大小不处在行边界当时候。</span><br><span class="line"></span><br><span class="line">f = open(file_name)</span><br><span class="line">while True:</span><br><span class="line">    lines = f.readlines(READ_SIZE)</span><br><span class="line">    if not lines:</span><br><span class="line">        break</span><br><span class="line">    for line in lines:</span><br><span class="line">        deal_one_line()</span><br></pre></td></tr></table></figure>
-<h4 id="多线程读取"><a href="#多线程读取" class="headerlink" title="多线程读取"></a>多线程读取</h4><p>思路是，主线程负责往队列中放每一行, 很多自线程并行对数据进行处理<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">queue = Queue.Queue()</span><br><span class="line">class MultiThreadFile(threading.Thread):</span><br><span class="line">    def __init__(self, queue):</span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.queue = queue</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        while True:</span><br><span class="line">            line = self.queue.get()</span><br><span class="line">            deal_line()</span><br><span class="line">            self.queue.task_done()</span><br><span class="line"></span><br><span class="line">if __name__  == '__main__':</span><br><span class="line">    for i in range(30):</span><br><span class="line">        t = MultiThreadFile(queue)</span><br><span class="line">        t.setDaemon(True)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">        f = open(USER_TERM_FILE)</span><br><span class="line">        while True:</span><br><span class="line">            lines = f.readlines(READ_SIZE)</span><br><span class="line">            if not lines:</span><br><span class="line">                break</span><br><span class="line">                for line in lines:</span><br><span class="line">                    line = line.rstrip()</span><br><span class="line">                    queue.put(line)</span><br><span class="line">        queue.join()</span><br></pre></td></tr></table></figure></p>
-<h4 id="对数据切成batch处理"><a href="#对数据切成batch处理" class="headerlink" title="对数据切成batch处理"></a>对数据切成batch处理</h4><p>这个程序是将数据切成200个batch，每5个batch进行并行跑，最后将batch合并下<br>感觉和hadoop的思想是一样的<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for((i = 1; i &lt;= 200; i++))</span><br><span class="line">do</span><br><span class="line">    sh your_program.sh $file_$i &amp;</span><br><span class="line">    let mod=i%5</span><br><span class="line">    if [ $mod -eq 0 ]</span><br><span class="line">    then</span><br><span class="line">        wait</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -945,7 +955,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -953,7 +963,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1012,7 +1022,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

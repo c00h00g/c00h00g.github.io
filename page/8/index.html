@@ -282,6 +282,139 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/10/grpc_install/" itemprop="url">
+                  GRPC安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-10T23:59:50+08:00" content="2017-02-10">
+              2017-02-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/程序技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">程序技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+	  
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>grpc是google发布的一款开源的rpc框架，使用protobuf作为序列化工具，相关代码都可以在github上搜到。rpc即远程过程调用，可以在客户端调用服务端的程序，同时可以支持不同语言之间的相互调用，比如：使用php作为前端的架构，c++作为后端语言，可以使用php调用后端c++服务端的函数接口。</p>
+<h4 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h4><ol>
+<li><p>下载源码并编译安装</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone -b $(curl -L https:<span class="comment">//grpc.io/release) https://github.com/grpc/grpc</span></span><br><span class="line">cd grpc</span><br><span class="line">git submodule update --init</span><br><span class="line">make</span><br><span class="line">[sudo] make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入grpc/examples/cpp/helloworld目录，并make，这个时候会提示protobuf没有安装</p>
+</li>
+<li>进入目录grpc/third_party/protobuf, 编译并安装protobuf<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>[<strong>参考文档</strong>]</p>
+<ol>
+<li><a href="https://doc.oschina.net/grpc" target="_blank" rel="noopener">https://doc.oschina.net/grpc</a> grpc文档</li>
+<li><a href="https://github.com/grpc/grpc" target="_blank" rel="noopener">https://github.com/grpc/grpc</a> grpc</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/09/my-first-blog/" itemprop="url">
                   开始重新写博客
                 </a>
@@ -430,7 +563,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -438,7 +571,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -497,7 +630,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
